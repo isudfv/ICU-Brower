@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 
     cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
     cefWindow->move(0, 111);
+//    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);
     qDebug() << "widget before" << cefWindow->pos();
 
     //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));

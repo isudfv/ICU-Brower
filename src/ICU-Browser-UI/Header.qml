@@ -10,7 +10,7 @@ Item {
         TitleBar {
             height: 37
             Layout.fillWidth: parent
-            Layout.fillHeight: parent
+//            Layout.fillHeight: parent
 //            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 //            Layout.fillWidth: parent
         }

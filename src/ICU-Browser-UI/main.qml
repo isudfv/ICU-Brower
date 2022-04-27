@@ -21,15 +21,15 @@ import QtQuick.Layouts 1.3
 
 Window {
     id: root
-    width: 1920
-    height: 1080
+    width: 960
+    height: 540
     visible: true
     color: "#cdcdcd"
-//    flags: Qt.Window | Qt.CustomizeWindowHint
 
-//    property int headHeight: 111
+    //    flags: Qt.Window | Qt.CustomizeWindowHint
 
-    ColumnLayout{
+    //    property int headHeight: 111
+    ColumnLayout {
         anchors.fill: parent
         spacing: 0
 
@@ -43,6 +43,4 @@ Window {
     }
     onWidthChanged: cefWindow.resizeCEFWindow(0, 0, width, height)
     onHeightChanged: cefWindow.resizeCEFWindow(0, 0, width, height)
-
 }
-
