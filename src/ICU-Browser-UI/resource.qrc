@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Header.qml</file>
+        <file>TitleBar.qml</file>
+        <file>Tabs.qml</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="plus.png">assets/icons/plus.png</file>
+        <file alias="close.png">assets/icons/close.png</file>
+        <file alias="stackoverflow.png">assets/icons/stackoverflow.png</file>
+    </qresource>
+</RCC>

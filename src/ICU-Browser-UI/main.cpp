@@ -1,29 +1,37 @@
-//
-// Created by isudfv on 2022/04/17.
-//
+#include "form.h"
 #include <QApplication>
+//#include <QDateTime>
+//#include <QGuiApplication>
 #include <QLabel>
-#include "browserwindow.h"
+//#include <QLineEdit>
+//#include <QPushButton>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+//#include <QQuickItem>
+#include <QQuickWidget>
 
-int main(int argc, char **argv) {
-    QCoreApplication::setOrganizationName("QtExamples");
-    QApplication app(argc, argv);
-//    QApplication::setWindowIcon(QIcon(":/assets/images/back.png"));
-    BrowserWindow window;
-    window.show();
-    window.setURL(QUrl("https://bilibili.com"));
+int main(int argc, char *argv[])
+{
+    QApplication          app(argc, argv);
+    QQmlApplicationEngine engine("qrc:/main.qml");
+
+    QObject *QmlObj    = engine.rootObjects().first();
+    QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
 
-//    app.setWindowIcon(QIcon(QStringLiteral(":AppLogoColor.png")));
+    auto cefWindow = new Form;
+    engine.rootContext()->setContextProperty("cefWindow", cefWindow);
 
-//    QWebEngineProfile::defaultProfile()->settings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
-//    QWebEngineProfile::defaultProfile()->settings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, true);
+    cefWindow->winId();
+    cefWindow->windowHandle()->setParent(QmlWindow);
+    cefWindow->show();
 
-//    QUrl url = commandLineUrlArgument();
+    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
+    cefWindow->move(0, 111);
+    qDebug() << "widget before" << cefWindow->pos();
 
-//    Browser        browser;
-//    BrowserWindow *window = browser.createWindow();
-//    window->tabWidget()->setUrl(url);
+    //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));
+
 
     return app.exec();
 }
