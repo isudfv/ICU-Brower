@@ -41,6 +41,6 @@ Window {
             rootWindow: root
         }
     }
-    onWidthChanged: cefWindow.resizeCEFWindow(0, 0, width, height)
-    onHeightChanged: cefWindow.resizeCEFWindow(0, 0, width, height)
+    onWidthChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
+    onHeightChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
 }

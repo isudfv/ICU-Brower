@@ -1,3 +1,4 @@
+#include "cefwindow.h"
 #include "form.h"
 #include <QApplication>
 //#include <QDateTime>
@@ -19,17 +20,18 @@ int main(int argc, char *argv[])
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
 
-    auto cefWindow = new Form;
+    auto cefWindow = new CEFWindow;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
 
     cefWindow->winId();
-    cefWindow->windowHandle()->setParent(QmlWindow);
+    cefWindow->setParent(QmlWindow);
     cefWindow->show();
 
-    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
-    cefWindow->move(0, 111);
-//    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);
-    qDebug() << "widget before" << cefWindow->pos();
+    cefWindow->setGeometry(0, 111, QmlWindow->width(), QmlWindow->height() - 111);
+    //    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
+    //    cefWindow->move(0, 111);
+    //    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);
+    //    qDebug() << "widget before" << cefWindow->pos();
 
     //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));
 

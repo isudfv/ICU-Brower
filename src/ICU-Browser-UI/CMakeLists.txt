@@ -13,7 +13,6 @@ find_package(Qt6 6.2 COMPONENTS
 
 qt_add_executable(ICU-Browser-UI
     main.cpp
-    form.h form.cpp form.ui
     cefwindow.h cefwindow.cpp
     resource.qrc
 )
