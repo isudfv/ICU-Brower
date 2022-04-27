@@ -39,8 +39,8 @@ ColumnLayout {
             color: "#cdcdcd"
             Image {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-                height: 32
-                width: 32
+                height: 28
+                width: 28
                 id: plusTab
                 source: "qrc:/icons/plus.png"
             }
