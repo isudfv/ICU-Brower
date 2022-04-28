@@ -22,7 +22,7 @@ Row {
         id: tabButton
         TabButton {
             id: button
-            implicitWidth: 300
+            implicitWidth: 200
             implicitHeight: 32
 //            MouseArea {
 //                anchors.fill: parent
@@ -86,7 +86,7 @@ Row {
                 radius: 6
                 Rectangle {
                     color: parent.color
-                    implicitWidth: 300
+                    implicitWidth: parent.parent.implicitWidth
                     //                        width: 300
                     //                        Layout.fillWidth: parent
                     height: 6
@@ -150,10 +150,21 @@ Row {
     function addItem() {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.setCurrentIndex(tabBar.count - 1)
+        adjustItem()
     }
 
     function removeAt(item) {
         tabBar.removeItem(item)
+        adjustItem()
+    }
+
+    function adjustItem() {
+        var equal_width = Window.width / tabBar.count - 50 / tabBar.count
+        if (equal_width < 200) {
+            for (var i = 0; i < tabBar.count; ++i) {
+                tabBar.itemAt(i).implicitWidth = equal_width
+            }
+        }
     }
 
 //    function
