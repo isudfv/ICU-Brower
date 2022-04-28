@@ -164,6 +164,7 @@ Row {
     }
 
     function adjustItem() {
+        // the algorithm is undecided
         var equal_width = Window.width / tabBar.count - 50 / tabBar.count
         if (equal_width < 300) {
             for (var i = 0; i < tabBar.count; ++i) {
