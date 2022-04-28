@@ -14,12 +14,30 @@ Item {
 //            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 //            Layout.fillWidth: parent
         }
-        Rectangle {
-            color:"#f7f7f7"
-            height: 111 - 37
+        NaviBar {
+            height: 37
             Layout.fillWidth: parent
-            Layout.fillHeight: parent
+//            height
         }
+
+        Rectangle {
+            color: "blue"
+            height: 37
+//            width:
+            Layout.fillWidth: parent
+        }
+
+//        NaviBar {
+//            height: 37
+//            Layout.fillWidth: parent
+////            height
+//        }
+//        Rectangle {
+//            color:"#f7f7f7"
+//            height: 111 - 37
+//            Layout.fillWidth: parent
+//            Layout.fillHeight: parent
+//        }
     }
 }
 

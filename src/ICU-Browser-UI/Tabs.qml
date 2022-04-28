@@ -42,9 +42,9 @@ Row {
 
                     Image {
                         Layout.leftMargin: 10
-                        source: "qrc:/icons/stackoverflow.png"
-                        width: 16
-                        height: 16
+                        source: "qrc:/icons/stackoverflow.svg"
+                        sourceSize.width: 16
+                        sourceSize.height: 16
                     }
                     Text {
                         text: "fuck"
@@ -62,7 +62,7 @@ Row {
                         color: "transparent"
                         radius: 2
                         Image {
-                            source: "qrc:/icons/close.png"
+                            source: "qrc:/icons/close.svg"
                             width: 16
                             height: 16
                         }

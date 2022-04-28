@@ -40,6 +40,13 @@ Window {
 
             rootWindow: root
         }
+        Rectangle {
+            color: "red"
+            Layout.fillWidth: true
+            anchors.top: Header.bottom
+//            Layout.alignment: Qt.AlignTop
+            height: 20
+        }
     }
     onWidthChanged: {
         cefWindow.resizeCEFWindow(0, 111, width, height)

@@ -35,7 +35,7 @@ Item {
                     height: 20
                     width: 20
                     id: plusTab
-                    source: "qrc:/icons/plus.png"
+                    source: "qrc:/icons/add.svg"
                 }
                 MouseArea {
                     id: mouseRegion

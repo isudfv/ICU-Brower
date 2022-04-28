@@ -4,10 +4,17 @@
         <file>Header.qml</file>
         <file>TitleBar.qml</file>
         <file>Tabs.qml</file>
+        <file>NaviBar.qml</file>
     </qresource>
     <qresource prefix="/icons">
-        <file alias="plus.png">assets/icons/plus.png</file>
-        <file alias="close.png">assets/icons/close.png</file>
-        <file alias="stackoverflow.png">assets/icons/stackoverflow.png</file>
+        <file alias="stackoverflow.svg">assets/icons/stackoverflow.svg</file>
+        <file alias="close.svg">assets/icons/close.svg</file>
+        <file alias="add.svg">assets/icons/add.svg</file>
+        <file alias="arrow-back.svg">assets/icons/arrow-back.svg</file>
+        <file alias="arrow-forward.svg">assets/icons/arrow-forward.svg</file>
+        <file>assets/icons/back_android.svg</file>
+        <file alias="home_light.svg">assets/icons/home_light.svg</file>
+        <file>assets/icons/HtmlToSvg.svg</file>
+        <file alias="refresh.svg">assets/icons/refresh.svg</file>
     </qresource>
 </RCC>

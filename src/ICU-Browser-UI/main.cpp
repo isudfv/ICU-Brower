@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);
-    cefWindow->show();
+    //    cefWindow->show();
 
-    cefWindow->setGeometry(0, 111, QmlWindow->width(), QmlWindow->height() - 111);
+    cefWindow->setGeometry(0, 150, QmlWindow->width(), QmlWindow->height() - 111);
     //    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
     //    cefWindow->move(0, 111);
     //    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);
