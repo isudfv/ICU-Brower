@@ -24,8 +24,12 @@ Row {
             id: button
             implicitWidth: 300
             implicitHeight: 32
-//            clip: true
-
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    button.focus = true
+                }
+            }
             contentItem: Item {
                 anchors.fill: parent
                 RowLayout {
@@ -56,14 +60,14 @@ Row {
                 }
             }
             background: Rectangle {
+                id: bg
                 anchors.fill: parent
-
-                color: button.activeFocus ? "#f7f7f7" : "transparent"
+                color: button.focus ? "#f7f7f7" : "transparent"
+                focus: true
 //                opacity: enabled ? 1 : 0.3
 //                border.color: "#cdcdcd"
 //                border.width: 1
                 radius: 6
-
                 Rectangle {
                     id: clipper
                     color: parent.color
@@ -73,10 +77,11 @@ Row {
                     height: 6
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 0
+
                 }
                 // right radius
                 Rectangle {
-                    color: button.activeFocus ? "#f7f7f7" : "transparent"
+                    color: button.focus ? "#f7f7f7" : "transparent"
                     implicitWidth: 6
                     implicitHeight: 6
                     anchors.bottom: parent.bottom
@@ -92,12 +97,12 @@ Row {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 0
                     anchors.left: parent.right
-                    color: button.activeFocus ? "#cdcdcd" : "transparent"
+                    color: button.focus ? "#cdcdcd" : "transparent"
                     radius: 6
                 }
                 // left radius
                 Rectangle {
-                    color: button.activeFocus ? "#f7f7f7" : "transparent"
+                    color: button.focus ? "#f7f7f7" : "transparent"
                     implicitWidth: 6
                     implicitHeight: 6
                     anchors.bottom: parent.bottom
@@ -113,7 +118,7 @@ Row {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 0
                     anchors.right: parent.left
-                    color: button.activeFocus ? "#cdcdcd" : "transparent"
+                    color: button.focus ? "#cdcdcd" : "transparent"
 //                    color: "#cdcdcd"
                     radius: 6
                 }
@@ -123,10 +128,18 @@ Row {
 
     Component.onCompleted: {
         parent.addaaa.connect(addItem)
+        parent.addaaa()
+        parent.addaaa()
+        tabBar.takeItem(tabBar.count-1);
+        tabBar.itemAt(tabBar.count - 1).focus = true
+        //玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 
     function addItem() {
         tabBar.addItem(tabButton.createObject(tabBar))
+        tabBar.itemAt(tabBar.count - 1).focus = true
+//        tabBar.itemAt(tabBar.count - 1).forceActiveFocus()
+        console.log(tabBar.itemAt(tabBar.count - 1).focus)
         console.log("added:", tabBar.itemAt(tabBar.count - 1))
     }
 }
