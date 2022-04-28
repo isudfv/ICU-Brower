@@ -22,7 +22,7 @@ Row {
         id: tabButton
         TabButton {
             id: button
-            implicitWidth: 200
+            implicitWidth: 300
             implicitHeight: 32
 //            MouseArea {
 //                anchors.fill: parent
@@ -147,6 +147,7 @@ Row {
         // todo: 玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 
+
     function addItem() {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.setCurrentIndex(tabBar.count - 1)
@@ -160,12 +161,14 @@ Row {
 
     function adjustItem() {
         var equal_width = Window.width / tabBar.count - 50 / tabBar.count
-        if (equal_width < 200) {
+        if (equal_width < 300) {
             for (var i = 0; i < tabBar.count; ++i) {
                 tabBar.itemAt(i).implicitWidth = equal_width
             }
         }
     }
 
-//    function
+    Window.onWidthChanged:
+        adjustItem()
+
 }
