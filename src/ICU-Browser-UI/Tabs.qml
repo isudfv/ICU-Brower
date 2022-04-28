@@ -156,6 +156,10 @@ Row {
 
     function removeAt(item) {
         tabBar.removeItem(item)
+        if (tabBar.count === 0){
+            Qt.quit()
+        }
+
         adjustItem()
     }
 
