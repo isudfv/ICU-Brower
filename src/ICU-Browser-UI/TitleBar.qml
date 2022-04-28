@@ -27,6 +27,7 @@ Item {
                 Layout.alignment: Qt.AlignLeft
                 width: 20
                 color: "#cdcdcd"
+                radius: 3
                 Image {
                     //                Layout.alignment: Qt.AlignCenter
                     anchors.horizontalCenter: parent.horizontalCenter
