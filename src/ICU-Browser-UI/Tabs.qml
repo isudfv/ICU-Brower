@@ -86,7 +86,7 @@ Row {
                 radius: 6
                 Rectangle {
                     color: parent.color
-                    implicitWidth: parent.parent.implicitWidth
+                    implicitWidth: 300
                     //                        width: 300
                     //                        Layout.fillWidth: parent
                     height: 6
@@ -147,33 +147,14 @@ Row {
         // todo: 玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 
-
     function addItem() {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.setCurrentIndex(tabBar.count - 1)
-        adjustItem()
     }
 
     function removeAt(item) {
         tabBar.removeItem(item)
-        if (tabBar.count === 0){
-            Qt.quit()
-        }
-
-        adjustItem()
     }
 
-    function adjustItem() {
-        // the algorithm is undecided
-        var equal_width = Window.width / tabBar.count - 50 / tabBar.count
-        if (equal_width < 300) {
-            for (var i = 0; i < tabBar.count; ++i) {
-                tabBar.itemAt(i).implicitWidth = equal_width
-            }
-        }
-    }
-
-    Window.onWidthChanged:
-        adjustItem()
-
+//    function
 }

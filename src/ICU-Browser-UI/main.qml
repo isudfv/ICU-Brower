@@ -43,14 +43,24 @@ Window {
         Rectangle {
             color: "red"
             Layout.fillWidth: true
+//            Layout.fillHeight: parent
             anchors.top: Header.bottom
-//            Layout.alignment: Qt.AlignTop
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            //            Layout.alignment: Qt.AlignTop
             height: 20
         }
     }
-    onWidthChanged: {
-        cefWindow.resizeCEFWindow(0, 111, width, height)
-    }
-
+    onWidthChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
     onHeightChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
+
+    onActiveFocusItemChanged: {
+        console.log(activeFocusItem)
+
+    }
 }
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:0.33}
+}
+##^##*/

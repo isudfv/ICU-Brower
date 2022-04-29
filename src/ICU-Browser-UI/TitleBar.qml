@@ -46,7 +46,7 @@ Item {
 
                     onClicked: {
                         root.addaaa()
-//                        console.debug(root.width, root.height)
+                        console.debug(root.width, root.height)
                     }
                 }
             }

@@ -3,6 +3,7 @@
 CEFWindow::CEFWindow()
 {
     //	setStyleSheet("QMainWindow {background: 'yellow';}");
+    setFlag(Qt::FramelessWindowHint);
 }
 
 void CEFWindow::resizeCEFWindow(int x, int y, int width, int height)

@@ -15,14 +15,21 @@ Item {
 //            Layout.fillWidth: parent
         }
         NaviBar {
-            height: 37
+            height: 36
             Layout.fillWidth: parent
 //            height
         }
 
         Rectangle {
-            color: "blue"
-            height: 37
+            color: "#f7f7f7"
+            height: 2
+//            width:
+            Layout.fillWidth: parent
+        }
+
+        Rectangle {
+            color: "#cdcdcd"
+            height: 36
 //            width:
             Layout.fillWidth: parent
         }
@@ -43,6 +50,6 @@ Item {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;formeditorZoom:0.33;height:480;width:640}
+    D{i:0;autoSize:true;formeditorZoom:0.75;height:480;width:640}
 }
 ##^##*/
