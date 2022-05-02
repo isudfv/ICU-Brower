@@ -4,6 +4,7 @@ import QtQuick.Layouts
 
 Item {
 
+//    property QtObject rootWindow
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
@@ -12,6 +13,13 @@ Item {
             height: 5
             color: "transparent"
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+
+//            MouseArea {
+//                anchors.fill: parent
+//                onClicked: {
+//                    rootWindow.requestActivate()
+//                }
+//            }
         }
         RowLayout {
             id: root
@@ -46,7 +54,6 @@ Item {
 
                     onClicked: {
                         root.addaaa()
-                        console.debug(root.width, root.height)
                     }
                 }
             }

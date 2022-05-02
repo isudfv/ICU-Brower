@@ -3,13 +3,21 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts
 
 Item {
-    property QtObject rootWindow
+//    property QtObject rootWindow
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: rootWindow.requestActivate()
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
+
         TitleBar {
             height: 37
             Layout.fillWidth: parent
+//            rootWindow: rootWindow
 //            Layout.fillHeight: parent
 //            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 //            Layout.fillWidth: parent

@@ -15,7 +15,6 @@ Item {
         }
 
         Rectangle {
-            id: rectangle
             color: "#f7f7f7"
             Layout.fillWidth: parent
             Layout.fillHeight: parent
@@ -158,6 +157,7 @@ Item {
 //                    }
 
                 TextField {
+                    id: tf
                     implicitHeight: 34
                     implicitWidth: 900
                     verticalAlignment: TextInput.AlignVCenter
@@ -183,8 +183,11 @@ Item {
 //border.color: "red"
                         MouseArea {
                             anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: parent.border.color = "#cecece"
+                            hoverEnabled: trued
+                            onEntered: {
+
+                                parent.border.color = "#cecece"
+                            }
                             onExited: parent.border.color = "white"
                         }
                     }

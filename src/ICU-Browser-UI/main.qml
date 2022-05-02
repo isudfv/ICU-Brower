@@ -19,13 +19,14 @@ import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
 
+import com.fuck.test 1.0
+
 Window {
-    id: root
+    id: rootWindow
     width: 960
     height: 540
     visible: true
     color: "#cdcdcd"
-
     //    flags: Qt.Window | Qt.CustomizeWindowHint
 
     //    property int headHeight: 111
@@ -38,12 +39,12 @@ Window {
             height: 111
             Layout.alignment: Qt.AlignTop
 
-            rootWindow: root
+            //            rootWindow: rootWindow
         }
         Rectangle {
             color: "red"
             Layout.fillWidth: true
-//            Layout.fillHeight: parent
+            //            Layout.fillHeight: parent
             anchors.top: Header.bottom
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             //            Layout.alignment: Qt.AlignTop
@@ -55,7 +56,6 @@ Window {
 
     onActiveFocusItemChanged: {
         console.log(activeFocusItem)
-
     }
 }
 
@@ -64,3 +64,4 @@ Designer {
     D{i:0;formeditorZoom:0.33}
 }
 ##^##*/
+

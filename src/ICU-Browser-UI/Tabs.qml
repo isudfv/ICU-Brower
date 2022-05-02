@@ -30,9 +30,9 @@ Row {
 //                    button.focus = true
 //                }
 //            }
-            onClicked: {
-                console.log(tabBar.currentIndex)
-            }
+//            onClicked: {
+//                console.log(tabBar.currentIndex)
+//            }
 
             contentItem: Item {
                 anchors.fill: parent
@@ -47,7 +47,7 @@ Row {
                         sourceSize.height: 16
                     }
                     Text {
-                        text: "fuck"
+                        text: "test"
                         fontSizeMode: Text.Fit
                         width: 228
                         height: 16
@@ -151,6 +151,8 @@ Row {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.setCurrentIndex(tabBar.count - 1)
         adjustItem()
+
+        console.log(tabBar.currentIndex)
     }
 
     function removeAt(item) {
