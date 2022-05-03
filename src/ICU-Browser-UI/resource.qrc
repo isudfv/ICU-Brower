@@ -18,5 +18,8 @@
         <file alias="gray-arrow-back.svg">assets/icons/gray-arrow-back.svg</file>
         <file alias="black-arrow-forward.svg">assets/icons/black-arrow-forward.svg</file>
         <file alias="gray-arrow-forward.svg">assets/icons/gray-arrow-forward.svg</file>
+        <file alias="star.svg">assets/icons/star.svg</file>
+        <file alias="history.svg">assets/icons/history.svg</file>
+        <file alias="user.svg">assets/icons/user.svg</file>
     </qresource>
 </RCC>

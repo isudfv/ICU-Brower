@@ -29,7 +29,7 @@ Item {
                 RowLayout {
                     spacing: 2
                     Rectangle {
-                        id:backButton
+                        id: backButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -40,8 +40,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            source: header.activeBack?"qrc:/icons/black-arrow-back.svg":"qrc:/icons/gray-arrow-back.svg"
-
+                            source: header.activeBack ? "qrc:/icons/black-arrow-back.svg" : "qrc:/icons/gray-arrow-back.svg"
                         }
 
                         MouseArea {
@@ -63,11 +62,11 @@ Item {
                                 console.debug(root.width, root.height)
                             }
 
-                            ToolTip{
+                            ToolTip {
                                 visible: parent.enter
                                 text: "返回"
                                 delay: 500
-                                background: Rectangle{
+                                background: Rectangle {
                                     color: "#f7f7f7"
                                     border.color: "black"
                                     border.width: 1
@@ -78,7 +77,7 @@ Item {
                     }
 
                     Rectangle {
-                        id:forwardButton
+                        id: forwardButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -89,7 +88,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            source: header.activeForward?"qrc:/icons/black-arrow-forward.svg":"qrc:/icons/gray-arrow-forward.svg"
+                            source: header.activeForward ? "qrc:/icons/black-arrow-forward.svg" : "qrc:/icons/gray-arrow-forward.svg"
                         }
                         MouseArea {
                             property bool enter: false
@@ -110,11 +109,11 @@ Item {
                                 console.debug(root.width, root.height)
                             }
 
-                            ToolTip{
+                            ToolTip {
                                 visible: parent.enter
                                 text: "继续"
                                 delay: 500
-                                background: Rectangle{
+                                background: Rectangle {
                                     color: "#f7f7f7"
                                     border.color: "black"
                                     border.width: 1
@@ -125,7 +124,7 @@ Item {
                     }
 
                     Rectangle {
-                        id:flashButton
+                        id: flashButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -157,11 +156,11 @@ Item {
                                 console.debug(root.width, root.height)
                             }
 
-                            ToolTip{
+                            ToolTip {
                                 visible: parent.enter
                                 text: "刷新"
                                 delay: 500
-                                background: Rectangle{
+                                background: Rectangle {
                                     color: "#f7f7f7"
                                     border.color: "black"
                                     border.width: 1
@@ -204,11 +203,11 @@ Item {
                                 console.debug(root.width, root.height)
                             }
 
-                            ToolTip{
+                            ToolTip {
                                 visible: parent.enter
                                 text: "主页"
                                 delay: 500
-                                background: Rectangle{
+                                background: Rectangle {
                                     color: "#f7f7f7"
                                     border.color: "black"
                                     border.width: 1
@@ -218,37 +217,17 @@ Item {
                         }
                     }
                 }
-
-                //                Rectangle {
-                //                    id: rec
-                //                    width: 100
-                //                    height: 28
-                //                    color: "red"
-
-                //                }
-
-                //                DropShadow {
-                //                        anchors.fill: rec
-                //                        cached: true
-                //                        horizontalOffset: 3
-                //                        verticalOffset: 3
-                //                        radius: 8.0
-                ////                        samples: 16
-                //                        color: "#80000000"
-                //                        source: rec
-                //                    }
                 TextField {
                     id: tf
                     implicitHeight: 34
-                    implicitWidth: 900
+                    implicitWidth: rootWindow.width - 345
                     verticalAlignment: TextInput.AlignVCenter
                     clip: true
-                    MouseArea{
-                        anchors.fill:parent
-                        onClicked: {
-//                            header.focus = true
-                            tf.forceActiveFocus()
-                        }
+                    selectByMouse: true
+                    selectedTextColor: "white"
+                    selectionColor: "#0078d4"
+                    onPressed: {
+                        rootWindow.requestActivate()
                     }
 
                     font {
@@ -263,8 +242,8 @@ Item {
                         //                        anchors.horizontalCenter: parent.horizontalCenter
                         //                        anchors.verticalCenter: rectangle.verticalCenter
                         color: "white"
-                        implicitHeight: 32
-                        implicitWidth: 900
+                        implicitHeight: parent.height
+                        implicitWidth: parent.width
                         border.width: 1
                         border.color: "#f7f7f7"
                         radius: 3
@@ -273,10 +252,152 @@ Item {
                             anchors.fill: parent
                             hoverEnabled: true
                             onEntered: {
-
                                 parent.border.color = "#cecece"
                             }
                             onExited: parent.border.color = "white"
+                        }
+                    }
+                }
+
+                RowLayout {
+                    spacing: 2
+                    Rectangle {
+                        id: starButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            source: "qrc:/icons/star.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+                                root.addaaa()
+                                console.debug(root.width, root.height)
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "收藏夹"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: historyButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            //id: plusTab
+                            source: "qrc:/icons/history.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+                                root.addaaa()
+                                console.debug(root.width, root.height)
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "历史记录"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: userButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            //id: plusTab
+                            source: "qrc:/icons/user.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+                                root.addaaa()
+                                console.debug(root.width, root.height)
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "用户信息"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
                         }
                     }
                 }
