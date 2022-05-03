@@ -1,9 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
-//import Qt5Compat.GraphicalEffects
 
+//import Qt5Compat.GraphicalEffects
 Item {
+    id: navibar
+
     height: 36
     ColumnLayout {
         anchors.fill: parent
@@ -37,11 +39,14 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            source: "qrc:/icons/arrow-back.svg"
+                            source: header.activeBack?"qrc:/icons/black-arrow-back.svg":"qrc:/icons/gray-arrow-back.svg"
+
                         }
+
                         MouseArea {
                             anchors.fill: parent
-                            hoverEnabled: true
+                            hoverEnabled: header.activeBack
+                            enabled: header.activeBack
                             onEntered: parent.color = "#dcdcdc"
                             onExited: parent.color = "#f7f7f7"
 
@@ -63,13 +68,13 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            // id: plusTab
-                            source: "qrc:/icons/arrow-forward.svg"
+                            source: header.activeForward?"qrc:/icons/black-arrow-forward.svg":"qrc:/icons/gray-arrow-forward.svg"
                         }
                         MouseArea {
                             //id: mouseRegion
                             anchors.fill: parent
-                            hoverEnabled: true
+                            hoverEnabled: header.activeForward
+                            enabled: header.activeForward
                             onEntered: parent.color = "#dcdcdc"
                             onExited: parent.color = "#f7f7f7"
 
@@ -137,39 +142,45 @@ Item {
                     }
                 }
 
-//                Rectangle {
-//                    id: rec
-//                    width: 100
-//                    height: 28
-//                    color: "red"
+                //                Rectangle {
+                //                    id: rec
+                //                    width: 100
+                //                    height: 28
+                //                    color: "red"
 
-//                }
+                //                }
 
-//                DropShadow {
-//                        anchors.fill: rec
-//                        cached: true
-//                        horizontalOffset: 3
-//                        verticalOffset: 3
-//                        radius: 8.0
-////                        samples: 16
-//                        color: "#80000000"
-//                        source: rec
-//                    }
-
+                //                DropShadow {
+                //                        anchors.fill: rec
+                //                        cached: true
+                //                        horizontalOffset: 3
+                //                        verticalOffset: 3
+                //                        radius: 8.0
+                ////                        samples: 16
+                //                        color: "#80000000"
+                //                        source: rec
+                //                    }
                 TextField {
                     id: tf
                     implicitHeight: 34
                     implicitWidth: 900
                     verticalAlignment: TextInput.AlignVCenter
                     clip: true
+                    MouseArea{
+                        anchors.fill:parent
+                        onClicked: {
+//                            header.focus = true
+                            tf.forceActiveFocus()
+                        }
+                    }
 
                     font {
                         pixelSize: 14
                     }
 
                     text: "https://bilibili.com"
-//                    placeholderText.
 
+                    //                    placeholderText.
                     background: Rectangle {
                         anchors.fill: parent
                         //                        anchors.horizontalCenter: parent.horizontalCenter
@@ -180,10 +191,10 @@ Item {
                         border.width: 1
                         border.color: "#f7f7f7"
                         radius: 3
-//border.color: "red"
+                        //border.color: "red"
                         MouseArea {
                             anchors.fill: parent
-                            hoverEnabled: trued
+                            hoverEnabled: true
                             onEntered: {
 
                                 parent.border.color = "#cecece"

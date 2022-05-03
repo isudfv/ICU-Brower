@@ -16,6 +16,11 @@ Row {
         background: Rectangle {
             color: "#cdcdcd"
         }
+        onCurrentItemChanged: {
+            //调用状态获取函数
+            header.activeBack = !header.activeBack
+            header.activeForward = !header.activeForward
+        }
     }
 
     Component {

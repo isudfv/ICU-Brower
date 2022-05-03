@@ -4,6 +4,9 @@ import QtQuick.Layouts
 
 Item {
 //    property QtObject rootWindow
+    id: header
+    property bool activeBack: true
+    property bool activeForward: false
 
     MouseArea {
         anchors.fill: parent

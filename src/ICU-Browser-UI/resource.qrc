@@ -12,9 +12,11 @@
         <file alias="add.svg">assets/icons/add.svg</file>
         <file alias="arrow-back.svg">assets/icons/arrow-back.svg</file>
         <file alias="arrow-forward.svg">assets/icons/arrow-forward.svg</file>
-        <file>assets/icons/back_android.svg</file>
         <file alias="home_light.svg">assets/icons/home_light.svg</file>
-        <file>assets/icons/HtmlToSvg.svg</file>
         <file alias="refresh.svg">assets/icons/refresh.svg</file>
+        <file alias="black-arrow-back.svg">assets/icons/black-arrow-back.svg</file>
+        <file alias="gray-arrow-back.svg">assets/icons/gray-arrow-back.svg</file>
+        <file alias="black-arrow-forward.svg">assets/icons/black-arrow-forward.svg</file>
+        <file alias="gray-arrow-forward.svg">assets/icons/gray-arrow-forward.svg</file>
     </qresource>
 </RCC>
