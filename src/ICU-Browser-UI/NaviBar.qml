@@ -29,6 +29,7 @@ Item {
                 RowLayout {
                     spacing: 2
                     Rectangle {
+                        id:backButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -44,20 +45,40 @@ Item {
                         }
 
                         MouseArea {
+                            property bool enter: false
                             anchors.fill: parent
                             hoverEnabled: header.activeBack
                             enabled: header.activeBack
-                            onEntered: parent.color = "#dcdcdc"
-                            onExited: parent.color = "#f7f7f7"
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
 
                             onClicked: {
                                 root.addaaa()
                                 console.debug(root.width, root.height)
                             }
+
+                            ToolTip{
+                                visible: parent.enter
+                                text: "返回"
+                                delay: 500
+                                background: Rectangle{
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
                         }
                     }
 
                     Rectangle {
+                        id:forwardButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -71,21 +92,40 @@ Item {
                             source: header.activeForward?"qrc:/icons/black-arrow-forward.svg":"qrc:/icons/gray-arrow-forward.svg"
                         }
                         MouseArea {
-                            //id: mouseRegion
+                            property bool enter: false
                             anchors.fill: parent
                             hoverEnabled: header.activeForward
                             enabled: header.activeForward
-                            onEntered: parent.color = "#dcdcdc"
-                            onExited: parent.color = "#f7f7f7"
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
 
                             onClicked: {
                                 root.addaaa()
                                 console.debug(root.width, root.height)
                             }
+
+                            ToolTip{
+                                visible: parent.enter
+                                text: "继续"
+                                delay: 500
+                                background: Rectangle{
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
                         }
                     }
 
                     Rectangle {
+                        id:flashButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -100,20 +140,39 @@ Item {
                             source: "qrc:/icons/refresh.svg"
                         }
                         MouseArea {
-                            //id: mouseRegion
+                            property bool enter: false
                             anchors.fill: parent
                             hoverEnabled: true
-                            onEntered: parent.color = "#dcdcdc"
-                            onExited: parent.color = "#f7f7f7"
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
 
                             onClicked: {
                                 root.addaaa()
                                 console.debug(root.width, root.height)
                             }
+
+                            ToolTip{
+                                visible: parent.enter
+                                text: "刷新"
+                                delay: 500
+                                background: Rectangle{
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
                         }
                     }
 
                     Rectangle {
+                        id: homeButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
                         width: 45
@@ -128,15 +187,33 @@ Item {
                             source: "qrc:/icons/home_light.svg"
                         }
                         MouseArea {
-                            //id: mouseRegion
+                            property bool enter: false
                             anchors.fill: parent
                             hoverEnabled: true
-                            onEntered: parent.color = "#dcdcdc"
-                            onExited: parent.color = "#f7f7f7"
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
 
                             onClicked: {
                                 root.addaaa()
                                 console.debug(root.width, root.height)
+                            }
+
+                            ToolTip{
+                                visible: parent.enter
+                                text: "主页"
+                                delay: 500
+                                background: Rectangle{
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
                             }
                         }
                     }

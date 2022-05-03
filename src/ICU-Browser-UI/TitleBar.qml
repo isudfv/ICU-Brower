@@ -47,13 +47,31 @@ Item {
                 }
                 MouseArea {
                     id: mouseRegion
+                    property bool enter: false
                     anchors.fill: parent
                     hoverEnabled: true
-                    onEntered: parent.color = "#adadad"
-                    onExited: parent.color = "#cdcdcd"
+                    onEntered: {
+                        enter = true
+                        parent.color = "#adadad"
+                    }
+                    onExited: {
+                        enter = false
+                        parent.color = "#cdcdcd"
+                    }
 
                     onClicked: {
                         root.addaaa()
+                    }
+                    ToolTip{
+                        visible: parent.enter
+                        text: "新建标签页"
+                        delay: 500
+                        background: Rectangle{
+                            color: "#f7f7f7"
+                            border.color: "black"
+                            border.width: 1
+                            radius: 5
+                        }
                     }
                 }
             }

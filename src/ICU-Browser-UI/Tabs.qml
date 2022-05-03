@@ -29,15 +29,6 @@ Row {
             id: button
             implicitWidth: 300
             implicitHeight: 32
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: {
-//                    button.focus = true
-//                }
-//            }
-//            onClicked: {
-//                console.log(tabBar.currentIndex)
-//            }
 
             contentItem: Item {
                 anchors.fill: parent
@@ -72,13 +63,31 @@ Row {
                             height: 16
                         }
                         MouseArea {
+                            property bool enter: false
                             anchors.fill: parent
                             onClicked: {
                                 removeAt(button)
                             }
                             hoverEnabled: true
-                            onEntered: parent.color = "#adadad"
-                            onExited: parent.color = "transparent"
+                            onEntered: {
+                                enter = true
+                                parent.color = "#adadad"
+                            }
+                            onExited: {
+                                enter = false
+                                parent.color = "transparent"
+                            }
+                            ToolTip{
+                                visible: parent.enter
+                                text: "关闭标签页"
+                                delay: 500
+                                background: Rectangle{
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
                         }
                     }
                 }
@@ -89,6 +98,29 @@ Row {
                 color: button.focus ? "#f7f7f7" : "transparent"
                 focus: true
                 radius: 6
+                MouseArea {
+                    property bool enter: false
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: {
+                        enter = true
+                    }
+                    onExited: {
+                        enter = false
+                    }
+                    onClicked: parent.clicked()
+                    ToolTip{
+                        visible: parent.enter
+                        text: "标签页信息\nwww.test.com"
+                        delay: 1000
+                        background: Rectangle{
+                            color: "#f7f7f7"
+                            border.color: "black"
+                            border.width: 1
+                            radius: 5
+                        }
+                    }
+                }
                 Rectangle {
                     color: parent.color
                     implicitWidth: parent.parent.implicitWidth
