@@ -1,4 +1,5 @@
 #include "cefwindow.h"
+#include <QDebug>
 
 CEFWindow::CEFWindow()
 {

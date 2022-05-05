@@ -1,4 +1,5 @@
 #include "cefwindow.h"
+#include "cef_app.h"
 //#include "form.h"
 #include <QApplication>
 //#include <QDateTime>
@@ -14,8 +15,44 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+#ifdef __linux__
+  CefMainArgs main_args(argc, argv);
+#endif
+#ifdef _WINDOWS
+  HINSTANCE h = GetModuleHandle(nullptr);
+  CefMainArgs main_args(h);
+#endif
 
+  // CEF applications have multiple sub-processes (render, GPU, etc) that share
+  // the same executable. This function checks the command-line and, if this is
+  // a sub-process, executes the appropriate logic.
+  int exit_code = CefExecuteProcess(main_args, nullptr, nullptr);
+  if (exit_code >= 0) {
+    // The sub-process has completed so return here.
+    return exit_code;
+  }
+
+  // Parse command-line arguments for use in this method.
+  CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();
+
+#ifdef __linux__
+  command_line->InitFromArgv(argc, argv);
+#endif
+#ifdef _WINDOWS
+#endif
+
+  // Specify CEF global settings here.
+  CefSettings settings;
+
+  CefString(&settings.locale).FromString("zh-CN");
+  CefString(&settings.accept_language_list).FromString("zh-CN");
+
+  CefRefPtr<CefApp> app;
+
+  CefInitialize(main_args, settings, app.get(), nullptr);
+
+
+    QApplication a(argc, argv);
 
     qmlRegisterType<CEFWindow>("com.fuck.test", 1, 0, "CEFWindow");
     QQmlApplicationEngine engine("qrc:/main.qml");
@@ -23,15 +60,18 @@ int main(int argc, char *argv[])
     QObject *QmlObj    = engine.rootObjects().first();
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
-    auto cefWindow = new CEFWindow;
+    auto cefWindow = new CEFWindow("bilibili.com");
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
 
-    cefWindow->winId();
+//    cefWindow->winId();
     cefWindow->setParent(QmlWindow);
     cefWindow->show();
-
+//
     cefWindow->setGeometry(0, 111, QmlWindow->width(), QmlWindow->height() - 111);
 
+  CefRunMessageLoop();
+
+  CefShutdown();
 
     //    auto   testWidget = new QWidget;
     //    QTimer timer;
@@ -50,5 +90,5 @@ int main(int argc, char *argv[])
     //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));
 
 
-    return app.exec();
+    return a.exec();
 }
