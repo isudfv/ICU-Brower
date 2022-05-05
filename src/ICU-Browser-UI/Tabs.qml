@@ -189,7 +189,7 @@ Row {
         tabBar.setCurrentIndex(tabBar.count - 1)
         adjustItem()
 
-        console.log(tabBar.currentIndex)
+//        console.log(tabBar.currentIndex)
     }
 
     function removeAt(item) {

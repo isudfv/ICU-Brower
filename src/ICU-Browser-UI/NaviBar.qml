@@ -217,6 +217,7 @@ Item {
                         }
                     }
                 }
+
                 TextField {
                     id: tf
                     implicitHeight: 34
@@ -289,8 +290,7 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                favoritemenu.visible = true
                             }
 
                             ToolTip {
@@ -305,6 +305,15 @@ Item {
                                 }
                             }
                         }
+
+                        FavoriteMenu{
+                            y:rootWindow.y + navibar.y + 39
+                            x:rootWindow.x + starButton.parent.x - 150
+                            width: 200
+                            height: 400
+                            id:favoritemenu
+                        }
+
                     }
 
                     Rectangle {
@@ -336,8 +345,7 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+//                                historyMenu.open()
                             }
 
                             ToolTip {
@@ -353,6 +361,21 @@ Item {
                             }
                         }
                     }
+
+//                    Menu {
+//                        y:historyButton.height
+//                        id: historyMenu
+
+//                        MenuItem {
+//                            text: "New..."
+//                        }
+//                        MenuItem {
+//                            text: "Open..."
+//                        }
+//                        MenuItem {
+//                            text: "Save"
+//                        }
+//                    }
 
                     Rectangle {
                         id: userButton

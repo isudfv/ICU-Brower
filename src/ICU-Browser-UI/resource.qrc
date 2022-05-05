@@ -5,6 +5,7 @@
         <file>TitleBar.qml</file>
         <file>Tabs.qml</file>
         <file>NaviBar.qml</file>
+        <file>FavoriteMenu.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="stackoverflow.svg">assets/icons/stackoverflow.svg</file>
