@@ -6,6 +6,7 @@
         <file>Tabs.qml</file>
         <file>NaviBar.qml</file>
         <file>FavoriteMenu.qml</file>
+        <file>HistoryMenu.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="stackoverflow.svg">assets/icons/stackoverflow.svg</file>
@@ -22,5 +23,6 @@
         <file alias="star.svg">assets/icons/star.svg</file>
         <file alias="history.svg">assets/icons/history.svg</file>
         <file alias="user.svg">assets/icons/user.svg</file>
+        <file alias="download.svg">assets/icons/download.svg</file>
     </qresource>
 </RCC>

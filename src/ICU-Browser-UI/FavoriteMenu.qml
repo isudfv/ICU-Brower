@@ -13,7 +13,7 @@ Window {
 
         Menu{
             id:menu
-            height: parent.height -20
+            height: parent.height
             width: parent.width
 //            Layout.fillWidth: parent
             Action{
@@ -26,6 +26,24 @@ Window {
                 text: "harmoe"
                 onTriggered: {
                     console.log("harmoe")
+                }
+            }
+            Action{
+                text: "tomori"
+                onTriggered: {
+                    console.log("tomori")
+                }
+            }
+            Action{
+                text: "tomori"
+                onTriggered: {
+                    console.log("tomori")
+                }
+            }
+            Action{
+                text: "tomori"
+                onTriggered: {
+                    console.log("tomori")
                 }
             }
             Action{

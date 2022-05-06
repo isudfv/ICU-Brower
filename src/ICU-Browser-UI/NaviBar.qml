@@ -5,7 +5,7 @@ import QtQuick.Layouts
 //import Qt5Compat.GraphicalEffects
 Item {
     id: navibar
-
+    property alias url: textfield.text
     height: 36
     ColumnLayout {
         anchors.fill: parent
@@ -58,8 +58,10 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                cefWindow.doGoBack()
+                                header.activeBack = cefWindow.getBackState()
+                                header.activeForward = cefWindow.getForwardState()
+                                navibar.url = cefWindow.getUrl()
                             }
 
                             ToolTip {
@@ -105,8 +107,10 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                cefWindow.doGoForward()
+                                header.activeBack = cefWindow.getBackState()
+                                header.activeForward = cefWindow.getForwardState()
+                                navibar.url = cefWindow.getUrl()
                             }
 
                             ToolTip {
@@ -152,8 +156,10 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                cefWindow.doReload()
+                                header.activeBack = cefWindow.getBackState()
+                                header.activeForward = cefWindow.getForwardState()
+                                navibar.url = cefWindow.getUrl()
                             }
 
                             ToolTip {
@@ -219,9 +225,9 @@ Item {
                 }
 
                 TextField {
-                    id: tf
+                    id: textfield
                     implicitHeight: 34
-                    implicitWidth: rootWindow.width - 345
+                    implicitWidth: rootWindow.width - 390
                     verticalAlignment: TextInput.AlignVCenter
                     clip: true
                     selectByMouse: true
@@ -345,7 +351,7 @@ Item {
                             }
 
                             onClicked: {
-//                                historyMenu.open()
+                                historymenu.visible = true
                             }
 
                             ToolTip {
@@ -360,22 +366,16 @@ Item {
                                 }
                             }
                         }
+
+                        HistoryMenu{
+                            y:rootWindow.y + navibar.y + 39
+                            x:rootWindow.x + historyButton.parent.x - 103
+                            width: 200
+                            height: 400
+                            id:historymenu
+                        }
                     }
 
-//                    Menu {
-//                        y:historyButton.height
-//                        id: historyMenu
-
-//                        MenuItem {
-//                            text: "New..."
-//                        }
-//                        MenuItem {
-//                            text: "Open..."
-//                        }
-//                        MenuItem {
-//                            text: "Save"
-//                        }
-//                    }
 
                     Rectangle {
                         id: userButton
@@ -406,8 +406,7 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+
                             }
 
                             ToolTip {
@@ -422,6 +421,54 @@ Item {
                                 }
                             }
                         }
+                    }
+
+                    Rectangle {
+                        id: downloadButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            //id: plusTab
+                            source: "qrc:/icons/download.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "下载记录"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
+                        }
+
+
                     }
                 }
             }

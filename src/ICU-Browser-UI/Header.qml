@@ -26,6 +26,7 @@ Item {
 //            Layout.fillWidth: parent
         }
         NaviBar {
+            id:navibar
             height: 36
             Layout.fillWidth: parent
 //            height

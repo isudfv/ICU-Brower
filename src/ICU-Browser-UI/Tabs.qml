@@ -18,8 +18,9 @@ Row {
         }
         onCurrentItemChanged: {
             //调用状态获取函数
-            header.activeBack = !header.activeBack
-            header.activeForward = !header.activeForward
+            header.activeBack = cefWindow.getBackState()
+            header.activeForward = cefWindow.getForwardState()
+            navibar.url = cefWindow.getUrl()
         }
     }
 
