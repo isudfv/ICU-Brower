@@ -68,12 +68,17 @@ set(CEF_RESOURCE_FILES
 
 if (OS_LINUX)
     # Standard libraries.
+    set(CEF_LIBS
+            libcef.so
+            libcef_dll_wrapper.a)
+
     set(CEF_STANDARD_LIBS
             X11
             )
 
     # List of CEF binary files.
     set(CEF_BINARY_FILES
+            libcef_dll_wrapper.a
             chrome-sandbox
             libcef.so
             libEGL.so
