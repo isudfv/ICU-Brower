@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QWindow>
 
-#include "../qbrowserclient/qbrowserwindow.h"
+#include "qbrowserwindow.h"
 
 //namespace Ui {
 //    class Form;
