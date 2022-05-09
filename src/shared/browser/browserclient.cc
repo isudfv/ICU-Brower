@@ -66,6 +66,7 @@ void BrowserClient::CreateBrowser(QBrowserWindow *target_window, const CefString
 #endif
 
 #ifdef _WINDOWS
+  window_info.SetAsPopup(nullptr, "sdf");
   window_info.SetAsChild((HWND)target_window->winId(), {0, 0, 0, 0});
 #endif
 

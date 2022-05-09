@@ -42,6 +42,8 @@ class QBrowserWindow : public QWindow {
 
   void closeEvent(QCloseEvent *) override;
 
+  void moveEvent(QMoveEvent *) override;
+
  private:
   int browser_id_;
   QString browser_url_;

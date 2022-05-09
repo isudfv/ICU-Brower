@@ -2,9 +2,9 @@
 // Created by liang on 22-4-20.
 //
 
-#include <iostream>
 #include "qbrowserwindow.h"
 #include "../browser/browserclient.h"
+#include <iostream>
 
 #ifdef __linux__
 #include <X11/Xlib.h>
@@ -24,9 +24,9 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev) {
 #endif
 #ifdef _WINDOWS
   if (browser_id_ < 0) return;
-   HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
-   ::MoveWindow(window, this->x(), this->y(),
-                this->width() * 1.25, this->height() * 1.25, true);
+  HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+  ::MoveWindow(window, 0, 0,
+               this->width() * 1.25, this->height() * 1.25, true);
 #endif
 }
 
@@ -38,10 +38,10 @@ void QBrowserWindow::closeEvent(QCloseEvent *ev) {
   qDebug("closing");
 #ifdef __linux__
   if (!is_closing_) {
-    BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
-    ev->ignore();
+      BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
+      ev->ignore();
   } else {
-    ev->accept();
+      ev->accept();
   }
 #endif
 }
@@ -84,4 +84,13 @@ void QBrowserWindow::doGoForward() {
 
 void QBrowserWindow::doStopLoad() {
   if (is_loading_) BrowserClient::GetInstance()->DoBrowserStopLoad(browser_id_);
+}
+void QBrowserWindow::moveEvent(QMoveEvent *event) {
+#ifdef _WINDOWS
+  if (browser_id_ < 0) return;
+  qDebug() << this->x() << this->y() << this->width() << this->height();
+  HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+  ::MoveWindow(window, 0, 0,
+               this->width() * 1.25, this->height() * 1.25, true);
+#endif
 }
