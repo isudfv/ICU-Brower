@@ -25,8 +25,13 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev) {
 #ifdef _WINDOWS
   if (browser_id_ < 0) return;
   HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+
+  HDC hdc = ::GetDC(NULL);
+  int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
+  float scale = float(hdpi) / 96;
+
   ::MoveWindow(window, 0, 0,
-               this->width() * 1.25, this->height() * 1.25, true);
+               this->width() * scale, this->height() * scale, true);
 #endif
 }
 
