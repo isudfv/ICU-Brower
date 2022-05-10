@@ -236,6 +236,9 @@ Item {
                     onPressed: {
                         rootWindow.requestActivate()
                     }
+                    onAccepted: {
+                        cefWindow.doLoadUrl(text)
+                    }
 
                     font {
                         pixelSize: 14
