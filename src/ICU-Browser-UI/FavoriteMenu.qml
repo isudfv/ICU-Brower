@@ -8,8 +8,6 @@ Window {
     visible: false
     color: "transparent"
     flags: Qt.Window | Qt.FramelessWindowHint
-    signal userChange(int uid)
-    property int userid: 0
     Rectangle {
         color: "white"
         radius: 10
@@ -34,7 +32,8 @@ Window {
                 }
 
                 Rectangle{
-                    property bool canfavorite: true //getCanFavorite(uid,url)
+                    id: favoritetitle
+                    property bool canfavorite: favoritesPresenter.getCanFavorite(header.uid,header.uid)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -49,13 +48,10 @@ Window {
                     MouseArea {
                         property bool enter: false
                         anchors.fill: parent
-                        hoverEnabled: parent.canfavorite
-                        enabled: parent.canfavorite
+                        hoverEnabled: favoritetitle.canfavorite
+                        enabled: favoritetitle.canfavorite
                         onClicked: {
-                            //addFavariteItem(uid,)
-                            var tempname = "good"
-                            var tempurl = "day"
-                            cefWindow.trying(tempname,tempurl,addFavoriteItem)
+                            favoritesPresenter.addFavariteItem(header.uid,header.nowtitle,header.nowurl,addFavoriteItem)
                         }
                         onEntered: {
                             enter = true
@@ -93,6 +89,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
+                            //doload(url)
                         }
                         onEntered: {
                             parent.color = "#dcdcdc"
@@ -128,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-//                                    removeFavariteItem(uid,url,removeFavariteItem)
+                                    favoritesPresenter.removeFavariteItem(header.uid,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -182,11 +179,12 @@ Window {
     }
 
     function loadFavorite(){
-        //loadFavorite(uid,addFavoriteItem,clearFavorite)
+        favoritesPresenter.loadFavorite(header.uid,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){
         favoritemodel.append({"name": name,"url": url})
+        updataFavariteState()
     }
 
     function removeFavariteItem(url){
@@ -196,6 +194,11 @@ Window {
                 break
             }
         }
+        updataFavariteState()
+    }
+
+    function updataFavariteState(){
+        favoritesPresenter.favoritetitle.canfavorite = getCanFavorite(header.nowurl)
     }
 
     onActiveFocusItemChanged: {
@@ -209,7 +212,13 @@ Window {
         }
     }
 
-    onUserChange: {
-        userid = uid
+    Connections{
+        target: header
+        function onUseridChanged() {
+            updataFavariteState()
+        }
+        function onNowurlChanged(){
+            updataFavariteState()
+        }
     }
 }

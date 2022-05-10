@@ -5,12 +5,19 @@ import QtQuick.Layouts
 Item {
 //    property QtObject rootWindow
     id: header
-    property bool activeBack: true
+    property bool activeBack: false
     property bool activeForward: false
+    property string nowurl: "bilibili"
+    property string nowtitle: "bilibili"
+    property int userid: 0
+
+
 
     MouseArea {
         anchors.fill: parent
-        onClicked: rootWindow.requestActivate()
+        onClicked: {
+            rootWindow.requestActivate()
+        }
     }
 
     ColumnLayout {
