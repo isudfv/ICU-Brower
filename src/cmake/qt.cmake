@@ -1,3 +1,0 @@
-set(QT_PATH C:/Qt/6.2.4/msvc2019_64)
-
-set(CMAKE_PREFIX_PATH ${QT_PATH})

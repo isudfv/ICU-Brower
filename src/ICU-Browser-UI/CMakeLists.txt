@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.19)
 project(ICU-Browser-UI VERSION 0.1 LANGUAGES CXX)
 
 include(../cmake/cef.cmake)
-include(../cmake/qt.cmake)
 include(../cmake/shared.cmake)
 
 set(CMAKE_AUTOMOC ON)

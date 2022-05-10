@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.19)
 project(qbrowserclient)
 
 include(../cmake/cef.cmake)
-include(../cmake/qt.cmake)
 include(../cmake/shared.cmake)
 
 set(CMAKE_CXX_STANDARD 20)
