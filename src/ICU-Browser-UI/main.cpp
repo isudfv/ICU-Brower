@@ -11,6 +11,8 @@
 //#include <QQuickItem>
 #include <QQuickWidget>
 
+#include "favoritesmanager.h"
+
 int main(int argc, char *argv[])
 {
     QApplication          app(argc, argv);
@@ -20,8 +22,10 @@ int main(int argc, char *argv[])
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
 
+    auto item      = new FavoritesManager;
     auto cefWindow = new CEFWindow;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
+    engine.rootContext()->setContextProperty("favoritesPresenter", item);
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);

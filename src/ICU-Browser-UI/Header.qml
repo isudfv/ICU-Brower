@@ -7,7 +7,7 @@ Item {
     id: header
     property bool activeBack: false
     property bool activeForward: false
-    property string nowurl: "bilibili.com"
+    property string nowurl: "tyriiiiiili.com"
     property string nowtitle: "bilibili"
     property int userid: 0
 

@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesPresenter.addFavariteItem(header.uid,header.nowtitle,header.nowurl,addFavoriteItem)
+                            favoritesPresenter.addFavoriteItem(header.nowurl,header.nowtitle,rootwindow.addFavoriteItem,header.uid)
                         }
                         onEntered: {
                             enter = true
@@ -125,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesPresenter.removeFavariteItem(header.uid,url,removeFavariteItem)
+                                    favoritesPresenter.removeFavoriteItem(header.uid,header.nowurl,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -184,7 +184,7 @@ Window {
 
     function addFavoriteItem(name,url){
         favoritemodel.append({"name": name,"url": url})
-        updataFavariteState()
+        updataFavoriteState()
     }
 
     function removeFavariteItem(url){
@@ -193,12 +193,13 @@ Window {
                 favoritemodel.remove(i)
                 break
             }
+
         }
-        updataFavariteState()
+        updataFavoriteState()
     }
 
-    function updataFavariteState(){
-        favoritesPresenter.favoritetitle.canfavorite = getCanFavorite(header.nowurl)
+    function updataFavoriteState(){
+        favoritetitle.canfavorite = favoritesPresenter.getCanFavorite(header.userid,header.nowurl)
     }
 
     onActiveFocusItemChanged: {

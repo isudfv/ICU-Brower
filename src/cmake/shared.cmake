@@ -2,7 +2,8 @@ set(SHARED_INCLUDE_PATH
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block
         ${CMAKE_SOURCE_DIR}/src/shared/browser
         ${CMAKE_SOURCE_DIR}/src/shared/window
-        ${CMAKE_SOURCE_DIR}/src/shared/download)
+        ${CMAKE_SOURCE_DIR}/src/shared/download
+		${CMAKE_SOURCE_DIR}/src/shared/favorites)
 
 set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/browserclient.cc
@@ -16,9 +17,14 @@ set(SHARED_WINDOW_SRCS
 
 
 set(SHARED_DOWNLOAD_SRCS
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.cpp
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
+
+set(SHARED_BOOKMARKS_SRCS
+        ${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h
+	)
 
 set(WINDOWS_MANIFEST_DIR
         ${CMAKE_SOURCE_DIR}/src/shared/manifest)
