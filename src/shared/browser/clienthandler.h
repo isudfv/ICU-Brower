@@ -14,6 +14,8 @@ class ClientHandler :
     public CefKeyboardHandler,
     public CefContextMenuHandler,
     public CefRequestHandler,
+    public CefResourceRequestHandler,
+    public CefFrameHandler,
     public CefLifeSpanHandler,
     public CefLoadHandler {
  public:
@@ -100,6 +102,26 @@ class ClientHandler :
     return this;
   }
 
+  CefRefPtr<CefFrameHandler> GetFrameHandler() override { return this; }
+
+  CefRefPtr<CefResourceRequestHandler> GetResourceRequestHandler(CefRefPtr<CefBrowser> browser,
+                                                                 CefRefPtr<CefFrame> frame,
+                                                                 CefRefPtr<CefRequest> request,
+                                                                 bool is_navigation,
+                                                                 bool is_download,
+                                                                 const CefString &request_initiator,
+                                                                 bool &disable_default_handling) override {
+    return this;
+  }
+
+  ReturnValue OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+                                   CefRefPtr<CefFrame> frame,
+                                   CefRefPtr<CefRequest> request,
+                                   CefRefPtr<CefCallback> callback) override;
+
+  void OnFrameCreated(CefRefPtr<CefBrowser> browser,
+                      CefRefPtr<CefFrame> frame) override;
+
   // LifeSpanHandler
   bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
                      CefRefPtr<CefFrame> frame,
@@ -129,6 +151,7 @@ class ClientHandler :
                             EventFlags event_flags) override;
 
   // CefLoadHandler methods:
+  void OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, TransitionType transition_type) override;
   void OnLoadingStateChange(CefRefPtr<CefBrowser> browser,
                             bool isLoading,
                             bool canGoBack,
@@ -156,9 +179,9 @@ class ClientHandler :
 
   // CefKeyboardHandler:
   virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
-                             const CefKeyEvent& event,
+                             const CefKeyEvent &event,
                              CefEventHandle os_event,
-                             bool* is_keyboard_shortcut) override;
+                             bool *is_keyboard_shortcut) override;
 
   // CefRequestHandler methods
   bool OnBeforeBrowse(CefRefPtr<CefBrowser> browser,

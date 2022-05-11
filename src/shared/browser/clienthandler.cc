@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <QDebug>
 #include "include/cef_base.h"
 #include "include/base/cef_bind.h"
 #include "include/base/cef_callback.h"
@@ -205,7 +206,6 @@ bool ClientHandler::OnBeforeBrowse(CefRefPtr<CefBrowser> browser,
                                    CefRefPtr<CefRequest> request,
                                    bool user_gesture,
                                    bool is_redirect) {
-
   return false;
 }
 bool ClientHandler::OnOpenURLFromTab(CefRefPtr<CefBrowser> browser,
@@ -238,4 +238,20 @@ void ClientHandler::OnDownloadUpdated(CefRefPtr<CefBrowser> browser,
   CEF_REQUIRE_UI_THREAD();
 
   if (delegate_) delegate_->OnUpdateDownloadState(download_item, callback);
+}
+void ClientHandler::OnFrameCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame) {
+}
+void ClientHandler::OnLoadStart(CefRefPtr<CefBrowser> browser,
+                                CefRefPtr<CefFrame> frame,
+                                CefLoadHandler::TransitionType transition_type) {
+
+}
+CefResourceRequestHandler::ReturnValue ClientHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
+                                                                           CefRefPtr<CefFrame> frame,
+                                                                           CefRefPtr<CefRequest> request,
+                                                                           CefRefPtr<CefCallback> callback) {
+  qDebug() << "request" <<  QString::fromStdString(request->GetURL())
+    << request->GetResourceType();
+
+  return RV_CONTINUE;
 }
