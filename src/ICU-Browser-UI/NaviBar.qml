@@ -354,7 +354,7 @@ Item {
                             }
 
                             onClicked: {
-                                historymenu.visible = true
+                               historyMenu.visible = true
                             }
 
                             ToolTip {
@@ -370,12 +370,12 @@ Item {
                             }
                         }
 
-                        HistoryMenu{
+                        HistoryMenu {
                             y:rootWindow.y + navibar.y + 39
-                            x:rootWindow.x + historyButton.parent.x - 103
-                            width: 200
+                            x:rootWindow.x + starButton.parent.x - 300
+                            width: 400
                             height: 400
-                            id:historymenu
+                            id:historyMenu
                         }
                     }
 
