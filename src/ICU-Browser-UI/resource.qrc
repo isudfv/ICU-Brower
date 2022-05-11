@@ -25,5 +25,7 @@
         <file alias="user.svg">assets/icons/user.svg</file>
         <file alias="download.svg">assets/icons/download.svg</file>
         <file alias="fillstar.svg">assets/icons/fillstar.svg</file>
+        <file alias="delete.svg">assets/icons/delete.svg</file>
+        <file alias="search.svg">assets/icons/search.svg</file>
     </qresource>
 </RCC>
