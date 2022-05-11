@@ -189,6 +189,7 @@ Row {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.setCurrentIndex(tabBar.count - 1)
         adjustItem()
+        return tabBar.count-1
 
 //        console.log(tabBar.currentIndex)
     }
@@ -210,6 +211,10 @@ Row {
                 tabBar.itemAt(i).implicitWidth = equal_width
             }
         }
+    }
+
+    function setBrowserIdToTab(browserId_,tabIndex_){
+        tabBar.itemAt(tabIndex_).browserId = browserId_
     }
 
     Window.onWidthChanged:

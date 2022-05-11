@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesPresenter.getCanFavorite(header.uid,header.uid)
+                    property bool canfavorite: favoritesPresenter.getCanFavorite(header.uid,header.nowurl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
