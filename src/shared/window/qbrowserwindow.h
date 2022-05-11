@@ -13,7 +13,7 @@ class QBrowserWindow : public QWindow {
 
  public:
   QBrowserWindow() = default;
-  ~QBrowserWindow() override = default;
+  virtual ~QBrowserWindow() override = default;
 
   explicit QBrowserWindow(const CefString &url);
 

@@ -20,7 +20,7 @@ class QDownloadWidget : public QWidget {
 
   explicit QDownloadWidget(QWidget *parent = nullptr);
   explicit QDownloadWidget(Id id, QWidget *parent);
-  ~QDownloadWidget() override;
+  virtual ~QDownloadWidget() override;
 
   void setFileName(const QString& file_name);
 

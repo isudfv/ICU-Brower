@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<CEFWindow>("com.fuck.test", 1, 0, "CEFWindow");
     QQmlApplicationEngine engine("qrc:/main.qml");
 
-    auto cefWindow = new CEFWindow("bilibili.com");
+    auto cefWindow = new CEFWindow("https://www.bilibili.com/video/BV13U4y1N7Uo/?spm_id_from=333.788");
 
     QObject *QmlObj    = engine.rootObjects().first();
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
