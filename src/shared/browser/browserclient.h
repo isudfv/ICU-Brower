@@ -62,6 +62,7 @@ class BrowserClient : public ClientHandler::Delegate {
   static BrowserClient *GetInstance();
 
   BrowserClient(const BrowserClient &) = delete;
+  virtual ~BrowserClient();
   const BrowserClient &operator=(const BrowserClient &) = delete;
 
  private:

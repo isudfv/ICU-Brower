@@ -199,3 +199,7 @@ void BrowserClient::InitAdBlockClient() {
     ad_block_client_.deserialize(ad_block_buffer);
   }
 }
+
+BrowserClient::~BrowserClient() {
+  delete []ad_block_buffer;
+}
