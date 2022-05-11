@@ -7,7 +7,7 @@ Item {
     id: header
     property bool activeBack: false
     property bool activeForward: false
-    property string nowurl: "bilibili"
+    property string nowurl: "bilibili.com"
     property string nowtitle: "bilibili"
     property int userid: 0
 
@@ -53,18 +53,19 @@ Item {
             Layout.fillWidth: parent
         }
 
-//        NaviBar {
-//            height: 37
-//            Layout.fillWidth: parent
-////            height
-//        }
-//        Rectangle {
-//            color:"#f7f7f7"
-//            height: 111 - 37
-//            Layout.fillWidth: parent
-//            Layout.fillHeight: parent
-//        }
     }
+
+    function setWindowState(activeBack_,activeForward_,nowurl_,nowtitle_){
+        activeBack = activeBack_
+        activeForward = activeForward_
+        nowurl = nowurl_
+        nowtitle = nowtitle_
+    }
+
+    function setUserId(uid){
+        userid = uid
+    }
+
 }
 
 /*##^##
