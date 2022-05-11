@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     auto item      = new FavoritesManager;
     auto cefWindow = new CEFWindow;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
-    engine.rootContext()->setContextProperty("favoritesPresenter", item);
+    engine.rootContext()->setContextProperty("favoritesManager", item);
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);

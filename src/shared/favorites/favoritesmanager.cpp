@@ -22,7 +22,6 @@ void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callB
     QJsonObject member;
     member.insert("name", name);
     member.insert("url", url);
-    qDebug() << name << url;
 
     //打开存放json串的文件
     QString file_path = QString("../%1.json").arg(uid);

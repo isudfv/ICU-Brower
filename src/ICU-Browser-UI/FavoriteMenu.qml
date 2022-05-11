@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesPresenter.getCanFavorite(header.uid,header.nowurl)
+                    property bool canfavorite: favoritesManager.getCanFavorite(header.uid,header.nowurl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesPresenter.addFavoriteItem(header.nowurl,header.nowtitle,rootwindow.addFavoriteItem,header.uid)
+                            favoritesManager.addFavoriteItem(header.nowurl,header.nowtitle,rootwindow.addFavoriteItem,header.uid)
                         }
                         onEntered: {
                             enter = true
@@ -125,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesPresenter.removeFavoriteItem(header.uid,header.nowurl,removeFavariteItem)
+                                    favoritesManager.removeFavoriteItem(header.uid,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -159,27 +159,14 @@ Window {
     }
     ListModel {
         id: favoritemodel
-        ListElement {
-            name: "Bilibili"
-            url: "bilibili.com"
-        }
-        ListElement {
-            name: "harmoe"
-            url: "bilibili.com"
-        }
-        ListElement {
-            name: "tomori"
-            url: "bilibili.com"
-        }
     }
 
     function clearFavorite(){
         favoritemodel.clear()
-        favoritemodel.sync()
     }
 
     function loadFavorite(){
-        favoritesPresenter.loadFavorite(header.uid,addFavoriteItem,clearFavorite)
+        favoritesManager.loadFavorite(header.uid,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){
@@ -199,7 +186,7 @@ Window {
     }
 
     function updataFavoriteState(){
-        favoritetitle.canfavorite = favoritesPresenter.getCanFavorite(header.userid,header.nowurl)
+        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.userid,header.nowurl)
     }
 
     onActiveFocusItemChanged: {
@@ -209,6 +196,7 @@ Window {
     }
     onVisibleChanged: {
         if (visible) {
+            loadFavorite()
             requestActivate()
         }
     }
