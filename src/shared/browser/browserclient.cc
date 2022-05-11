@@ -178,9 +178,9 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser) {
 }
 bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
 
-  if (ad_block_client_.matches(request->GetURL().ToString().c_str(),
-                               FONoFilterOption,
-                               request->GetReferrerURL().ToString().c_str())){
+  if (ab_block_flag_ && ad_block_client_.matches(request->GetURL().ToString().c_str(),
+                                                 FONoFilterOption,
+                                                 request->GetReferrerURL().ToString().c_str())) {
     return true;
   }
   return false;

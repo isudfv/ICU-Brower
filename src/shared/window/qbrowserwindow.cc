@@ -105,3 +105,6 @@ void QBrowserWindow::moveEvent(QMoveEvent *event) {
                this->width() * scale, this->height() * scale, true);
 #endif
 }
+void QBrowserWindow::setAdBlockFlag(bool flag) {
+  BrowserClient::GetInstance()->SetAdBlockFlag(flag);
+}

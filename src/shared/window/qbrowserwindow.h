@@ -27,6 +27,8 @@ class QBrowserWindow : public QWindow {
   void setClosingState(bool isClosing);
 
   // user method
+  void setAdBlockFlag(bool flag);
+
   void doLoadUrl(const QString &url);
 
   void doReload();

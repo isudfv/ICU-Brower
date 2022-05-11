@@ -45,6 +45,10 @@ class BrowserClient : public ClientHandler::Delegate {
 
   CefWindowHandle GetBrowserWindowHanlder(int browser_id);
 
+  void SetAdBlockFlag(bool flag){
+    ab_block_flag_ = flag;
+  }
+
   void DoBrowserLoadUrl(int browser_id, const QString &url);
 
   void DoBrowserReload(int browser_id);
@@ -64,6 +68,7 @@ class BrowserClient : public ClientHandler::Delegate {
   ClientHandler *handler_;
 
   AdBlockClient ad_block_client_;
+  bool ab_block_flag_ = true;
 
   std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
