@@ -11,7 +11,7 @@
 
 using Qt::endl;
 
-void addFavouriteItem(QString url,QString name,QJSValue addFavouriteIte,int uid=0)
+void FavouritesManager::addFavouriteItem(QString url,QString name,QJSValue addFavouriteIte,int uid=0)
 {
     //json文件
     QJsonDocument jDoc;
@@ -25,7 +25,7 @@ void addFavouriteItem(QString url,QString name,QJSValue addFavouriteIte,int uid=
 
 
     //打开存放json串的文件
-    QString file_path=QString("C:/Users/lenovo/desktop/%1.json").arg(uid);
+    QString file_path=QString("../%1.json").arg(uid);
     QFile file(file_path);
     file.open(QIODevice::ReadWrite);
 
@@ -64,10 +64,10 @@ void addFavouriteItem(QString url,QString name,QJSValue addFavouriteIte,int uid=
     addFavouriteIte.call(p);
 }
 
-bool getCanFavorite(int uid,QString url)
+bool FavouritesManager::getCanFavorite(int uid,QString url)
 {
     //根据uid，确定文件的存取路径
-    QString file_path=QString("C:/Users/lenovo/desktop/%1.json").arg(uid);
+    QString file_path=QString("../%1.json").arg(uid);
     QFile file(file_path);
     file.open(QIODevice::ReadOnly);
 
@@ -89,10 +89,10 @@ bool getCanFavorite(int uid,QString url)
     return true;
 }
 
-void removeFavouriteItem(int uid,QString url,QJSValue removeFavouriteItem)
+void FavouritesManager::removeFavouriteItem(int uid,QString url,QJSValue removeFavouriteItem)
 {
     //打开文件，读取书签列表
-    QString file_path=QString("C:/Users/lenovo/Desktop/%1.json").arg(uid);
+    QString file_path=QString("../%1.json").arg(uid);
     QFile file(file_path);
     file.open(QIODevice::ReadOnly);
 
@@ -131,13 +131,13 @@ void removeFavouriteItem(int uid,QString url,QJSValue removeFavouriteItem)
     removeFavouriteItem.call(p);
 }
 
-void loadFavourite(int uid,QJSValue addFavourite,QJSValue clearFavourite)
+void FavouritesManager::loadFavourite(int uid,QJSValue addFavourite,QJSValue clearFavourite)
 {
     //回调函数，清空view层的数据
     clearFavourite.call();
 
     //打开文件，获取到书签列表
-    QString file_path=QString("C:/Users/lenovo/Desktop/%1.json").arg(uid);
+    QString file_path=QString("../%1.json").arg(uid);
     QFile file(file_path);
     file.open(QIODevice::ReadOnly);
 
