@@ -21,7 +21,8 @@ class ClientHandler :
  public:
   class Delegate {
    public:
-    // Called when the browser has been created.
+    virtual bool CheckRequestIntercept(CefRefPtr<CefRequest> request) = 0;
+
     virtual void OnBrowserCreated(CefRefPtr<CefBrowser> browser) = 0;
 
     virtual void OnBeforeBrowserPopup(CefWindowInfo &windowInfo) = 0;
@@ -119,9 +120,6 @@ class ClientHandler :
                                    CefRefPtr<CefRequest> request,
                                    CefRefPtr<CefCallback> callback) override;
 
-  void OnFrameCreated(CefRefPtr<CefBrowser> browser,
-                      CefRefPtr<CefFrame> frame) override;
-
   // LifeSpanHandler
   bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
                      CefRefPtr<CefFrame> frame,
@@ -151,7 +149,6 @@ class ClientHandler :
                             EventFlags event_flags) override;
 
   // CefLoadHandler methods:
-  void OnLoadStart(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, TransitionType transition_type) override;
   void OnLoadingStateChange(CefRefPtr<CefBrowser> browser,
                             bool isLoading,
                             bool canGoBack,
@@ -178,7 +175,7 @@ class ClientHandler :
   void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString &title) override;
 
   // CefKeyboardHandler:
-  virtual bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
+  bool OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
                              const CefKeyEvent &event,
                              CefEventHandle os_event,
                              bool *is_keyboard_shortcut) override;

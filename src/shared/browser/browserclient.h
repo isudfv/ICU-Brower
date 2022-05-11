@@ -8,12 +8,16 @@
 #include "clienthandler.h"
 #include "../window/qbrowserwindow.h"
 #include "../download/qdownloadwidget.h"
+#include "ad_block_client.h"
 
 class BrowserClient : public ClientHandler::Delegate {
  public:
   explicit BrowserClient();
 
 //  impl the SimpleHandler::Delegate
+
+  bool CheckRequestIntercept(CefRefPtr<CefRequest> request) override;
+
   void OnBrowserCreated(CefRefPtr<CefBrowser> browser) override;
 
   void OnBeforeBrowserPopup(CefWindowInfo &windowInfo) override;
@@ -59,11 +63,15 @@ class BrowserClient : public ClientHandler::Delegate {
  private:
   ClientHandler *handler_;
 
+  AdBlockClient ad_block_client_;
+
   std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
   std::unordered_map<QDownloadWidget::Id, std::pair<QDownloadWidget *, CefRefPtr<CefDownloadItem>>> download_item_list_;
 
   static CefString GetDownloadPath(const CefString &suggested_name);
+
+  void InitAdBlockClient();
 };
 
 #endif //BROWSERCLIENT__BROWSERCLIENT_H_

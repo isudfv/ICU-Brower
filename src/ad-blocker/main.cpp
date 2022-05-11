@@ -4,38 +4,35 @@
 
 #include "ad_block_client.h"
 #include <algorithm>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
 using namespace std;
 
-string getFileContents(const char *filename)
-{
+string getFileContents(const char *filename) {
   fstream in(filename, ios::in | ios::out);
   if (in) {
     ostringstream contents;
     contents << in.rdbuf();
     in.close();
-    return(contents.str());
+    return (contents.str());
   }
-  throw(errno);
+  throw (errno);
 }
 
-void writeFile(const char *filename, const char *buffer, int length)
-{
+void writeFile(const char *filename, const char *buffer, int length) {
   ofstream outFile(filename, ios::out | ios::binary);
   if (outFile) {
     outFile.write(buffer, length);
     outFile.close();
     return;
   }
-  throw(errno);
+  throw (errno);
 }
 
-
-int main(int argc, char**argv) {
+int main(int argc, char **argv) {
   std::string &&easyListTxt = getFileContents("easylist.txt");
   const char *urlsToCheck[] = {
       // ||pagead2.googlesyndication.com^$~object-subrequest
@@ -45,8 +42,7 @@ int main(int argc, char**argv) {
       // Should be blocked by: ||googletagservices.com/tag/js/gpt_$third-party
       "http://www.googletagservices.com/tag/js/gpt_mobile.js",
       // Shouldn't be blocked
-      "http://www.brianbondy.com"
-  };
+      "http://www.brianbondy.com"};
 
   // This is the site who's URLs are being checked, not the domain of the URL being checked.
   const char *currentPageDomain = "slashdot.org";
@@ -56,13 +52,15 @@ int main(int argc, char**argv) {
   client.parse(easyListTxt.c_str());
 
   // Do the checks
-  std::for_each(urlsToCheck, urlsToCheck + sizeof(urlsToCheck) / sizeof(urlsToCheck[0]), [&client, currentPageDomain](std::string const &urlToCheck) {
-    if (client.matches(urlToCheck.c_str(), FONoFilterOption, currentPageDomain)) {
-      cout << urlToCheck << ": You should block this URL!" << endl;
-    } else {
-      cout << urlToCheck << ": You should NOT block this URL!" << endl;
-    }
-  });
+  std::for_each(urlsToCheck,
+                urlsToCheck + sizeof(urlsToCheck) / sizeof(urlsToCheck[0]),
+                [&client, currentPageDomain](std::string const &urlToCheck) {
+                  if (client.matches(urlToCheck.c_str(), FONoFilterOption, currentPageDomain)) {
+                    cout << urlToCheck << ": You should block this URL!" << endl;
+                  } else {
+                    cout << urlToCheck << ": You should NOT block this URL!" << endl;
+                  }
+                });
 
   int size;
   // This buffer is allocate on the heap, you must call delete[] when you're done using it.
@@ -73,13 +71,15 @@ int main(int argc, char**argv) {
   // Deserialize uses the buffer directly for subsequent matches, do not free until all matches are done.
   client2.deserialize(buffer);
   // Prints the same as client.matches would
-  std::for_each(urlsToCheck, urlsToCheck + sizeof(urlsToCheck) / sizeof(urlsToCheck[0]), [&client2, currentPageDomain](std::string const &urlToCheck) {
-    if (client2.matches(urlToCheck.c_str(), FONoFilterOption, currentPageDomain)) {
-      cout << urlToCheck << ": You should block this URL!" << endl;
-    } else {
-      cout << urlToCheck << ": You should NOT block this URL!" << endl;
-    }
-  });
+  std::for_each(urlsToCheck,
+                urlsToCheck + sizeof(urlsToCheck) / sizeof(urlsToCheck[0]),
+                [&client2, currentPageDomain](std::string const &urlToCheck) {
+                  if (client2.matches(urlToCheck.c_str(), FONoFilterOption, currentPageDomain)) {
+                    cout << urlToCheck << ": You should block this URL!" << endl;
+                  } else {
+                    cout << urlToCheck << ": You should NOT block this URL!" << endl;
+                  }
+                });
   delete[] buffer;
   return 0;
 }

@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
   // Specify CEF global settings here.
   CefSettings settings;
 
+  CefString (&settings.user_agent).FromString("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36");
   CefString(&settings.locale).FromString("zh-CN");
   CefString(&settings.accept_language_list).FromString("zh-CN");
 
@@ -45,7 +46,7 @@ int main(int argc, char **argv) {
   CefInitialize(main_args, settings, app.get(), nullptr);
   QApplication a(argc, argv);
 
-  QBrowserWindow w("bilibili.com");
+  QBrowserWindow w("https://www.ypojie.com/");
 
   CefRunMessageLoop();
 

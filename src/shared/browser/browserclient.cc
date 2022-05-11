@@ -6,13 +6,17 @@
 #include "cef_app.h"
 
 #include <mutex>
+#include <fstream>
+
 namespace {
 std::mutex window_lock;
 QBrowserWindow *curr_window;
+char *ad_block_buffer;
 } // namespace
 
 BrowserClient::BrowserClient() {
   handler_ = new ClientHandler(this);
+  InitAdBlockClient();
 }
 
 void BrowserClient::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
@@ -171,4 +175,27 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser) {
   browser_list_.erase(browser->GetIdentifier());
 
   if (browser_list_.empty()) CefQuitMessageLoop();
+}
+bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
+
+  if (ad_block_client_.matches(request->GetURL().ToString().c_str(),
+                               FONoFilterOption,
+                               request->GetReferrerURL().ToString().c_str())){
+    return true;
+  }
+  return false;
+}
+
+void BrowserClient::InitAdBlockClient() {
+  std::fstream in("ABPFilterParserData.dat", std::ios::in | std::ios::out);
+  if (in) {
+    in.seekg(0, std::ios::end);
+    auto len = in.tellg();
+    ad_block_buffer = new char[len];
+    in.seekg(0, std::ios::beg);
+    in.read(ad_block_buffer, len);
+    in.close();
+
+    ad_block_client_.deserialize(ad_block_buffer);
+  }
 }

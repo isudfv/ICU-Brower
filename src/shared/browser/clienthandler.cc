@@ -151,9 +151,9 @@ void ClientHandler::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString
 }
 
 bool ClientHandler::OnPreKeyEvent(CefRefPtr<CefBrowser> browser,
-                                  const CefKeyEvent& event,
+                                  const CefKeyEvent &event,
                                   CefEventHandle os_event,
-                                  bool* is_keyboard_shortcut) {
+                                  bool *is_keyboard_shortcut) {
   if (event.modifiers == EVENTFLAG_CONTROL_DOWN) {
     if (event.type == KEYEVENT_RAWKEYDOWN) {
       switch (event.native_key_code) {
@@ -239,19 +239,19 @@ void ClientHandler::OnDownloadUpdated(CefRefPtr<CefBrowser> browser,
 
   if (delegate_) delegate_->OnUpdateDownloadState(download_item, callback);
 }
-void ClientHandler::OnFrameCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame) {
-}
-void ClientHandler::OnLoadStart(CefRefPtr<CefBrowser> browser,
-                                CefRefPtr<CefFrame> frame,
-                                CefLoadHandler::TransitionType transition_type) {
 
-}
 CefResourceRequestHandler::ReturnValue ClientHandler::OnBeforeResourceLoad(CefRefPtr<CefBrowser> browser,
                                                                            CefRefPtr<CefFrame> frame,
                                                                            CefRefPtr<CefRequest> request,
                                                                            CefRefPtr<CefCallback> callback) {
-  qDebug() << "request" <<  QString::fromStdString(request->GetURL())
-    << request->GetResourceType();
+  CEF_REQUIRE_IO_THREAD();
+
+  if (delegate_) {
+    if (delegate_->CheckRequestIntercept(request)) {
+      qDebug() << "BLOCKING";
+      return RV_CANCEL;
+    }
+  }
 
   return RV_CONTINUE;
 }
