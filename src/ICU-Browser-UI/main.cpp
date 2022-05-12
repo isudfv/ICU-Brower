@@ -12,6 +12,7 @@
 #include <QQuickWidget>
 
 #include "favoritesmanager.h"
+#include "windowmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,10 +23,12 @@ int main(int argc, char *argv[])
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
 
-    auto item      = new FavoritesManager;
+    auto favoritesManager = new FavoritesManager;
     auto cefWindow = new CEFWindow;
+    auto windowManager = new WindowManager;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
-    engine.rootContext()->setContextProperty("favoritesManager", item);
+    engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
+    engine.rootContext()->setContextProperty("windowManager", windowManager);
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);

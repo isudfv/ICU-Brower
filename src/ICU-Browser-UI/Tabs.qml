@@ -17,10 +17,9 @@ Row {
             color: "#cdcdcd"
         }
         onCurrentItemChanged: {
-            //调用状态获取函数
-            header.activeBack = cefWindow.getBackState()
-            header.activeForward = cefWindow.getForwardState()
-            navibar.url = cefWindow.getUrl()
+            header.currentTabItem = currentItem
+            header.currentWindowIndex = currentItem.windowId
+            windowManager.toggleTab(currentItem.windowId)
         }
     }
 
@@ -28,6 +27,8 @@ Row {
         id: tabButton
         TabButton {
             id: button
+            property int windowId: 0
+            property string windowTitle: " "
             implicitWidth: 300
             implicitHeight: 32
 
@@ -44,7 +45,7 @@ Row {
                         sourceSize.height: 16
                     }
                     Text {
-                        text: "test"
+                        text: button.windowTitle
                         fontSizeMode: Text.Fit
                         width: 228
                         height: 16
@@ -173,6 +174,15 @@ Row {
                     radius: 6
                 }
             }
+            function setTitle(title_){
+                windowTitle = title_
+            }
+        }
+    }
+
+    Connections{
+        target: windowManager
+        function onAddTab(){
         }
     }
 
@@ -217,8 +227,9 @@ Row {
         tabBar.itemAt(tabIndex_).browserId = browserId_
     }
 
-    Window.onWidthChanged:
-        adjustItem()
 
+    Window.onWidthChanged:{
+        adjustItem()
+    }
 //    function
 }

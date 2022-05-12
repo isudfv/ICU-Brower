@@ -58,10 +58,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doGoBack()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doGoBack(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -107,10 +104,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doGoForward()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doGoForward(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -156,10 +150,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doReload()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doReLoad(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -188,7 +179,6 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            //id: plusTab
                             source: "qrc:/icons/home_light.svg"
                         }
                         MouseArea {
@@ -205,8 +195,7 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl)
                             }
 
                             ToolTip {
@@ -237,27 +226,22 @@ Item {
                         rootWindow.requestActivate()
                     }
                     onAccepted: {
-                        cefWindow.doLoadUrl(text)
+                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentTabItem.setTitle)
                     }
 
                     font {
                         pixelSize: 14
                     }
 
-                    text: "https://bilibili.com"
-
-                    //                    placeholderText.
+                    text: header.currentUrl
                     background: Rectangle {
                         anchors.fill: parent
-                        //                        anchors.horizontalCenter: parent.horizontalCenter
-                        //                        anchors.verticalCenter: rectangle.verticalCenter
                         color: "white"
                         implicitHeight: parent.height
                         implicitWidth: parent.width
                         border.width: 1
                         border.color: "#f7f7f7"
                         radius: 3
-                        //border.color: "red"
                         MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
@@ -379,6 +363,51 @@ Item {
                         }
                     }
 
+                    Rectangle {
+                        id: downloadButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            //id: plusTab
+                            source: "qrc:/icons/download.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "下载记录"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
+                        }                      
+                    }
 
                     Rectangle {
                         id: userButton
@@ -424,54 +453,6 @@ Item {
                                 }
                             }
                         }
-                    }
-
-                    Rectangle {
-                        id: downloadButton
-                        height: 34
-                        Layout.alignment: Qt.AlignLeft
-                        width: 45
-                        color: "#f7f7f7"
-                        radius: 3
-                        Image {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            height: 20
-                            width: 20
-                            //id: plusTab
-                            source: "qrc:/icons/download.svg"
-                        }
-                        MouseArea {
-                            property bool enter: false
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: {
-                                parent.color = "#dcdcdc"
-                                enter = true
-                            }
-                            onExited: {
-                                parent.color = "#f7f7f7"
-                                enter = false
-                            }
-
-                            onClicked: {
-
-                            }
-
-                            ToolTip {
-                                visible: parent.enter
-                                text: "下载记录"
-                                delay: 500
-                                background: Rectangle {
-                                    color: "#f7f7f7"
-                                    border.color: "black"
-                                    border.width: 1
-                                    radius: 5
-                                }
-                            }
-                        }
-
-
                     }
                 }
             }

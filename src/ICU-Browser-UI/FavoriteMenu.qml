@@ -10,7 +10,7 @@ Window {
     flags: Qt.Window | Qt.FramelessWindowHint
     Rectangle {
         color: "white"
-        radius: 10
+        radius: 6
         border.width: 3
         border.color: "#f7f7f7"
         anchors.fill: parent
@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesManager.getCanFavorite(header.uid,header.currentUrl)
+                    property bool canfavorite: favoritesManager.getCanFavorite(header.userid,header.currentUrl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.uid)
+                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.userid)
                         }
                         onEntered: {
                             enter = true
@@ -89,7 +89,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            //doload(url)
+                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setTitle)
                         }
                         onEntered: {
                             parent.color = "#dcdcdc"
@@ -125,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesManager.removeFavoriteItem(header.uid,url,removeFavariteItem)
+                                    favoritesManager.removeFavoriteItem(header.userid,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -166,7 +166,7 @@ Window {
     }
 
     function loadFavorite(){
-        favoritesManager.loadFavorite(header.uid,addFavoriteItem,clearFavorite)
+        favoritesManager.loadFavorite(header.userid,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){

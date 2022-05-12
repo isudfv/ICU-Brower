@@ -60,6 +60,7 @@ Item {
                     }
 
                     onClicked: {
+//                        windowManager.addWindow(header.defaultUrl)
                         root.addaaa()
                     }
                     ToolTip{

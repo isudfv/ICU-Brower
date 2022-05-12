@@ -7,9 +7,12 @@ Item {
     id: header
     property bool activeBack: false
     property bool activeForward: false
-    property string currentUrl: "tyriASDili.com"
+    property string currentUrl: "https://www.bilibili.com"
     property string currentTitle: "moep"
     property int userid: 0
+    property Item currentTabItem: null
+    property int currentWindowIndex: 0
+    property string defaultUrl: "https://www.bilibili.com"
 
 
 
@@ -25,6 +28,7 @@ Item {
         spacing: 0
 
         TitleBar {
+            id:titlebar
             height: 37
             Layout.fillWidth: parent
 //            rootWindow: rootWindow

@@ -13,7 +13,10 @@ set(SHARED_BROWSER_SRCS
 
 set(SHARED_WINDOW_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
-        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h)
+        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
+        ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.cpp
+        ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.h
+)
 
 
 set(SHARED_DOWNLOAD_SRCS
@@ -21,9 +24,9 @@ set(SHARED_DOWNLOAD_SRCS
 		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
 		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
 
-set(SHARED_BOOKMARKS_SRCS
+set(SHARED_FAVORITES_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
-		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h
+        ${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h
 	)
 
 set(WINDOWS_MANIFEST_DIR
