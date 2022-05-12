@@ -65,6 +65,9 @@ Window {
                             enter = false
                             parent.color = "transparent"
                         }
+                        onClicked: {
+                            historyManager.addHistory("youtube", "12:00", ".", header.userid, addHistoryItem)
+                        }
                         ToolTip {
                             visible: parent.enter
                             text: "搜索历史记录"
@@ -105,6 +108,9 @@ Window {
                             enter = false
                             parent.color = "transparent"
                         }
+                        onClicked: {
+                            historyManager.clearHistory(header.userid, clearHistory)
+                        }
                         ToolTip {
                             visible: parent.enter
                             text: "删除历史记录"
@@ -126,9 +132,11 @@ Window {
                 Layout.fillHeight: true
                 model: historymodel
                 delegate: Rectangle {
+                    property bool enter: false
+                    id: rect
                     width: historylist.width
                     height: 30
-//                    color: "transparent"
+                    color: enter || cls_mouse.cls_enter ? "#dcdcdc" : "transparent"
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -136,41 +144,47 @@ Window {
                             //doload(url)
                         }
                         onEntered: {
-                            parent.color = "#dcdcdc"
-                            icon.color = "#dcdcdc"
-                            detail.color = "#dcdcdc"
-                            date.color = "#dcdcdc"
+                            rect.enter = true
+                            // parent.color = "#dcdcdc"
+                            // icon.color = "#dcdcdc"
+                            // detail.color = "#dcdcdc"
+                            // date.color = "#dcdcdc"
                         }
                         onExited: {
-                            parent.color = "transparent"
-                            icon.color = "transparent"
-                            detail.color = "transparent"
-                            date.color = "transparent"
+                            rect.enter = false
+                            // parent.color = "transparent"
+                            // icon.color = "transparent"
+                            // detail.color = "transparent"
+                            // date.color = "transparent"
                         }
                     }
-                    RowLayout {
-                        anchors.fill: parent
 
+                    RowLayout {
+                        anchors.fill: rect
                         spacing: 5
+                        // icon
                         Rectangle {
                             id: icon
                             Layout.leftMargin: 5
-//                            color: "grey"
+                            color: rect.color
+                            // color: "pink"
                             width: 20
                             height: 20
                             radius: 2
                             Image {
-//                                source: "qrc:/icons/close.svg"
+                                // source: "qrc:/icons/close.svg"
                                 source: img
                                 width: 20
                                 height: 20
                             }
                         }
 
+                        // detail
                         Rectangle {
                             id: detail
-                            width:300
-//                            color: "pink"
+                            width: 260
+                            color: rect.color
+                            // color: "purple"
                             height: parent.height
                             Text {
                                 text: name
@@ -182,10 +196,12 @@ Window {
                             }
                         }
 
+                        // date
                         Rectangle {
                             id: date
-                            Layout.rightMargin: 5
-//                            color: "purple"
+                            // Layout.rightMargin: 5
+                            color: rect.color
+                            // color: "grey"
                             height: parent.height
                             width: 50
                             Text {
@@ -197,6 +213,55 @@ Window {
                                 elide: Text.ElideRight
                             }
                         }
+                        // cls
+                        Rectangle {
+                            id: cls
+                            Layout.rightMargin: 5
+                            anchors.horizontalCenter: rect.horizontalCenter
+                            color: cls_mouse.cls_enter ? "#f08cb8" : rect.color
+                            // color: "orange"
+                            height: 16
+                            width: 16
+                            radius: 5
+                            Image {
+                                source: "qrc:/icons/close.svg"
+                                width: 16
+                                height: 16
+                            }
+                            MouseArea {
+                                id: cls_mouse
+                                property bool cls_enter: false
+                                propagateComposedEvents: true
+                                anchors.fill: cls
+                                hoverEnabled: true
+                                onClicked: {
+                                    historyManager.removeHistory(name, time, url, header.userid, removeHistoryItem)
+                                    console.log(cls_enter)
+                                    console.log(rect.enter)
+                                }
+                                onEntered: {
+                                    rect.enter = true
+                                    cls_enter = true
+                                    // cls.color = "#adadad"
+                                }
+                                onExited: {
+                                    // enter = false
+                                    cls_enter = false
+                                    // cls.color = "#ead7d4"
+                                }
+                                ToolTip {
+                                    visible: cls_mouse.cls_enter
+                                    text: "删除此项历史记录"
+                                    delay: 500
+                                    background: Rectangle {
+                                        color: "#f7f7f7"
+                                        border.color: "black"
+                                        border.width: 1
+                                        radius: 5
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -205,24 +270,36 @@ Window {
 
     ListModel {
         id: historymodel
+
         ListElement {
             img: "qrc:/icons/history.svg"
             name: "Bilibili"
             time: "12:00"
             url: "bilibili.com"
         }
-         ListElement {
-             img: "qrc:/icons/history.svg"
-             name: "googledfajdflkdsajflkasjdfkljasklfjaskljfasdfjklkljdsafjklasdfafdsjlk"
-             time: "12:12"
-             url: "bilibili.com"
-         }
-         ListElement {
-             img: "qrc:/icons/history.svg"
-             name: "youtube"
-             time: "12:12"
-             url: "bilibili.com"
-         }
+    }
+
+    function loadHistory(){
+        console.log(123)
+        historyManager.loadHistory(header.userid, clearHistory, addHistoryItem)
+    }
+
+    function addHistoryItem(name,time,url){
+        historymodel.append({"name":name, "time":time, "url":url})
+    }
+
+    function removeHistoryItem(name, time, url){
+        for (let i = 0; i < historymodel.count; ++i) {
+            if (historymodel.get(i).url === url) {
+                historymodel.remove(i)
+                break
+            }
+        }
+    }
+
+    function clearHistory(){
+        //清空视图中的历史记录
+        historymodel.clear()
     }
 
     onActiveFocusItemChanged: {
@@ -230,10 +307,12 @@ Window {
         visible = false
     }
 }
-onVisibleChanged: {
-    if(visible)
-    {
-//        menu.open()
+    onVisibleChanged: {
+        if(visible) {
+           loadHistory()
+        }
     }
-}
+    Component.onCompleted: {
+        loadHistory()
+    }
 }

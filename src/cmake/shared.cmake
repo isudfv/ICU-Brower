@@ -3,7 +3,12 @@ set(SHARED_INCLUDE_PATH
         ${CMAKE_SOURCE_DIR}/src/shared/browser
         ${CMAKE_SOURCE_DIR}/src/shared/window
         ${CMAKE_SOURCE_DIR}/src/shared/download
-		${CMAKE_SOURCE_DIR}/src/shared/favorites)
+		${CMAKE_SOURCE_DIR}/src/shared/favorites
+		${CMAKE_SOURCE_DIR}/src/shared/history)
+
+set(SHARED_HISTORY_SRCS
+		${CMAKE_SOURCE_DIR}/src/shared/history/historymanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/history/historymanager.h)
 
 set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/browserclient.cc

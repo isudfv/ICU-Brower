@@ -13,6 +13,7 @@
 
 #include "favoritesmanager.h"
 #include "windowmanager.h"
+#include "historymanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,9 +27,11 @@ int main(int argc, char *argv[])
     auto favoritesManager = new FavoritesManager;
     auto cefWindow = new CEFWindow;
     auto windowManager = new WindowManager;
+    auto historyManager = new HistoryManager;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
     engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
     engine.rootContext()->setContextProperty("windowManager", windowManager);
+    engine.rootContext()->setContextProperty("historyManager", historyManager);
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);
