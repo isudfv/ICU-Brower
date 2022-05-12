@@ -153,10 +153,6 @@ Q_INVOKABLE void HistoryManager::LoadHistory(int uid,QJSValue callbacka,QJSValue
         list.append(_time);
         list.append(_url);
         callbackb.call(list);
-        qDebug()<<temp["name"].toString()<<endl;
-        qDebug()<<temp["url"].toString()<<endl;
-        qDebug()<<temp["time"].toString()<<endl;
-        qDebug()<<endl;
     }
     file.close();
 }
