@@ -7,8 +7,9 @@
 
 #include <QDateTime>
 #include <QString>
+#include "cef_app.h"
 
-class DownloadItem{
+class DownloadItem {
  public:
   using Id = unsigned int;
 
@@ -16,11 +17,7 @@ class DownloadItem{
 
   virtual ~DownloadItem() = default;
 
-//  void setDownloadControlState(QDateTime start_time, int percent);
-
-  void setDownloadStatus(QDateTime start_time, int percent);
-
-  void InitDownload(const std::string &suggested_name);
+  void InitDownload(CefRefPtr<CefDownloadItem> download_item);
 
  public:
   const QString &GetFileName() const;
@@ -31,15 +28,22 @@ class DownloadItem{
   void SetStartTime(const QDateTime &start_time);
   int GetPercent() const;
   void SetPercent(int percent);
+  const QString &GetUrl() const;
+  void SetUrl(const QString &url);
+  int64 GetCurrSpeed() const;
+  void SetCurrSpeed(int64 curr_speed);
+  const QDateTime &GetEndTime() const;
+  void SetEndTime(const QDateTime &end_time);
 
  private:
   Id item_id_;
   QString file_name_;
   QString full_path_;
-  int control_state_;
-
   QDateTime start_time_;
+  QDateTime end_time_;
   int percent_ = 0;
+  QString url_;
+  int64 curr_speed_;
 };
 
 #endif //QBROWSERCLIENT__QDOWNLOADWIDGET_H_

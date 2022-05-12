@@ -34,9 +34,12 @@ class BrowserClient : public ClientHandler::Delegate {
 
   void OnSetLoadingState(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) override;
 
-  void OnStartDownload(CefRefPtr<CefDownloadItem> download_item, const CefString &suggested_name, CefRefPtr<CefBeforeDownloadCallback> callback) override;
+  void OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
+                       const CefString &suggested_name,
+                       CefRefPtr<CefBeforeDownloadCallback> callback) override;
 
-  void OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item, CefRefPtr<CefDownloadItemCallback> callback) override;
+  void OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item,
+                             CefRefPtr<CefDownloadItemCallback> callback) override;
 
   // QBrowserWindow user method
   void CreateBrowser(QBrowserWindow *target_window, const CefString &url);
@@ -68,7 +71,7 @@ class BrowserClient : public ClientHandler::Delegate {
 
   std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
-  std::unordered_map<DownloadItem::Id, std::pair<DownloadItem *, CefRefPtr<CefDownloadItem>>> download_item_list_;
+  std::unordered_map<DownloadItem::Id, DownloadItem *> download_item_list_;
 
   void InitAdBlockClient();
 };

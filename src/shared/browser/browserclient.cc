@@ -22,7 +22,6 @@ BrowserClient::BrowserClient() {
 
 void BrowserClient::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // Add to the list of existing browsers.
-
   curr_window->setBrowserId(browser->GetIdentifier());
   browser_list_[browser->GetIdentifier()] = {curr_window, browser};
   curr_window->show();
@@ -96,12 +95,12 @@ void BrowserClient::OnCreateBrowserByUrl(const CefString &url) {
 void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
                                     const CefString &suggested_name,
                                     CefRefPtr<CefBeforeDownloadCallback> callback) {
-  auto t = download_item_list_[download_item->GetId()].first;
+  auto t = download_item_list_[download_item->GetId()];
 
   qDebug() << download_item->IsInProgress() << download_item->IsComplete()
            << download_item->IsCanceled() << download_item->IsValid();
 
-  t->InitDownload(suggested_name.ToString());
+  t->InitDownload(download_item);
 
   CefString full_path = t->GetFullPath().toStdString();
 
@@ -115,15 +114,16 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
   DownloadItem *p_download_item = nullptr;
   if (download_item_list_.find(download_item->GetId()) == download_item_list_.end()) {
     p_download_item = new DownloadItem(download_item->GetId());
-    download_item_list_[download_item->GetId()] = {p_download_item, download_item};
+    download_item_list_[download_item->GetId()] = p_download_item;
     return;
-  } else {
-    p_download_item = download_item_list_[download_item->GetId()].first;
   }
 
-  p_download_item->setDownloadStatus(
-      QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()),
-      download_item->GetPercentComplete());
+  p_download_item = download_item_list_[download_item->GetId()];
+  p_download_item->SetPercent(download_item->GetPercentComplete());
+  p_download_item->SetStartTime(
+      QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()));
+  p_download_item->SetEndTime(
+      QDateTime::fromSecsSinceEpoch(download_item->GetEndTime().GetTimeT()));
 
   if (download_item->IsComplete()) download_item_list_.erase(download_item->GetId());
 }
