@@ -12,26 +12,28 @@
 #include <QQuickWidget>
 
 #include "favoritesmanager.h"
-#include "windowmanager.h"
 #include "historymanager.h"
+#include "windowmanager.h"
 
 int main(int argc, char *argv[])
 {
     QApplication          app(argc, argv);
-    QQmlApplicationEngine engine("qrc:/main.qml");
-
-    QObject *QmlObj    = engine.rootObjects().first();
-    QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
-
+    QQmlApplicationEngine engine;
 
     auto favoritesManager = new FavoritesManager;
-    auto cefWindow = new CEFWindow;
-    auto windowManager = new WindowManager;
-    auto historyManager = new HistoryManager;
+    auto cefWindow        = new CEFWindow;
+    auto windowManager    = new WindowManager;
+    auto historyManager   = new HistoryManager;
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
     engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
     engine.rootContext()->setContextProperty("windowManager", windowManager);
     engine.rootContext()->setContextProperty("historyManager", historyManager);
+
+    engine.load("qrc:/main.qml");
+
+    QObject *QmlObj    = engine.rootObjects().first();
+    QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
+
 
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);
