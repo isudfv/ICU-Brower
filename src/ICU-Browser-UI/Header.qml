@@ -7,8 +7,8 @@ Item {
     id: header
     property bool activeBack: false
     property bool activeForward: false
-    property string nowurl: "tyriiiiiili.com"
-    property string nowtitle: "bilibili"
+    property string currentUrl: "tyriASDili.com"
+    property string currentTitle: "moep"
     property int userid: 0
 
 
@@ -55,11 +55,18 @@ Item {
 
     }
 
-    function setWindowState(activeBack_,activeForward_,nowurl_,nowtitle_){
+    Connections{
+        target: windowManager
+        function onSetState(activeBack_,activeForward_,currentUrl_,currentTitle_){
+            setWindowState(activeBack_,activeForward_,currentUrl_,currentTitle_)
+        }
+    }
+
+    function setWindowState(activeBack_,activeForward_,currentUrl_,currentTitle_){
         activeBack = activeBack_
         activeForward = activeForward_
-        nowurl = nowurl_
-        nowtitle = nowtitle_
+        currentUrl = currentUrl_
+        currentTitle = currentTitle_
     }
 
     function setUserId(uid){

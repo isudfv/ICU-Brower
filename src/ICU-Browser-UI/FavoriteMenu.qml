@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesManager.getCanFavorite(header.uid,header.nowurl)
+                    property bool canfavorite: favoritesManager.getCanFavorite(header.uid,header.currentUrl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesManager.addFavoriteItem(header.nowurl,header.nowtitle,rootwindow.addFavoriteItem,header.uid)
+                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.uid)
                         }
                         onEntered: {
                             enter = true
@@ -186,7 +186,7 @@ Window {
     }
 
     function updataFavoriteState(){
-        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.userid,header.nowurl)
+        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.userid,header.currentUrl)
     }
 
     onActiveFocusItemChanged: {
@@ -203,11 +203,11 @@ Window {
 
     Connections{
         target: header
-        function onUseridChanged() {
-            updataFavariteState()
+        function onCurrentUrlChanged() {
+            updataFavoriteState()
         }
-        function onNowurlChanged(){
-            updataFavariteState()
+        function onCurrentTitleChanged(){
+            updataFavoriteState()
         }
     }
 
