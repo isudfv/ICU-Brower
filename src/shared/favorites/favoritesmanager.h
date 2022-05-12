@@ -10,6 +10,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include <QDir>
+using Qt::endl;
 class FavoritesManager : public QObject {
     Q_OBJECT
 public:
