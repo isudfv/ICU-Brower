@@ -100,39 +100,32 @@ void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
 
   qDebug() << download_item->IsInProgress() << download_item->IsComplete()
            << download_item->IsCanceled() << download_item->IsValid();
-  qDebug() << 21234132;
 
-  auto full_path = GetDownloadPath(suggested_name);
+  t->InitDownload(suggested_name.ToString());
 
-  t->setFileName(QString::fromStdString(suggested_name.ToString()));
-  t->setFullPath(QString::fromStdString(full_path.ToString()));
+  CefString full_path = t->GetFullPath().toStdString();
 
-  qDebug() << QString::fromStdString(full_path.ToString());
+  qDebug() << QString::fromStdString(full_path);
 
   callback->Continue(full_path, false);
 }
 
 void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item,
                                           CefRefPtr<CefDownloadItemCallback> callback) {
-  QDownloadWidget *download_widget;
+  DownloadItem *p_download_item = nullptr;
   if (download_item_list_.find(download_item->GetId()) == download_item_list_.end()) {
-    QDownloadWidget *t = new QDownloadWidget(download_item->GetId(), nullptr);
-    download_item_list_[download_item->GetId()] = {t, download_item};
-    download_widget = t;
+    p_download_item = new DownloadItem(download_item->GetId());
+    download_item_list_[download_item->GetId()] = {p_download_item, download_item};
+    return;
   } else {
-    download_widget = download_item_list_[download_item->GetId()].first;
+    p_download_item = download_item_list_[download_item->GetId()].first;
   }
 
-  download_widget->setDownloadStatus(
+  p_download_item->setDownloadStatus(
       QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()),
       download_item->GetPercentComplete());
 
   if (download_item->IsComplete()) download_item_list_.erase(download_item->GetId());
-}
-
-CefString BrowserClient::GetDownloadPath(const CefString &suggested_name) {
-  std::string download_directory = "/home/liang/";
-  return download_directory + suggested_name.ToString();
 }
 
 void BrowserClient::DoBrowserLoadUrl(int browser_id, const QString &url) {

@@ -6,8 +6,8 @@
 #define BROWSERCLIENT__BROWSERCLIENT_H_
 
 #include "clienthandler.h"
-#include "../window/qbrowserwindow.h"
-#include "../download/qdownloadwidget.h"
+#include "qbrowserwindow.h"
+#include "downloaditem.h"
 #include "ad_block_client.h"
 
 class BrowserClient : public ClientHandler::Delegate {
@@ -68,9 +68,7 @@ class BrowserClient : public ClientHandler::Delegate {
 
   std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
-  std::unordered_map<QDownloadWidget::Id, std::pair<QDownloadWidget *, CefRefPtr<CefDownloadItem>>> download_item_list_;
-
-  static CefString GetDownloadPath(const CefString &suggested_name);
+  std::unordered_map<DownloadItem::Id, std::pair<DownloadItem *, CefRefPtr<CefDownloadItem>>> download_item_list_;
 
   void InitAdBlockClient();
 };

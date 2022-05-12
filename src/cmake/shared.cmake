@@ -17,9 +17,8 @@ set(SHARED_WINDOW_SRCS
 
 
 set(SHARED_DOWNLOAD_SRCS
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.cpp
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
-        ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
+        ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.cc
+        ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.h)
 
 set(SHARED_PROFILE_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.h
