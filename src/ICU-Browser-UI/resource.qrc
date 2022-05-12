@@ -7,6 +7,9 @@
         <file>NaviBar.qml</file>
         <file>FavoriteMenu.qml</file>
         <file>HistoryMenu.qml</file>
+        <file>LoginWindow.qml</file>
+        <file>RegisterWindow.qml</file>
+        <file>UserWindow.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="stackoverflow.svg">assets/icons/stackoverflow.svg</file>
@@ -27,5 +30,6 @@
         <file alias="fillstar.svg">assets/icons/fillstar.svg</file>
         <file alias="delete.svg">assets/icons/delete.svg</file>
         <file alias="search.svg">assets/icons/search.svg</file>
+        <file alias="locker.svg">assets/icons/locker.svg</file>
     </qresource>
 </RCC>

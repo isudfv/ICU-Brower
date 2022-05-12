@@ -299,14 +299,13 @@ Item {
                             }
                         }
 
-                        FavoriteMenu{
-                            y:rootWindow.y + navibar.y + 39
-                            x:rootWindow.x + starButton.parent.x - 150
+                        FavoriteMenu {
+                            y: rootWindow.y + navibar.y + 39
+                            x: rootWindow.x + starButton.parent.x - 150
                             width: 200
                             height: 400
-                            id:favoritemenu
+                            id: favoritemenu
                         }
-
                     }
 
                     Rectangle {
@@ -338,7 +337,7 @@ Item {
                             }
 
                             onClicked: {
-                               historyMenu.visible = true
+                                historyMenu.visible = true
                             }
 
                             ToolTip {
@@ -355,11 +354,11 @@ Item {
                         }
 
                         HistoryMenu {
-                            y:rootWindow.y + navibar.y + 39
-                            x:rootWindow.x + starButton.parent.x - 300
+                            y: rootWindow.y + navibar.y + 39
+                            x: rootWindow.x + starButton.parent.x - 300
                             width: 400
                             height: 400
-                            id:historyMenu
+                            id: historyMenu
                         }
                     }
 
@@ -406,10 +405,13 @@ Item {
                                     radius: 5
                                 }
                             }
-                        }                      
+                        }
                     }
 
                     Rectangle {
+                        property bool isLoginWindow: false
+                        property bool isRegisterWindow: false
+
                         id: userButton
                         height: 34
                         Layout.alignment: Qt.AlignLeft
@@ -438,7 +440,7 @@ Item {
                             }
 
                             onClicked: {
-
+                                userButton.isLoginWindow = true
                             }
 
                             ToolTip {
@@ -451,6 +453,19 @@ Item {
                                     border.width: 1
                                     radius: 5
                                 }
+                            }
+
+                            LoginWindow {
+                                id: loginWindow
+                                visible: userButton.isLoginWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - loginWindow.width - 2
+                            }
+                            RegisterWindow {
+                                id: registerWindow
+                                visible: userButton.isRegisterWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - registerWindow.width - 2
                             }
                         }
                     }
