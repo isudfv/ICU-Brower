@@ -1,6 +1,5 @@
 ﻿#include "favoritesmanager.h"
-void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callBack, int uid = 0)
-{
+void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callBack, int uid = 0){
     //json文件
     QJsonDocument jDoc;
     //存放书签列表
@@ -13,9 +12,8 @@ void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callB
 
 
 	//判断文件夹是否存在，不存在就创建一个
-	QDir*dir=new QDir();
-	if(!dir->exists("./favourites")
-	{
+    QDir* dir=new QDir();
+    if(!dir->exists("./favourites")){
 		dir->mkdir("./favourites");
 	}
     //打开存放json串的文件
@@ -57,8 +55,7 @@ void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callB
     callBack.call(p);
 }
 
-bool FavoritesManager::getCanFavorite(int uid, QString url)
-{
+bool FavoritesManager::getCanFavorite(int uid, QString url){
     //根据uid，确定文件的存取路径
     QString file_path = QString("./favourites/%1.json").arg(uid);
     QFile   file(file_path);
@@ -81,8 +78,7 @@ bool FavoritesManager::getCanFavorite(int uid, QString url)
     return true;
 }
 
-void FavoritesManager::removeFavoriteItem(int uid, QString url, QJSValue callBack)
-{
+void FavoritesManager::removeFavoriteItem(int uid, QString url, QJSValue callBack){
     //打开文件，读取书签列表
     QString file_path = QString("./favourites/%1.json").arg(uid);
     QFile   file(file_path);
@@ -121,8 +117,7 @@ void FavoritesManager::removeFavoriteItem(int uid, QString url, QJSValue callBac
     callBack.call(p);
 }
 
-void FavoritesManager::loadFavorite(int uid, QJSValue addFavorite, QJSValue callBack)
-{
+void FavoritesManager::loadFavorite(int uid, QJSValue addFavorite, QJSValue callBack){
     //回调函数，清空view层的数据
     callBack.call();
 	
