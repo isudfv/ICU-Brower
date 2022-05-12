@@ -18,6 +18,8 @@ public:
     Q_INVOKABLE void addHistory(QString name,QString time,QString url,int uid,QJSValue callback);
     Q_INVOKABLE void removeHistory(QString name,QString time,QString url,int uid,QJSValue callback);
     Q_INVOKABLE void clearHistory(int uid,QJSValue callback);
+    Q_INVOKABLE void LoadHistory(int uid,QJSValue callbacka,QJSValue callbackb);
+
 };
 
 #endif // HISTORYMANAGER_H

@@ -125,3 +125,38 @@ Q_INVOKABLE void HistoryManager::clearHistory(int uid,QJSValue callback)
     //调用回调函数，更新view层
     callback.call();
 }
+Q_INVOKABLE void HistoryManager::LoadHistory(int uid,QJSValue callbacka,QJSValue callbackb)
+{
+    //打开文件
+    QString file_path=QString("./history/%1.json").arg(uid);
+    QFile file(file_path);
+    file.open(QIODevice::ReadOnly);
+
+    //获取指定用户的所有history列表
+    QJsonParseError error;
+    QJsonDocument doc=QJsonDocument::fromJson(file.readAll(),&error);
+
+    QJsonObject obj=doc.object();
+    QJsonArray arr=obj["histories"].toArray();
+
+    //调用回调函数，在view层清空上一个用户的列表，并显示当前用户的历史记录列表
+    callbacka.call();
+
+    for(auto it=arr.begin();it!=arr.end();++it)
+    {
+        QJsonObject temp=it->toObject();
+        QJSValue _name(temp["name"].toString());
+        QJSValue _url(temp["url"].toString());
+        QJSValue _time(temp["time"].toString());
+        QJSValueList list;
+        list.append(_name);
+        list.append(_time);
+        list.append(_url);
+        callbackb.call(list);
+        qDebug()<<temp["name"].toString()<<endl;
+        qDebug()<<temp["url"].toString()<<endl;
+        qDebug()<<temp["time"].toString()<<endl;
+        qDebug()<<endl;
+    }
+    file.close();
+}
