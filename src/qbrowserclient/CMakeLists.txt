@@ -29,7 +29,7 @@ add_executable(
         ${SHARED_WINDOW_SRCS}
         ${SHARED_DOWNLOAD_SRCS}
         ${SHARED_AB_BLOCK_SRCS}
-)
+        ../shared/profile/browserprofile.cc ../shared/profile/browserprofile.h)
 
 COPY_FILES("${PROJECT_NAME}" "${CEF_BINARY_FILES}" "${CEF_BINARY_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 COPY_FILES("${PROJECT_NAME}" "${CEF_RESOURCE_FILES}" "${CEF_RESOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")

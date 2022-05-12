@@ -3,7 +3,7 @@
 //
 
 #include "qbrowserwindow.h"
-#include "../browser/browserclient.h"
+#include "browserclient.h"
 #include <iostream>
 
 #ifdef __linux__
@@ -104,7 +104,4 @@ void QBrowserWindow::moveEvent(QMoveEvent *event) {
   ::MoveWindow(window, 0, 0,
                this->width() * scale, this->height() * scale, true);
 #endif
-}
-void QBrowserWindow::setAdBlockFlag(bool flag) {
-  BrowserClient::GetInstance()->SetAdBlockFlag(flag);
 }

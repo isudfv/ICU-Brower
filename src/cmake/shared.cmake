@@ -2,7 +2,8 @@ set(SHARED_INCLUDE_PATH
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block
         ${CMAKE_SOURCE_DIR}/src/shared/browser
         ${CMAKE_SOURCE_DIR}/src/shared/window
-        ${CMAKE_SOURCE_DIR}/src/shared/download)
+        ${CMAKE_SOURCE_DIR}/src/shared/download
+        ${CMAKE_SOURCE_DIR}/src/shared/profile)
 
 set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/browserclient.cc
@@ -20,8 +21,9 @@ set(SHARED_DOWNLOAD_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
         ${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
 
-set(WINDOWS_MANIFEST_DIR
-        ${CMAKE_SOURCE_DIR}/src/shared/manifest)
+set(SHARED_PROFILE_SRCS
+        ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.h
+        ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.cc)
 
 set(SHARED_AB_BLOCK_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/ad_block_client.h
@@ -34,3 +36,7 @@ set(SHARED_AB_BLOCK_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/BloomFilter.cpp
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/hash_set.cc
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/hashFn.cc)
+
+
+set(WINDOWS_MANIFEST_DIR
+        ${CMAKE_SOURCE_DIR}/src/shared/manifest)

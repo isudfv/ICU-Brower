@@ -4,6 +4,7 @@
 
 #include "browserclient.h"
 #include "cef_app.h"
+#include "browserprofile.h"
 
 #include <mutex>
 #include <fstream>
@@ -59,11 +60,8 @@ void BrowserClient::OnSetLoadingState(CefRefPtr<CefBrowser> browser,
 }
 
 void BrowserClient::CreateBrowser(QBrowserWindow *target_window, const CefString &url) {
-//  if (target_window==Q_NULLPTR)
-
   window_lock.lock();
   CefWindowInfo window_info;
-//  window_info.SetAsPopup((HWND)target_window->winId(), "sdf");
 
 #ifdef __linux__
   window_info.SetAsChild(target_window->winId(), {0, 0, 0, 0});
@@ -178,15 +176,21 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser) {
 }
 bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
 
-  if (ab_block_flag_ && ad_block_client_.matches(request->GetURL().ToString().c_str(),
-                                                 FONoFilterOption,
-                                                 request->GetReferrerURL().ToString().c_str())) {
+  request->SetHeaderByName("User-Agent",
+                           BrowserProfile::GetInstance()->GetUserAgent(),
+                           true);
+
+  if (BrowserProfile::GetInstance()->IsAdBlockFlag()
+      && ad_block_client_.matches(request->GetURL().ToString().c_str(),
+                                  FONoFilterOption,
+                                  request->GetReferrerURL().ToString().c_str())) {
     return true;
   }
   return false;
 }
 
 void BrowserClient::InitAdBlockClient() {
+  // load ad-blocker dat file
   std::fstream in("ABPFilterParserData.dat", std::ios::in | std::ios::out);
   if (in) {
     in.seekg(0, std::ios::end);
@@ -201,5 +205,5 @@ void BrowserClient::InitAdBlockClient() {
 }
 
 BrowserClient::~BrowserClient() {
-  delete []ad_block_buffer;
+  delete[]ad_block_buffer;
 }

@@ -5,8 +5,6 @@
 #include <iostream>
 #include <QDebug>
 #include "include/cef_base.h"
-#include "include/base/cef_bind.h"
-#include "include/base/cef_callback.h"
 #include "include/cef_app.h"
 #include "include/cef_parser.h"
 #include "include/views/cef_window.h"
@@ -252,6 +250,5 @@ CefResourceRequestHandler::ReturnValue ClientHandler::OnBeforeResourceLoad(CefRe
       return RV_CANCEL;
     }
   }
-
   return RV_CONTINUE;
 }
