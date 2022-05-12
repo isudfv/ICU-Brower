@@ -89,7 +89,7 @@ BrowserClient *BrowserClient::GetInstance() {
 }
 
 void BrowserClient::OnCreateBrowserByUrl(const CefString &url) {
-  QBrowserWindow *new_window = new QBrowserWindow(url);
+  auto *new_window = new QBrowserWindow(url);
 }
 
 void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
@@ -152,7 +152,7 @@ void BrowserClient::TryCloseBrowser(int browser_id) {
   browser_list_[browser_id].second->GetHost()->TryCloseBrowser();
 }
 
-CefWindowHandle BrowserClient::GetBrowserWindowHanlder(int browser_id) {
+CefWindowHandle BrowserClient::GetBrowserWindowHandler(int browser_id) {
   return browser_list_[browser_id].second->GetHost()->GetWindowHandle();
 }
 

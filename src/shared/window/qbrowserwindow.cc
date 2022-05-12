@@ -18,7 +18,7 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev) {
   ::Display *display = cef_get_xdisplay();
   DCHECK(display);
   if (browser_id_ <= 0) return;
-  ::Window window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+  ::Window window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
   XResizeWindow(display, window, this->geometry().width() * 1.25, this->geometry().height() * 1.25);
   XFlush(display);
 #endif

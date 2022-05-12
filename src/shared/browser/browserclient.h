@@ -46,7 +46,7 @@ class BrowserClient : public ClientHandler::Delegate {
 
   void TryCloseBrowser(int browser_id);
 
-  CefWindowHandle GetBrowserWindowHanlder(int browser_id);
+  CefWindowHandle GetBrowserWindowHandler(int browser_id);
 
   void DoBrowserLoadUrl(int browser_id, const QString &url);
 

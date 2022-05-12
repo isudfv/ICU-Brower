@@ -59,6 +59,7 @@ set(CEF_BINARY_DIR "${CMAKE_SOURCE_DIR}/${CMAKE_BUILD_TYPE}")
 
 # List of CEF resource files.
 set(CEF_RESOURCE_FILES
+        ABPFilterParserData.dat
         chrome_100_percent.pak
         chrome_200_percent.pak
         resources.pak
