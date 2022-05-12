@@ -28,7 +28,7 @@ qt_add_executable(
     ${SHARED_BROWSER_SRCS}
     ${SHARED_WINDOW_SRCS}
     ${SHARED_DOWNLOAD_SRCS}
-	${SHARED_BOOKMARKS_SRCS}
+    ${SHARED_FAVORITES_SRCS}
 )
 
 #qt_add_qml_module(apptest3
