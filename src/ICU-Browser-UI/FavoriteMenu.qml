@@ -89,7 +89,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setTitle)
+                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setState)
                         }
                         onEntered: {
                             parent.color = "#dcdcdc"
@@ -208,6 +208,9 @@ Window {
         }
         function onCurrentTitleChanged(){
             updataFavoriteState()
+        }
+        function onUseridChanged(){
+            loadFavorite()
         }
     }
 

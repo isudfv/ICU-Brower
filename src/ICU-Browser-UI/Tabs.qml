@@ -19,7 +19,16 @@ Row {
         onCurrentItemChanged: {
             header.currentTabItem = currentItem
             header.currentWindowIndex = currentItem.windowId
+            header.currentUrl = currentItem.windowUrl
             windowManager.toggleTab(currentItem.windowId)
+        }
+
+        onCountChanged: {
+            if(count === 0){
+                Qt.quit()
+            }
+
+            adjustItem()
         }
     }
 
@@ -29,6 +38,8 @@ Row {
             id: button
             property int windowId: 0
             property string windowTitle: " "
+            property string windowUrl: " "
+            property string windowIcon: "qrc:/icons/stackoverflow.svg"
             implicitWidth: 300
             implicitHeight: 32
 
@@ -40,7 +51,7 @@ Row {
 
                     Image {
                         Layout.leftMargin: 10
-                        source: "qrc:/icons/stackoverflow.svg"
+                        source: Qt.resolvedUrl(windowIcon)
                         sourceSize.width: 16
                         sourceSize.height: 16
                     }
@@ -68,7 +79,7 @@ Row {
                             property bool enter: false
                             anchors.fill: parent
                             onClicked: {
-                                removeAt(button)
+                                windowManager.removeWindow(button.windowId)
                             }
                             hoverEnabled: true
                             onEntered: {
@@ -113,7 +124,7 @@ Row {
                     onClicked: parent.clicked()
                     ToolTip{
                         visible: parent.enter
-                        text: "标签页信息\nwww.test.com"
+                        text: button.windowTitle + "\n" + button.windowUrl
                         delay: 1000
                         background: Rectangle{
                             color: "#f7f7f7"
@@ -174,43 +185,57 @@ Row {
                     radius: 6
                 }
             }
-            function setTitle(title_){
+            function setState(title_,url_,windowIcon_){
                 windowTitle = title_
+                windowUrl = url_
+                windowIcon = windowIcon_
+            }
+
+            onWindowUrlChanged: {
+                header.currentUrl = windowUrl
+            }
+
+            onWindowTitleChanged: {
+                header.currentTitle = windowTitle
             }
         }
     }
 
     Connections{
         target: windowManager
-        function onAddTab(){
+        function onAddTab(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_){
+            addTabItem(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_)
+        }
+        function onRemoveTab(windowId_){
+            removeTabItem(windowId_)
         }
     }
 
     Component.onCompleted: {
-        parent.addaaa.connect(addItem)
-        addItem()
-        addItem()
-        tabBar.takeItem(tabBar.count - 1)
-        tabBar.itemAt(tabBar.count - 1).focus = true
+        windowManager.addWindow(header.defaultUrl)
+        windowManager.addWindow(header.defaultUrl)
+        windowManager.removeWindow(tabBar.itemAt(tabBar.count - 1).windowId)
         // todo: 玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 
-    function addItem() {
+    function addTabItem(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_) {
         tabBar.addItem(tabButton.createObject(tabBar))
-        tabBar.setCurrentIndex(tabBar.count - 1)
-        adjustItem()
-        return tabBar.count-1
-
-//        console.log(tabBar.currentIndex)
+        tabBar.itemAt(tabBar.count - 1).windowTitle = windowTitle_
+        tabBar.itemAt(tabBar.count - 1).windowId = windowId_
+        tabBar.itemAt(tabBar.count - 1).windowUrl = windowUrl_
+        tabBar.itemAt(tabBar.count - 1).windowIcon = windowIcon_
+        if(toToggle_){
+            tabBar.setCurrentIndex(tabBar.count - 1)
+        }
     }
 
-    function removeAt(item) {
-        tabBar.removeItem(item)
-        if (tabBar.count === 0){
-            Qt.quit()
+    function removeTabItem(windowId_){
+        for (var i =0;i < tabBar.count;++i){
+            if(tabBar.itemAt(i).windowId === windowId_){
+                tabBar.removeItem(tabBar.itemAt(i));
+                break;
+            }
         }
-
-        adjustItem()
     }
 
     function adjustItem() {
@@ -223,9 +248,9 @@ Row {
         }
     }
 
-    function setBrowserIdToTab(browserId_,tabIndex_){
-        tabBar.itemAt(tabIndex_).browserId = browserId_
-    }
+//    function setBrowserIdToTab(browserId_,tabIndex_){
+//        tabBar.itemAt(tabIndex_).browserId = browserId_
+//    }
 
 
     Window.onWidthChanged:{

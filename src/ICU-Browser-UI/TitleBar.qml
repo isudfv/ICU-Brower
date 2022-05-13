@@ -60,8 +60,8 @@ Item {
                     }
 
                     onClicked: {
-//                        windowManager.addWindow(header.defaultUrl)
-                        root.addaaa()
+                        windowManager.addWindow(header.defaultUrl)
+//                        root.addaaa()
                     }
                     ToolTip{
                         visible: parent.enter

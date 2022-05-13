@@ -16,20 +16,22 @@ class WindowManager : public QObject {
     Q_OBJECT
 public:
     Q_INVOKABLE void toggleTab(int windowId);
-    Q_INVOKABLE void doGoBack(int windowId);
-    Q_INVOKABLE void doGoForward(int windowId);
-    Q_INVOKABLE void doReLoad(int windowId);
+    Q_INVOKABLE void doGoBack(int windowId,QJSValue callback);
+    Q_INVOKABLE void doGoForward(int windowId,QJSValue callback);
+    Q_INVOKABLE void doReLoad(int windowId,QJSValue callback);
     Q_INVOKABLE void doLoadUrl(int windowId,QString url,QJSValue callback);
     Q_INVOKABLE void addWindow(QString url);
     Q_INVOKABLE void addWindowNotInFocus(QString url);
     Q_INVOKABLE void removeWindow(int windowId);
+    int getIndex();
 signals:
-    void addTab(int newWindowId,QString newWindowTitle,bool toToggle);
+    void addTab(int newWindowId,QString newWindowTitle,QString newWindowUrl,QString icon,bool toToggle);
     void removeTab(int removeWindowId);
-    void setState(bool activeBack,
-                  bool activeForward,
-                  QString currentUrl,
-                  QString currentTitle);
+    void setHeaderState(bool activeBack,
+                  bool activeForward);
+    void setTabState(QString title,
+                     QString url,
+                     QString icon);
 public slots:
 
 private:

@@ -10,6 +10,7 @@ Item {
     property string currentUrl: "https://www.bilibili.com"
     property string currentTitle: "moep"
     property int userid: 0
+    property string username: "tourists"
     property Item currentTabItem: null
     property int currentWindowIndex: 0
     property string defaultUrl: "https://www.bilibili.com"
@@ -61,20 +62,19 @@ Item {
 
     Connections{
         target: windowManager
-        function onSetState(activeBack_,activeForward_,currentUrl_,currentTitle_){
-            setWindowState(activeBack_,activeForward_,currentUrl_,currentTitle_)
+        function onSetHeaderState(activeBack_,activeForward_){
+            setWindowState(activeBack_,activeForward_)
         }
     }
 
-    function setWindowState(activeBack_,activeForward_,currentUrl_,currentTitle_){
+    function setWindowState(activeBack_,activeForward_){
         activeBack = activeBack_
         activeForward = activeForward_
-        currentUrl = currentUrl_
-        currentTitle = currentTitle_
     }
 
-    function setUserId(uid){
-        userid = uid
+    function setUserInfo(userid_,username_){
+        userid = userid_
+        username = username_
     }
 
 }
