@@ -71,7 +71,7 @@ class BrowserClient : public ClientHandler::Delegate {
 
   std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
-  std::unordered_map<DownloadItem::Id, DownloadItem *> download_item_list_;
+  std::unordered_map<DownloadItem::Id, std::pair<DownloadItem *, CefRefPtr<CefDownloadItem>>> download_item_list_;
 
   void InitAdBlockClient();
 };

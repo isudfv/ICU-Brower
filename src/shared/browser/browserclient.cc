@@ -95,12 +95,12 @@ void BrowserClient::OnCreateBrowserByUrl(const CefString &url) {
 void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
                                     const CefString &suggested_name,
                                     CefRefPtr<CefBeforeDownloadCallback> callback) {
-  auto t = download_item_list_[download_item->GetId()];
+  auto t = download_item_list_[download_item->GetId()].first;
 
   qDebug() << download_item->IsInProgress() << download_item->IsComplete()
            << download_item->IsCanceled() << download_item->IsValid();
 
-  t->InitDownload(download_item);
+  t->InitDownload(download_item, suggested_name);
 
   CefString full_path = t->GetFullPath().toStdString();
 
@@ -114,14 +114,15 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
   DownloadItem *p_download_item = nullptr;
   if (download_item_list_.find(download_item->GetId()) == download_item_list_.end()) {
     p_download_item = new DownloadItem(download_item->GetId());
-    download_item_list_[download_item->GetId()] = p_download_item;
+    download_item_list_[download_item->GetId()] = {p_download_item, download_item};
     return;
   }
 
-  p_download_item = download_item_list_[download_item->GetId()];
+  p_download_item = download_item_list_[download_item->GetId()].first;
   p_download_item->SetPercent(download_item->GetPercentComplete());
-  p_download_item->SetStartTime(
-      QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()));
+  p_download_item->SetCurrSpeed(download_item->GetCurrentSpeed());
+//  p_download_item->SetStartTime(
+//      QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()));
   p_download_item->SetEndTime(
       QDateTime::fromSecsSinceEpoch(download_item->GetEndTime().GetTimeT()));
 
@@ -165,8 +166,11 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser) {
   browser_list_[browser->GetIdentifier()].second = nullptr;
   browser_list_.erase(browser->GetIdentifier());
 
-  if (browser_list_.empty()) CefQuitMessageLoop();
+  if (browser_list_.empty()) {
+    CefQuitMessageLoop();
+  }
 }
+
 bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
 
   request->SetHeaderByName("User-Agent",

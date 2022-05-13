@@ -43,10 +43,10 @@ void QBrowserWindow::closeEvent(QCloseEvent *ev) {
   qDebug("closing");
 #ifdef __linux__
   if (!is_closing_) {
-      BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
-      ev->ignore();
+    BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
+    ev->ignore();
   } else {
-      ev->accept();
+    ev->accept();
   }
 #endif
 }

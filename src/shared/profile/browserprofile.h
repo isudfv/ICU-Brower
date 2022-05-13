@@ -12,7 +12,7 @@ class BrowserProfile {
   BrowserProfile();
   static BrowserProfile *GetInstance();
 
-  void InitCefSettings(const CefSettings& settings);
+  void InitCefSettings(const CefSettings &settings);
 
   void SetAdBlockFlag(bool ad_block_flag);
   bool IsAdBlockFlag() const;

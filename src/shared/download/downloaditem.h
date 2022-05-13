@@ -17,7 +17,7 @@ class DownloadItem {
 
   virtual ~DownloadItem() = default;
 
-  void InitDownload(CefRefPtr<CefDownloadItem> download_item);
+  void InitDownload(CefRefPtr<CefDownloadItem> download_item, const CefString &suggested_name);
 
  public:
   const QString &GetFileName() const;

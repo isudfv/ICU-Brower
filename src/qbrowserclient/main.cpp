@@ -45,11 +45,9 @@ int main(int argc, char **argv) {
   CefInitialize(main_args, settings, app.get(), nullptr);
   QApplication a(argc, argv);
 
-  QBrowserWindow w("https://www.ypojie.com/");
+  QBrowserWindow w("https://mirror.tuna.tsinghua.edu.cn/ubuntu-releases/22.04/");
 
   CefRunMessageLoop();
 
   CefShutdown();
-
-//  return a.exec();
 }
