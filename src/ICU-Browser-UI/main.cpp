@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
     QObject *QmlObj    = engine.rootObjects().first();
     QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
 
-
     cefWindow->winId();
     cefWindow->setParent(QmlWindow);
     cefWindow->show();

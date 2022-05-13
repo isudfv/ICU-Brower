@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesManager.getCanFavorite(header.userid,header.currentUrl)
+                    property bool canfavorite: favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.userid)
+                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.currentUserId)
                         }
                         onEntered: {
                             enter = true
@@ -125,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesManager.removeFavoriteItem(header.userid,url,removeFavariteItem)
+                                    favoritesManager.removeFavoriteItem(header.currentUserId,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -166,7 +166,7 @@ Window {
     }
 
     function loadFavorite(){
-        favoritesManager.loadFavorite(header.userid,addFavoriteItem,clearFavorite)
+        favoritesManager.loadFavorite(header.currentUserId,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){
@@ -186,7 +186,7 @@ Window {
     }
 
     function updataFavoriteState(){
-        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.userid,header.currentUrl)
+        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
     }
 
     onActiveFocusItemChanged: {
@@ -209,7 +209,7 @@ Window {
         function onCurrentTitleChanged(){
             updataFavoriteState()
         }
-        function onUseridChanged(){
+        function onCurrentUserIdChanged(){
             loadFavorite()
         }
     }

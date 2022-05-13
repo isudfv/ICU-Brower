@@ -9,8 +9,8 @@ Item {
     property bool activeForward: false
     property string currentUrl: "https://www.bilibili.com"
     property string currentTitle: "moep"
-    property int userid: 0
-    property string username: "tourists"
+    property int currentUserId: 0
+    property string currentUserName: "tourists"
     property Item currentTabItem: null
     property int currentWindowIndex: 0
     property string defaultUrl: "https://www.bilibili.com"
@@ -73,8 +73,8 @@ Item {
     }
 
     function setUserInfo(userid_,username_){
-        userid = userid_
-        username = username_
+        currentUserId = userid_
+        currentUserName = username_
     }
 
 }

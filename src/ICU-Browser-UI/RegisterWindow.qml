@@ -89,6 +89,7 @@ Window {
             TextField {
                                 id: password
                 anchors.fill: parent
+                verticalAlignment: TextInput.AlignVCenter
 //                anchors.verticalCenter: parent.verticalCenter
                 //                             text: ""
                 placeholderText: "输入密码"
@@ -131,6 +132,7 @@ Window {
             TextField {
                                 id: rePassword
                 anchors.fill: parent
+                verticalAlignment: TextInput.AlignVCenter
 //                anchors.verticalCenter: parent.verticalCenter
                 //                             text: ""
                 placeholderText: "再次输入密码"

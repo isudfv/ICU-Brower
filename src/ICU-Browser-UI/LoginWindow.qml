@@ -89,6 +89,7 @@ Window {
             TextField {
                                 id: password
                 anchors.fill: parent
+                verticalAlignment: TextInput.AlignVCenter
 //                anchors.verticalCenter: parent.verticalCenter
                 //                             text: ""
                 placeholderText: "输入密码"
@@ -187,6 +188,14 @@ Window {
     onVisibleChanged: {
         if (visible) {
             requestActivate()
+        }
+    }
+
+    function checkLoginState(error_code, uid = 0) {
+        switch (error_code){
+            case userManager.success: {
+
+            }
         }
     }
 

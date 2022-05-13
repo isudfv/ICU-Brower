@@ -66,7 +66,7 @@ Window {
                             parent.color = "transparent"
                         }
                         onClicked: {
-                            historyManager.addHistory("youtube", "12:00", ".", header.userid, addHistoryItem)
+                            historyManager.addHistory("youtube", "12:00", ".", header.currentUserId, addHistoryItem)
                         }
                         ToolTip {
                             visible: parent.enter
@@ -109,7 +109,7 @@ Window {
                             parent.color = "transparent"
                         }
                         onClicked: {
-                            historyManager.clearHistory(header.userid, clearHistory)
+                            historyManager.clearHistory(header.currentUserId, clearHistory)
                         }
                         ToolTip {
                             visible: parent.enter
@@ -235,7 +235,7 @@ Window {
                                 anchors.fill: cls
                                 hoverEnabled: true
                                 onClicked: {
-                                    historyManager.removeHistory(name, time, url, header.userid, removeHistoryItem)
+                                    historyManager.removeHistory(name, time, url, header.currentUserId, removeHistoryItem)
                                     console.log(cls_enter)
                                     console.log(rect.enter)
                                 }
@@ -281,7 +281,7 @@ Window {
 
     function loadHistory(){
         console.log(123)
-        historyManager.loadHistory(header.userid, clearHistory, addHistoryItem)
+        historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
     }
 
     function addHistoryItem(name,time,url){
