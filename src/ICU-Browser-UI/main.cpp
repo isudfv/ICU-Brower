@@ -13,6 +13,7 @@
 
 #include "favoritesmanager.h"
 #include "historymanager.h"
+#include "usermanager.h"
 #include "windowmanager.h"
 
 int main(int argc, char *argv[])
@@ -20,14 +21,16 @@ int main(int argc, char *argv[])
     QApplication          app(argc, argv);
     QQmlApplicationEngine engine;
 
-    auto favoritesManager = new FavoritesManager;
-    auto cefWindow        = new CEFWindow;
-    auto windowManager    = new WindowManager;
-    auto historyManager   = new HistoryManager;
+    auto   favoritesManager = new FavoritesManager;
+    auto   cefWindow        = new CEFWindow;
+    auto   windowManager    = new WindowManager;
+    auto   historyManager   = new HistoryManager;
+    auto &&userManager      = UserManager::getInstance();
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
     engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
     engine.rootContext()->setContextProperty("windowManager", windowManager);
     engine.rootContext()->setContextProperty("historyManager", historyManager);
+    engine.rootContext()->setContextProperty("userManager", &userManager);
 
     engine.load("qrc:/main.qml");
 

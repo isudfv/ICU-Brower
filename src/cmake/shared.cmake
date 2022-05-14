@@ -4,7 +4,8 @@ set(SHARED_INCLUDE_PATH
         ${CMAKE_SOURCE_DIR}/src/shared/window
         ${CMAKE_SOURCE_DIR}/src/shared/download
 		${CMAKE_SOURCE_DIR}/src/shared/favorites
-		${CMAKE_SOURCE_DIR}/src/shared/history)
+		${CMAKE_SOURCE_DIR}/src/shared/history
+		${CMAKE_SOURCE_DIR}/src/shared/user)
 
 set(SHARED_HISTORY_SRCS
 		${CMAKE_SOURCE_DIR}/src/shared/history/historymanager.cpp
@@ -17,8 +18,8 @@ set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/clienthandler.h)
 
 set(SHARED_WINDOW_SRCS
-        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
-        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
+#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
+#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
         ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.cpp
         ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.h
 )
@@ -30,9 +31,12 @@ set(SHARED_DOWNLOAD_SRCS
 		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
 
 set(SHARED_FAVORITES_SRCS
-        ${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
-        ${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h
-	)
+		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h)
+
+set(SHARED_USER_SRCS
+        ${CMAKE_SOURCE_DIR}/src/shared/user/usermanager.cpp
+        ${CMAKE_SOURCE_DIR}/src/shared/user/usermanager.h)
 
 set(WINDOWS_MANIFEST_DIR
         ${CMAKE_SOURCE_DIR}/src/shared/manifest)
