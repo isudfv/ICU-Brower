@@ -4,12 +4,13 @@
 
 #include "downloadmanager.h"
 
-void DownloadManager::deleteDownloadItem(int id, QString path){
+void DownloadManager::deleteDownloadItem(QString path,QJSValue callback){
     QFile::remove(path);
-    emit removeItem(id);
+    QJSValueList list{QJSValue(false)};
+    callback.call(list);
 }
 
-void DownloadManager::removeDownloadItem(int id, QString path){
+void DownloadManager::removeDownloadItem(int id){
     emit removeItem(id);
 }
 

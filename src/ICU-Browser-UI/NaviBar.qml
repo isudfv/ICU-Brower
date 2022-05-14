@@ -301,8 +301,8 @@ Item {
 
                         FavoriteMenu {
                             y: rootWindow.y + navibar.y + 39
-                            x: rootWindow.x + starButton.parent.x - 150
-                            width: 200
+                            x: rootWindow.x + starButton.parent.x - 200
+                            width: 250
                             height: 400
                             id: favoritemenu
                         }
@@ -391,7 +391,7 @@ Item {
                             }
 
                             onClicked: {
-
+                                downloadwindow.visible = true
                             }
 
                             ToolTip {
@@ -405,6 +405,14 @@ Item {
                                     radius: 5
                                 }
                             }
+                        }
+
+                        DownloadWindow {
+                            y: rootWindow.y + navibar.y + 39
+                            x: rootWindow.x + starButton.parent.x - 200
+                            width: 250
+                            height: 400
+                            id: downloadwindow
                         }
                     }
 

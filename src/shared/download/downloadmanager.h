@@ -21,13 +21,13 @@
 class DownloadManager:public QObject{
     Q_OBJECT
 public:
-    static DownloadManager& getInstanse(){
+    static DownloadManager* getInstanse(){
         static DownloadManager dm;
-        return dm;
+        return &dm;
     }
 
-    Q_INVOKABLE void deleteDownloadItem(int id, QString path);
-    Q_INVOKABLE void removeDownloadItem(int id, QString path);
+    Q_INVOKABLE void deleteDownloadItem( QString path,QJSValue callback);
+    Q_INVOKABLE void removeDownloadItem(int id);
     Q_INVOKABLE void clearDownloadItem();
     Q_INVOKABLE void showDownLoadItemInExplorer(QString path,QJSValue callback);
 

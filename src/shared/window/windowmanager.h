@@ -15,6 +15,11 @@
 class WindowManager : public QObject {
     Q_OBJECT
 public:
+    static WindowManager* getInstanse(){
+        static WindowManager wm;
+        return &wm;
+    }
+
     Q_INVOKABLE void toggleTab(int windowId);
     Q_INVOKABLE void doGoBack(int windowId,QJSValue callback);
     Q_INVOKABLE void doGoForward(int windowId,QJSValue callback);

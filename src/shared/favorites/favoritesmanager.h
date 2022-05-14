@@ -15,6 +15,11 @@ using Qt::endl;
 class FavoritesManager : public QObject {
     Q_OBJECT
 public:
+    static FavoritesManager* getInstanse(){
+        static FavoritesManager fm;
+        return &fm;
+    }
+
     Q_INVOKABLE void addFavoriteItem(QString url, QString name, QJSValue callBack, int uid);
     Q_INVOKABLE bool getCanFavorite(int uid, QString url);
     Q_INVOKABLE void removeFavoriteItem(int uid, QString url, QJSValue callBack);
