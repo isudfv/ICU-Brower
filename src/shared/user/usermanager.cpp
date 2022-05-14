@@ -1,4 +1,5 @@
 ﻿#include "usermanager.h"
+#include <iostream>
 
 int getNumber(Database &database)
 {
@@ -23,6 +24,8 @@ Q_INVOKABLE void UserManager::doLogin(const QString& username, const QString& pa
     QJSValueList list;
     int          uid;
 
+    //    qDebug() << "here";
+
     //创建数据库实例
     Instance inst = {};
     Uri      uri("mongodb://175.178.155.66:27017");
@@ -38,22 +41,20 @@ Q_INVOKABLE void UserManager::doLogin(const QString& username, const QString& pa
     find_one = coll.find_one(document{} << "username" << username.toStdString() << finalize);
     //用户不存在
     if (!find_one) {
-        list = {userNotExist};
+        list = {UserNotExist};
         goto CALLBACK;
     }
 
-    //用户存在，则判断密码是否正确
     ele = find_one->view()["password"];
+    //用户存在，则判断密码是否正确
     if (ele.get_utf8().value != password.toStdString()) {
-        list = {passwordError};
+        list = {PasswordError};
         goto CALLBACK;
     }
 
-    //登录成功，则获取用户的id
     ele  = find_one->view()["_id"];
-    uid  = ele.get_int32();
-    list = {loginSuccess, uid};
-
+    uid  = ele.get_int32().value;
+    list = {LoginSuccess, uid};
 //调用回调函数，返回给view层用户的uid
 CALLBACK:
     callback.call(list);
@@ -83,13 +84,14 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
 
     //先判断名字是否合法
     if (nameLen < 6 || nameLen > 16) {
-        list = {userNameLengthViolation};
+        qDebug() << username << nameLen;
+        list = {UserNameLengthViolation};
         goto CALLBACK;
     }
 
     //判断密码长度是否合法
     if (pwdLen < 8 || pwdLen > 16) {
-        list = {pwdLengthViolation};
+        list = {PwdLengthViolation};
         goto CALLBACK;
     }
 
@@ -97,18 +99,21 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
     find_one = coll.find_one(document{} << "username" << username.toStdString() << finalize);
     //如果找到了重复的,则报错
     if (find_one) {
-        list = {userAlreadyExist};
+        list = {UserAlreadyExist};
         goto CALLBACK;
     }
 
     //向表中插入
-    result_insert_one = coll.insert_one(document{} << "username" << username.toStdString() << "password" << password.toStdString() << finalize);
+    result_insert_one = coll.insert_one(document{} << "username" << username.toStdString()
+                                                   << "password" << password.toStdString()
+                                                   << "_id" << getNumber(db)
+                                                   << finalize);
     if (result_insert_one) {
-        list = {registerSuccess};
+        list = {RegisterSuccess};
         goto CALLBACK;
     }
     // 插入失败
-    list = {dbInsertFailure};
+    list = {DBInsertFailure};
 
 //调用回调函数，给view层显示状态
 CALLBACK:

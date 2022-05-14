@@ -21,16 +21,16 @@ int main(int argc, char *argv[])
     QApplication          app(argc, argv);
     QQmlApplicationEngine engine;
 
-    auto   favoritesManager = new FavoritesManager;
-    auto   cefWindow        = new CEFWindow;
-    auto   windowManager    = new WindowManager;
-    auto   historyManager   = new HistoryManager;
-    auto &&userManager      = UserManager::getInstance();
+    auto favoritesManager = new FavoritesManager;
+    auto cefWindow        = new CEFWindow;
+    auto windowManager    = new WindowManager;
+    auto historyManager   = new HistoryManager;
+
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
     engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
     engine.rootContext()->setContextProperty("windowManager", windowManager);
     engine.rootContext()->setContextProperty("historyManager", historyManager);
-    engine.rootContext()->setContextProperty("userManager", &userManager);
+    UserManager::declareQML();
 
     engine.load("qrc:/main.qml");
 
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     cefWindow->show();
 
     cefWindow->setGeometry(0, 111, QmlWindow->width(), QmlWindow->height() - 111);
+
     //    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
     //    cefWindow->move(0, 111);
     //    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);

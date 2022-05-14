@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import UserManager 1.0
 
 Window {
     id: rootWindow
@@ -144,7 +145,7 @@ Window {
             }
 
             onClicked: {
-                userManager.doLogin(userName, password, loginStateCheck)
+                UserManager.doLogin(userName.text, password.text, loginStateCheck)
             }
         }
 
@@ -189,21 +190,25 @@ Window {
         }
     }
 
-    function loginStateCheck(error_code, uid = 0) {
-        console.info(error_code)
+    function loginStateCheck(error_code, uid = "") {
+        console.info("callback called with ec: ", error_code)
+//        console.info(userManager.LoginSuccess, userManager.userNotExist, Manager.PasswordError)
         switch (error_code) {
-        case userManager.loginSuccess:
+        case UserManager.LoginSuccess:
         {
             console.info("success")
+            console.info(uid)
             break
         }
-        case userManager.userNotExist:
+        case UserManager.UserNotExist:
         {
+            console.info("User Not Exist")
             userName.placeholderText = "User Not Exist";
             password.text = "";
             break
         }
-        case userManger.passwordError:
+        case UserManager.PasswordError:
+            console.info("Password Error")
 //            userName.placeholderText = "Password Error";
             password.placeholderText = "Password Error"
             break

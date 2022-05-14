@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import UserManager 1.0
 
 Window {
     id: rootWindow
@@ -191,7 +192,7 @@ Window {
                     rePassword.text = ""
                     rePassword.placeholderText = "密码不一致"
                 } else {
-                    userManager.doRegister(userName, password,
+                    UserManager.doRegister(userName.text, password.text,
                                            registerStateCheck)
                 }
             }
@@ -229,32 +230,36 @@ Window {
 
     function registerStateCheck(error_code, uid = 0) {
         console.info(error_code)
+//        console.info(UserManager.UserNameLengthViolation)
         switch (error_code) {
-        case userManager.registerSuccess:
+        case UserManager.RegisterSuccess:
         {
             console.info("success")
             userButton.isLoginWindow = true
             userButton.isRegisterWindow = false
             break
         }
-        case userManager.userAlreadyExist:
+        case UserManager.UserAlreadyExist:
         {
+            console.info("User Already Exist")
             userName.placeholderText = "User Already Exist"
             password.text = ""
             rePassword.text = ""
             break
         }
-        case userManger.userNameLengthViolation:
+        case UserManager.UserNameLengthViolation:
         {
+            console.info("User Name Length Violation")
             userName.placeholderText = "User Name Length Violation"
             password.text = ""
             rePassword.text = ""
             break
         }
-        case userManger.pwdLengthViolation:
+        case UserManager.PwdLengthViolation:
         {
-            //            userName.placeholderText = "User Name Length Violation";
-            password.placeholderText = "User Name Length Violation"
+            console.info("Password Length Violation")
+            password.test = ""
+            password.placeholderText = "Password Length Violation"
             rePassword.text = ""
             break
         }

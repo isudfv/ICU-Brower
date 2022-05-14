@@ -2,8 +2,9 @@
 #define USERMANAGER_H
 
 #include <QCoreApplication>
+#include <QDebug>
 #include <QJSValue>
-#include<QDebug>
+#include <QQmlEngine>
 #include <QString>
 
 #include <mongocxx/client.hpp>
@@ -35,31 +36,42 @@ typedef bsoncxx::document::value DocumentValue;
 typedef bsoncxx::document::view DocumentView;
 
 
-class UserManager:public QObject{
+class UserManager : public QObject {
     Q_OBJECT
 public:
-    static UserManager& getInstance()
+    static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
     {
         static UserManager um;
-        return um;
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+        return &um;
     }
-    Q_INVOKABLE void doLogin(const QString& username,const QString& password,QJSValue callback);
-    Q_INVOKABLE void doRegister(const QString& username,const QString& password,QJSValue callback);
-    Q_INVOKABLE void doLogout(QJSValue callback);
-    enum registerState{
-        registerSuccess,
-        dbInsertFailure,
-        userAlreadyExist,
-        userNameLengthViolation,
-        pwdLengthViolation
-    };
-    enum loginState{
-        loginSuccess,
-        userNotExist,
-        passwordError
+
+    Q_INVOKABLE static void doLogin(const QString &username, const QString &password, QJSValue callback);
+    Q_INVOKABLE static void doRegister(const QString &username, const QString &password, QJSValue callback);
+    Q_INVOKABLE static void doLogout(QJSValue callback);
+
+    static void declareQML()
+    {
+        qmlRegisterSingletonType<UserManager>("UserManager", 1, 0, "UserManager", getInstance);
+    }
+
+    enum registerState {
+        RegisterSuccess,
+        DBInsertFailure,
+        UserAlreadyExist,
+        UserNameLengthViolation,
+        PwdLengthViolation
     };
 
+    enum loginState {
+        LoginSuccess,
+        UserNotExist,
+        PasswordError
+    };
 
+    Q_ENUM(registerState)
+    Q_ENUM(loginState)
 };
 
 #endif // USERMANAGER_H
