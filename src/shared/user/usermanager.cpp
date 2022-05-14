@@ -25,7 +25,7 @@ Q_INVOKABLE void UserManager::doLogin(const QString& username, const QString& pa
 
     //创建数据库实例
     Instance inst = {};
-    Uri      uri("mongodb://1.14.130.92:27017");
+    Uri      uri("mongodb://175.178.155.66:27017");
     Client   client(uri);
 
     //连接数据库实例
@@ -71,7 +71,7 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
 
     //创建数据库实例
     Instance inst = {};
-    Uri      uri("mongodb://1.14.130.92:27017");
+    Uri      uri("mongodb://175.178.155.66:27017");
     Client   client(uri);
 
     //连接数据库实例
