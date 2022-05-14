@@ -19,18 +19,17 @@ set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/clienthandler.h)
 
 set(SHARED_WINDOW_SRCS
-#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
-#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
+        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
+        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
         ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.cpp
         ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.h
 )
 
 set(SHARED_DOWNLOAD_SRCS
-		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.cpp
-		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
-		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
-        ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.cc
-        ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.h)
+		${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.cc
+		${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.h
+		${CMAKE_SOURCE_DIR}/src/shared/download/downloadmanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/download/downloadmanager.h)
 
 set(SHARED_FAVORITES_SRCS
 		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
