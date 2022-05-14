@@ -10,6 +10,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(bsoncxx CONFIG REQUIRED)
+find_package(mongocxx CONFIG REQUIRED)
 find_package(
 	Qt6 6.2 COMPONENTS
 	Quick Widgets QuickWidgets
@@ -25,9 +27,12 @@ qt_add_executable(
 	main.cpp
 	cefwindow.h cefwindow.cpp
 	resource.qrc
-    ${SHARED_BROWSER_SRCS}
+#    ${SHARED_BROWSER_SRCS}
     ${SHARED_WINDOW_SRCS}
     ${SHARED_DOWNLOAD_SRCS}
+	${SHARED_FAVORITES_SRCS}
+	${SHARED_HISTORY_SRCS}
+	${SHARED_USER_SRCS}
 )
 
 #qt_add_qml_module(apptest3
@@ -55,9 +60,12 @@ COPY_FILES("${PROJECT_NAME}" "${CEF_RESOURCE_FILES}" "${CEF_RESOURCE_DIR}" "${CM
 
 target_link_libraries(
 	ICU-Browser-UI
-	PRIVATE Qt6::Quick
+	PRIVATE
+	Qt6::Quick
 	Qt6::Widgets
 	Qt6::QuickWidgets
     ${CEF_STANDARD_LIBS}
     ${CEF_LIBS}
+	mongo::bsoncxx_shared
+	mongo::mongocxx_shared
 )

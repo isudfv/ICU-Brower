@@ -10,7 +10,7 @@ Window {
     flags: Qt.Window | Qt.FramelessWindowHint
     Rectangle {
         color: "white"
-        radius: 10
+        radius: 6
         border.width: 3
         border.color: "#f7f7f7"
         anchors.fill: parent
@@ -33,7 +33,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesPresenter.getCanFavorite(header.uid,header.uid)
+                    property bool canfavorite: favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -51,7 +51,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesPresenter.addFavariteItem(header.uid,header.nowtitle,header.nowurl,addFavoriteItem)
+                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.currentUserId)
                         }
                         onEntered: {
                             enter = true
@@ -89,7 +89,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            //doload(url)
+                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setState)
                         }
                         onEntered: {
                             parent.color = "#dcdcdc"
@@ -125,7 +125,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesPresenter.removeFavariteItem(header.uid,url,removeFavariteItem)
+                                    favoritesManager.removeFavoriteItem(header.currentUserId,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -159,32 +159,19 @@ Window {
     }
     ListModel {
         id: favoritemodel
-        ListElement {
-            name: "Bilibili"
-            url: "bilibili.com"
-        }
-        ListElement {
-            name: "harmoe"
-            url: "bilibili.com"
-        }
-        ListElement {
-            name: "tomori"
-            url: "bilibili.com"
-        }
     }
 
     function clearFavorite(){
         favoritemodel.clear()
-        favoritemodel.sync()
     }
 
     function loadFavorite(){
-        favoritesPresenter.loadFavorite(header.uid,addFavoriteItem,clearFavorite)
+        favoritesManager.loadFavorite(header.currentUserId,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){
         favoritemodel.append({"name": name,"url": url})
-        updataFavariteState()
+        updataFavoriteState()
     }
 
     function removeFavariteItem(url){
@@ -193,12 +180,13 @@ Window {
                 favoritemodel.remove(i)
                 break
             }
+
         }
-        updataFavariteState()
+        updataFavoriteState()
     }
 
-    function updataFavariteState(){
-        favoritesPresenter.favoritetitle.canfavorite = getCanFavorite(header.nowurl)
+    function updataFavoriteState(){
+        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
     }
 
     onActiveFocusItemChanged: {
@@ -208,17 +196,21 @@ Window {
     }
     onVisibleChanged: {
         if (visible) {
+            loadFavorite()
             requestActivate()
         }
     }
 
     Connections{
         target: header
-        function onUseridChanged() {
-            updataFavariteState()
+        function onCurrentUrlChanged() {
+            updataFavoriteState()
         }
-        function onNowurlChanged(){
-            updataFavariteState()
+        function onCurrentTitleChanged(){
+            updataFavoriteState()
+        }
+        function onCurrentUserIdChanged(){
+            loadFavorite()
         }
     }
 

@@ -58,10 +58,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doGoBack()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doGoBack(header.currentWindowIndex,header.currentTabItem.setState)
                             }
 
                             ToolTip {
@@ -107,10 +104,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doGoForward()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doGoForward(header.currentWindowIndex,header.currentTabItem.setState)
                             }
 
                             ToolTip {
@@ -156,10 +150,7 @@ Item {
                             }
 
                             onClicked: {
-                                cefWindow.doReload()
-                                header.activeBack = cefWindow.getBackState()
-                                header.activeForward = cefWindow.getForwardState()
-                                navibar.url = cefWindow.getUrl()
+                                windowManager.doReLoad(header.currentWindowIndex,header.currentTabItem.setState)
                             }
 
                             ToolTip {
@@ -188,7 +179,6 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
                             height: 20
                             width: 20
-                            //id: plusTab
                             source: "qrc:/icons/home_light.svg"
                         }
                         MouseArea {
@@ -205,8 +195,7 @@ Item {
                             }
 
                             onClicked: {
-                                root.addaaa()
-                                console.debug(root.width, root.height)
+                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentTabItem.setState)
                             }
 
                             ToolTip {
@@ -237,27 +226,22 @@ Item {
                         rootWindow.requestActivate()
                     }
                     onAccepted: {
-                        cefWindow.doLoadUrl(text)
+                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentTabItem.setState)
                     }
 
                     font {
                         pixelSize: 14
                     }
 
-                    text: "https://bilibili.com"
-
-                    //                    placeholderText.
+                    text: header.currentUrl
                     background: Rectangle {
                         anchors.fill: parent
-                        //                        anchors.horizontalCenter: parent.horizontalCenter
-                        //                        anchors.verticalCenter: rectangle.verticalCenter
                         color: "white"
                         implicitHeight: parent.height
                         implicitWidth: parent.width
                         border.width: 1
                         border.color: "#f7f7f7"
                         radius: 3
-                        //border.color: "red"
                         MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
@@ -315,14 +299,13 @@ Item {
                             }
                         }
 
-                        FavoriteMenu{
-                            y:rootWindow.y + navibar.y + 39
-                            x:rootWindow.x + starButton.parent.x - 150
+                        FavoriteMenu {
+                            y: rootWindow.y + navibar.y + 39
+                            x: rootWindow.x + starButton.parent.x - 150
                             width: 200
                             height: 400
-                            id:favoritemenu
+                            id: favoritemenu
                         }
-
                     }
 
                     Rectangle {
@@ -354,7 +337,7 @@ Item {
                             }
 
                             onClicked: {
-                               historyMenu.visible = true
+                                historyMenu.visible = true
                             }
 
                             ToolTip {
@@ -371,58 +354,11 @@ Item {
                         }
 
                         HistoryMenu {
-                            y:rootWindow.y + navibar.y + 39
-                            x:rootWindow.x + starButton.parent.x - 300
+                            y: rootWindow.y + navibar.y + 39
+                            x: rootWindow.x + starButton.parent.x - 300
                             width: 400
                             height: 400
-                            id:historyMenu
-                        }
-                    }
-
-
-                    Rectangle {
-                        id: userButton
-                        height: 34
-                        Layout.alignment: Qt.AlignLeft
-                        width: 45
-                        color: "#f7f7f7"
-                        radius: 3
-                        Image {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            anchors.verticalCenter: parent.verticalCenter
-                            height: 20
-                            width: 20
-                            //id: plusTab
-                            source: "qrc:/icons/user.svg"
-                        }
-                        MouseArea {
-                            property bool enter: false
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            onEntered: {
-                                parent.color = "#dcdcdc"
-                                enter = true
-                            }
-                            onExited: {
-                                parent.color = "#f7f7f7"
-                                enter = false
-                            }
-
-                            onClicked: {
-
-                            }
-
-                            ToolTip {
-                                visible: parent.enter
-                                text: "用户信息"
-                                delay: 500
-                                background: Rectangle {
-                                    color: "#f7f7f7"
-                                    border.color: "black"
-                                    border.width: 1
-                                    radius: 5
-                                }
-                            }
+                            id: historyMenu
                         }
                     }
 
@@ -470,8 +406,80 @@ Item {
                                 }
                             }
                         }
+                    }
 
+                    Rectangle {
+                        property bool isLoginWindow: false
+                        property bool isRegisterWindow: false
+                        property bool isUserWindow: false
 
+                        id: userButton
+                        height: 34
+                        Layout.alignment: Qt.AlignLeft
+                        width: 45
+                        color: "#f7f7f7"
+                        radius: 3
+                        Image {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+                            width: 20
+                            //id: plusTab
+                            source: "qrc:/icons/user.svg"
+                        }
+                        MouseArea {
+                            property bool enter: false
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onEntered: {
+                                parent.color = "#dcdcdc"
+                                enter = true
+                            }
+                            onExited: {
+                                parent.color = "#f7f7f7"
+                                enter = false
+                            }
+
+                            onClicked: {
+                                if (currentUserId) {
+                                    userButton.isUserWindow = true
+                                }
+                                else {
+                                    userButton.isLoginWindow = true
+                                }
+                            }
+
+                            ToolTip {
+                                visible: parent.enter
+                                text: "用户信息"
+                                delay: 500
+                                background: Rectangle {
+                                    color: "#f7f7f7"
+                                    border.color: "black"
+                                    border.width: 1
+                                    radius: 5
+                                }
+                            }
+
+                            LoginWindow {
+                                id: loginWindow
+                                visible: userButton.isLoginWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - loginWindow.width - 2
+                            }
+                            RegisterWindow {
+                                id: registerWindow
+                                visible: userButton.isRegisterWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - registerWindow.width - 2
+                            }
+                            UserWindow {
+                                id: userWindow
+                                visible: userButton.isUserWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - userWindow.width - 2
+                            }
+                        }
                     }
                 }
             }

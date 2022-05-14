@@ -7,9 +7,13 @@ Item {
     id: header
     property bool activeBack: false
     property bool activeForward: false
-    property string nowurl: "bilibili.com"
-    property string nowtitle: "bilibili"
-    property int userid: 0
+    property string currentUrl: "https://www.bilibili.com"
+    property string currentTitle: "moep"
+    property int currentUserId: 0
+    property string currentUserName: "tourists"
+    property Item currentTabItem: null
+    property int currentWindowIndex: 0
+    property string defaultUrl: "https://www.bilibili.com"
 
 
 
@@ -25,6 +29,7 @@ Item {
         spacing: 0
 
         TitleBar {
+            id:titlebar
             height: 37
             Layout.fillWidth: parent
 //            rootWindow: rootWindow
@@ -55,15 +60,21 @@ Item {
 
     }
 
-    function setWindowState(activeBack_,activeForward_,nowurl_,nowtitle_){
-        activeBack = activeBack_
-        activeForward = activeForward_
-        nowurl = nowurl_
-        nowtitle = nowtitle_
+    Connections{
+        target: windowManager
+        function onSetHeaderState(activeBack_,activeForward_){
+            setWindowState(activeBack_,activeForward_)
+        }
     }
 
-    function setUserId(uid){
-        userid = uid
+    function setWindowState(activeBack_,activeForward_){
+        activeBack = activeBack_
+        activeForward = activeForward_
+    }
+
+    function setUserInfo(userid_,username_){
+        currentUserId = userid_
+        currentUserName = username_
     }
 
 }

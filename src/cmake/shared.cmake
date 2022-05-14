@@ -3,7 +3,14 @@ set(SHARED_INCLUDE_PATH
         ${CMAKE_SOURCE_DIR}/src/shared/browser
         ${CMAKE_SOURCE_DIR}/src/shared/window
         ${CMAKE_SOURCE_DIR}/src/shared/download
-        ${CMAKE_SOURCE_DIR}/src/shared/profile)
+		${CMAKE_SOURCE_DIR}/src/shared/profile
+		${CMAKE_SOURCE_DIR}/src/shared/favorites
+		${CMAKE_SOURCE_DIR}/src/shared/history
+		${CMAKE_SOURCE_DIR}/src/shared/user)
+
+set(SHARED_HISTORY_SRCS
+		${CMAKE_SOURCE_DIR}/src/shared/history/historymanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/history/historymanager.h)
 
 set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/browserclient.cc
@@ -12,17 +19,33 @@ set(SHARED_BROWSER_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/browser/clienthandler.h)
 
 set(SHARED_WINDOW_SRCS
-        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
-        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h)
-
+#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.cc
+#        ${CMAKE_SOURCE_DIR}/src/shared/window/qbrowserwindow.h
+        ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.cpp
+        ${CMAKE_SOURCE_DIR}/src/shared/window/windowmanager.h
+)
 
 set(SHARED_DOWNLOAD_SRCS
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.h
+		${CMAKE_SOURCE_DIR}/src/shared/download/qdownloadwidget.ui)
         ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.cc
         ${CMAKE_SOURCE_DIR}/src/shared/download/downloaditem.h)
+
+set(SHARED_FAVORITES_SRCS
+		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.cpp
+		${CMAKE_SOURCE_DIR}/src/shared/favorites/favoritesmanager.h)
+
+set(SHARED_USER_SRCS
+        ${CMAKE_SOURCE_DIR}/src/shared/user/usermanager.cpp
+        ${CMAKE_SOURCE_DIR}/src/shared/user/usermanager.h)
 
 set(SHARED_PROFILE_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.h
         ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.cc)
+
+set(WINDOWS_MANIFEST_DIR
+        ${CMAKE_SOURCE_DIR}/src/shared/manifest)
 
 set(SHARED_AB_BLOCK_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/ad_block_client.h

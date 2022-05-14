@@ -48,4 +48,21 @@ QString CEFWindow::getUrl(){
     return browser_url_;
 }
 
+Q_INVOKABLE void CEFWindow::trying(QString a,QString b,QJSValue callback){
+    QJSValue name(QString("nonono"));
+    QJSValue url(b);
+    QJSValueList p;
+    p.append(name);
+    p.append(url);
+    callback.call(p);
+}
+
+//Q_INVOKABLE void addFavariteIte(QString name,QString url,QJSValue callback){
+//    QJSValue _name(name);
+//    QJSValue _url(url);
+//    QJSValueList p;
+//    p.append(_name);
+//    p.append(_url);
+//    callback.call(p);
+//}
 
