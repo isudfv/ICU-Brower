@@ -29,7 +29,8 @@ typedef mongocxx::client Client;
 typedef mongocxx::uri Uri;
 typedef mongocxx::database Database;
 typedef mongocxx::collection Collection;
-typedef bsoncxx::builder::basic::document DocumentBuilder;
+typedef bsoncxx::builder::basic::document DocumentBasicBuilder;
+typedef bsoncxx::builder::stream::document DocumentStreamBuilder;
 typedef bsoncxx::document::value DocumentValue;
 typedef bsoncxx::document::view DocumentView;
 
@@ -37,6 +38,11 @@ typedef bsoncxx::document::view DocumentView;
 class UserManager:public QObject{
     Q_OBJECT
 public:
+    static UserManager& getInstance()
+    {
+        static UserManager um;
+        return um;
+    }
     Q_INVOKABLE void doLogin(QString username,QString password,QJSValue callback);
     Q_INVOKABLE void doRegister(QString username,QString password,QJSValue callback);
     Q_INVOKABLE void doLogout(QJSValue callback);
@@ -52,6 +58,8 @@ public:
         userNotExist,
         passwordError
     }lstate;
+
+
 };
 
 #endif // USERMANAGER_H
