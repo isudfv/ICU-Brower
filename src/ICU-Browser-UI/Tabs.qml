@@ -245,6 +245,10 @@ Row {
             for (var i = 0; i < tabBar.count; ++i) {
                 tabBar.itemAt(i).implicitWidth = equal_width
             }
+        }else {
+            for (var j = 0; j < tabBar.count; ++j) {
+                tabBar.itemAt(j).implicitWidth = 300
+            }
         }
     }
 

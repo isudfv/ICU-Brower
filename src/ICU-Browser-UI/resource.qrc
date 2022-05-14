@@ -10,6 +10,7 @@
         <file>LoginWindow.qml</file>
         <file>RegisterWindow.qml</file>
         <file>UserWindow.qml</file>
+        <file>DownloadWindow.qml</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="stackoverflow.svg">assets/icons/stackoverflow.svg</file>
