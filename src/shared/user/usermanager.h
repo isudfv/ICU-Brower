@@ -43,21 +43,21 @@ public:
         static UserManager um;
         return um;
     }
-    Q_INVOKABLE void doLogin(QString username,QString password,QJSValue callback);
-    Q_INVOKABLE void doRegister(QString username,QString password,QJSValue callback);
+    Q_INVOKABLE void doLogin(const QString& username,const QString& password,QJSValue callback);
+    Q_INVOKABLE void doRegister(const QString& username,const QString& password,QJSValue callback);
     Q_INVOKABLE void doLogout(QJSValue callback);
-    enum registerstate{
+    enum registerState{
         registerSuccess,
-        registerFailure,
+        dbInsertFailure,
         userAlreadyExist,
         userNameLengthViolation,
         pwdLengthViolation
-    }rstate;
-    enum loginstate{
+    };
+    enum loginState{
         loginSuccess,
         userNotExist,
         passwordError
-    }lstate;
+    };
 
 
 };

@@ -8,8 +8,8 @@ Window {
     visible: true
     height: 200 + 32
     width: 250
-        color: "transparent"
-        flags: Qt.Window | Qt.FramelessWindowHint
+    color: "transparent"
+    flags: Qt.Window | Qt.FramelessWindowHint
     Rectangle {
         id: rectangle
         anchors.fill: parent
@@ -37,14 +37,13 @@ Window {
             anchors.topMargin: 70
             anchors.horizontalCenter: parent.horizontalCenter
             TextField {
-                                id: userName
+                id: userName
                 anchors.fill: parent
-//                implicitHeight: 48
-//                implicitWidth: 250
+                //                implicitHeight: 48
+                //                implicitWidth: 250
                 verticalAlignment: TextInput.AlignVCenter
-//                verticalAlignment: PlaceholderText.AlignVCenter
 
-
+                //                verticalAlignment: PlaceholderText.AlignVCenter
                 font.pixelSize: 15
 
                 selectByMouse: true
@@ -87,10 +86,10 @@ Window {
             anchors.topMargin: 110
             anchors.horizontalCenter: parent.horizontalCenter
             TextField {
-                                id: password
+                id: password
                 anchors.fill: parent
                 verticalAlignment: TextInput.AlignVCenter
-//                anchors.verticalCenter: parent.verticalCenter
+                //                anchors.verticalCenter: parent.verticalCenter
                 //                             text: ""
                 placeholderText: "输入密码"
 
@@ -130,10 +129,10 @@ Window {
             anchors.topMargin: 150
             anchors.horizontalCenter: parent.horizontalCenter
             TextField {
-                                id: rePassword
+                id: rePassword
                 anchors.fill: parent
                 verticalAlignment: TextInput.AlignVCenter
-//                anchors.verticalCenter: parent.verticalCenter
+                //                anchors.verticalCenter: parent.verticalCenter
                 //                             text: ""
                 placeholderText: "再次输入密码"
 
@@ -191,9 +190,9 @@ Window {
                 if (rePassword.text != password.text) {
                     rePassword.text = ""
                     rePassword.placeholderText = "密码不一致"
-                }
-                else {
-                    userManager.doRegister()
+                } else {
+                    userManager.doRegister(userName, password,
+                                           registerStateCheck)
                 }
             }
         }
@@ -226,8 +225,40 @@ Window {
                 userButton.isLoginWindow = true
             }
         }
+    }
 
-
+    function registerStateCheck(error_code, uid = 0) {
+        console.info(error_code)
+        switch (error_code) {
+        case userManager.registerSuccess:
+        {
+            console.info("success")
+            userButton.isLoginWindow = true
+            userButton.isRegisterWindow = false
+            break
+        }
+        case userManager.userAlreadyExist:
+        {
+            userName.placeholderText = "User Already Exist"
+            password.text = ""
+            rePassword.text = ""
+            break
+        }
+        case userManger.userNameLengthViolation:
+        {
+            userName.placeholderText = "User Name Length Violation"
+            password.text = ""
+            rePassword.text = ""
+            break
+        }
+        case userManger.pwdLengthViolation:
+        {
+            //            userName.placeholderText = "User Name Length Violation";
+            password.placeholderText = "User Name Length Violation"
+            rePassword.text = ""
+            break
+        }
+        }
     }
 
     onActiveFocusItemChanged: {

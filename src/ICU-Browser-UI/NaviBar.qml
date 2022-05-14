@@ -411,6 +411,7 @@ Item {
                     Rectangle {
                         property bool isLoginWindow: false
                         property bool isRegisterWindow: false
+                        property bool isUserWindow: false
 
                         id: userButton
                         height: 34
@@ -466,6 +467,12 @@ Item {
                                 visible: userButton.isRegisterWindow
                                 y: rootWindow.y + 37 * 2 + 2
                                 x: rootWindow.x + rootWindow.width - registerWindow.width - 2
+                            }
+                            RegisterWindow {
+                                id: userWindow
+                                visible: userButton.isUserWindow
+                                y: rootWindow.y + 37 * 2 + 2
+                                x: rootWindow.x + rootWindow.width - userWindow.width - 2
                             }
                         }
                     }
