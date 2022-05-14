@@ -197,12 +197,16 @@ Window {
         case UserManager.LoginSuccess:
         {
             console.info("success")
-            console.info(uid)
+            userButton.isLoginWindow = false;
+            userButton.isRegisterWindow = false;
+            userButton.isUserWindow = true;
+            setUserInfo(uid, userName.text)
             break
         }
         case UserManager.UserNotExist:
         {
             console.info("User Not Exist")
+            userName.text=""
             userName.placeholderText = "User Not Exist";
             password.text = "";
             break
@@ -210,6 +214,7 @@ Window {
         case UserManager.PasswordError:
             console.info("Password Error")
 //            userName.placeholderText = "Password Error";
+            password.text = ""
             password.placeholderText = "Password Error"
             break
         }

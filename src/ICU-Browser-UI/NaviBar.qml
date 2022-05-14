@@ -441,7 +441,12 @@ Item {
                             }
 
                             onClicked: {
-                                userButton.isLoginWindow = true
+                                if (currentUserId) {
+                                    userButton.isUserWindow = true
+                                }
+                                else {
+                                    userButton.isLoginWindow = true
+                                }
                             }
 
                             ToolTip {
@@ -468,7 +473,7 @@ Item {
                                 y: rootWindow.y + 37 * 2 + 2
                                 x: rootWindow.x + rootWindow.width - registerWindow.width - 2
                             }
-                            RegisterWindow {
+                            UserWindow {
                                 id: userWindow
                                 visible: userButton.isUserWindow
                                 y: rootWindow.y + 37 * 2 + 2

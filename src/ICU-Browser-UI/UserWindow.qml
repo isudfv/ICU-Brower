@@ -19,7 +19,7 @@ Window {
         border.color: "#aeaeae"
         Text {
             //            id: name
-            text: qsTr("Hello xxx")
+            text: qsTr("Hello ") + currentUserName
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 20

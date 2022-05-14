@@ -6,7 +6,7 @@ import UserManager 1.0
 
 Window {
     id: rootWindow
-    visible: true
+    visible: false
     height: 200 + 32
     width: 250
     color: "transparent"
@@ -242,14 +242,16 @@ Window {
         case UserManager.UserAlreadyExist:
         {
             console.info("User Already Exist")
+            userName.text = ""
             userName.placeholderText = "User Already Exist"
-            password.text = ""
+            password.text = "1"
             rePassword.text = ""
             break
         }
         case UserManager.UserNameLengthViolation:
         {
             console.info("User Name Length Violation")
+            userName.text = ""
             userName.placeholderText = "User Name Length Violation"
             password.text = ""
             rePassword.text = ""
@@ -258,6 +260,7 @@ Window {
         case UserManager.PwdLengthViolation:
         {
             console.info("Password Length Violation")
+            userName.text = ""
             password.test = ""
             password.placeholderText = "Password Length Violation"
             rePassword.text = ""
