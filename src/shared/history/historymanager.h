@@ -16,6 +16,11 @@ using Qt::endl;
 class HistoryManager:public QObject{
     Q_OBJECT
 public:
+    static HistoryManager* getInstanse(){
+        static HistoryManager fm;
+        return &fm;
+    }
+
     Q_INVOKABLE void addHistory(QString name,QString url,int uid,QJSValue callback);
     Q_INVOKABLE void removeHistory(QString name,QString url,QString date,QString time,int uid,QJSValue callback);
     Q_INVOKABLE void clearHistory(int uid,QJSValue callback);
