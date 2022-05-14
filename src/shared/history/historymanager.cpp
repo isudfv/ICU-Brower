@@ -121,7 +121,7 @@ Q_INVOKABLE void HistoryManager::clearHistory(int uid,QJSValue callback)
     //调用回调函数，更新view层
     callback.call();
 }
-Q_INVOKABLE void HistoryManager::LoadHistory(int uid,QJSValue callbacka,QJSValue callbackb)
+Q_INVOKABLE void HistoryManager::loadHistory(int uid,QJSValue callbacka,QJSValue callbackb)
 {
     //打开文件
     QString file_path=QString("./history/%1.json").arg(uid);

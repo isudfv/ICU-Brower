@@ -75,7 +75,7 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                historyManager.addHistory("youtube", "12:12", ".", header.currentUserId, addHistoryItem)
+                                historyManager.addHistory("youtube", ".", header.currentUserId, addHistoryItem)
                             }
                         }
                     }
@@ -309,6 +309,12 @@ Window {
                             width: 325
                             radius: 5
                             Text {
+                                id: dateText
+                                visible: false
+                                text: date
+                            }
+
+                            Text {
                                 id: nameText
                                 text: name
                                 // 设置在矩形中垂直居中；左对齐（默认）
@@ -354,7 +360,9 @@ Window {
                                 hoverEnabled: true
                                 anchors.fill: parent
                                 onClicked: {
-                                    historyManager.removeHistory(nameText.text, timeText.text, ".", header.currentUserId, removeHistoryItem)
+                                    // console.info(dateText.text)
+                                    // console.info(nameText.text)
+                                    historyManager.removeHistory(nameText.text, ".", dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
                                 }
                                 onEntered: {
                                     signalDelete.enter = true
@@ -365,7 +373,7 @@ Window {
 
                                 ToolTip {
                                     visible: signalDelete.enter
-                                    text: "删除"
+                                    text: "删除此条"
                                     background: Rectangle {
                                         color: "#f7f7f7"
                                         border.color: "black"
@@ -397,7 +405,7 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                console.log(groupItem.enter)
+                                // console.log(groupItem.enter)
                             }
                             onEntered: {
                                 groupItem.enter = true
@@ -455,7 +463,7 @@ Window {
 
                                 ToolTip {
                                     visible: deleteSignle.enter
-                                    text: "删除"
+                                    text: "删除此日所有历史记录"
                                     background: Rectangle {
                                         color: "#f7f7f7"
                                         border.color: "black"
@@ -473,7 +481,8 @@ Window {
                                         deleteSignle.enter = false
                                     }
                                     onClicked: {
-
+                                        // console.info(section)
+                                        historyManager.removeSignalDayHistory(header.currentUserId, section, removeSignalDayHistory)
                                     }
                                 }
                             }
@@ -494,24 +503,13 @@ Window {
         // ListView不会将一个分组内的元素放到一起，
         // 而是会显示多个相同的section
         id: historyModel
-        ListElement {
-            name: "bilibili"
-            time: "00:00"
-            date: "2001-05-14"
-        }
-
-        ListElement {
-            name: "bilibsdfffffdsffffffsdfsfdfsdfsdddddddddddddddddddddddddddddddddddddddddddddddddddddddili"
-            time: "00:01"
-            date: "2001-05-14"
-        }
-
-        ListElement {
-            name: "aa"
-            time: "00:00"
-            date: "2001-06-22"
-        }
         
+        // ListElement {
+        //     name: "bilibili"
+        //     time: "00:00"
+        //     date: "2001-05-14"
+        //     url: "."
+        // }
         
     }
 
@@ -519,15 +517,25 @@ Window {
         historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
     }
 
-    function addHistoryItem(name,time,url){
-        historyModel.append({"name":name, "time":time, "url":url})
+    function addHistoryItem(name, url, time, date){
+        historyModel.append({"name":name, "url":url, "time": time, "date": date})
     }
 
-    function removeHistoryItem(name, time, url){
+    function removeHistoryItem(name, url, time, date){
         for (let i = 0; i < historyModel.count; ++i) {
             if (historyModel.get(i).url === url) {
                 historyModel.remove(i)
                 break
+            }
+        }
+    }
+
+    function removeSignalDayHistory(uid, date) {
+        // 删除单日历史记录
+        for (let i = 0; i < historyModel.count; ++i) {
+            if (historyModel.get(i).date === date) {
+                historyModel.remove(i)
+                --i
             }
         }
     }
@@ -544,10 +552,10 @@ Window {
     }
     onVisibleChanged: {
         if(visible) {
-        //    loadHistory()
+           loadHistory()
         }
     }
     Component.onCompleted: {
-        // loadHistory()
+        loadHistory()
     }
 }
