@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("favoritesManager", FavoritesManager::getInstanse());
     engine.rootContext()->setContextProperty("windowManager", WindowManager::getInstanse());
     engine.rootContext()->setContextProperty("historyManager", HistoryManager::getInstanse());
+    engine.rootContext()->setContextProperty("downloadManager", DownloadManager::getInstanse());
     UserManager::declareQML();
 
     engine.load("qrc:/main.qml");

@@ -4,10 +4,9 @@
 
 #include "downloadmanager.h"
 
-void DownloadManager::deleteDownloadItem(QString path,QJSValue callback){
+void DownloadManager::deleteDownloadItem(int id, QString path){
     QFile::remove(path);
-    QJSValueList list{QJSValue(false)};
-    callback.call(list);
+    emit setFileState(id,false);
 }
 
 void DownloadManager::removeDownloadItem(int id){
@@ -18,12 +17,11 @@ void DownloadManager::clearDownloadItem(){
     emit clearItem();
 }
 
-void DownloadManager::showDownLoadItemInExplorer(QString path,QJSValue callback){
+void DownloadManager::showDownLoadItemInExplorer(int id, QString path){
     //判断文件不存在则调用回调函数
-    QDir dir(path);
-    if(false == dir.exists()){
-        QJSValueList list{QJSValue(false)};
-        callback.call(list);
+    qDebug() << id <<path;
+    if(!QFileInfo(path).isFile()){
+        emit setFileState(id,false);
         return;
     }
     //打开目录并高亮选中文件
@@ -47,4 +45,9 @@ void DownloadManager::updateDowmloadItemState(int id,
                                               int precent,
                                               int currentSpeed){
     emit updateItemState(id, precent, currentSpeed);
+}
+
+void DownloadManager::changeDownloadItemPauseState(int id){
+    emit toChangeDownloadItemPauseState(id);
+    emit changePauseState(id);
 }

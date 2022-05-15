@@ -33,5 +33,6 @@
         <file alias="search.svg">assets/icons/search.svg</file>
         <file alias="locker.svg">assets/icons/locker.svg</file>
         <file alias="back.svg">assets/icons/back.svg</file>
+        <file alias="pause.svg">assets/icons/pause.svg</file>
     </qresource>
 </RCC>

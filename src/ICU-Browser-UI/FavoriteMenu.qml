@@ -19,12 +19,19 @@ Window {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
             Rectangle {
+                color: "transparent"
+                height: 3
+                radius: 6
                 Layout.fillWidth: true
-                height: 40
+            }
+
+            Rectangle {
+                Layout.fillWidth: true
+                height: 30
                 color: "transparent"
                 Text {
                     height: parent.height
-                    x: parent.x + 10
+                    x: parent.x + 20
                     text: "收藏夹"
                     verticalAlignment: Text.AlignVCenter
                     font.bold: true
@@ -76,15 +83,27 @@ Window {
                 }
             }
 
+            Rectangle {
+                color: "#f7f7f7"
+                height: 1.5
+                Layout.fillWidth: true
+            }
+
             ListView {
                 id:favoritelist
+                Layout.leftMargin: 5
+                Layout.rightMargin: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 model: favoritemodel
                 delegate: Rectangle {
+                    id: backGround
+                    property bool isChoose: enter || closeArea.enter
+                    property bool enter: false
                     width: favoritelist.width
                     height: 40
-                    color: "#f7f7f7"
+                    radius: 2
+                    color: isChoose ? "#dcdcdc":"white"
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -92,10 +111,10 @@ Window {
                             windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setState)
                         }
                         onEntered: {
-                            parent.color = "#dcdcdc"
+                            parent.enter = true;
                         }
                         onExited: {
-                            parent.color = "#f7f7f7"
+                            parent.enter = false
                         }
                     }
                     RowLayout {
@@ -121,6 +140,7 @@ Window {
                                 height: 16
                             }
                             MouseArea {
+                                id:closeArea
                                 property bool enter: false
                                 anchors.fill: parent
                                 hoverEnabled: true
