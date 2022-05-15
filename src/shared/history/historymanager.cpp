@@ -1,6 +1,6 @@
 ﻿#include "historymanager.h"
 
-Q_INVOKABLE void HistoryManager::addHistory(QString name,QString url,int uid,QJSValue callback)
+Q_INVOKABLE void HistoryManager::addHistory(QString name,QString url,int uid)
 {
     QDateTime datetime=QDateTime::currentDateTime();
     QString date=datetime.date().toString("yyyy-MM-dd");
@@ -53,10 +53,10 @@ Q_INVOKABLE void HistoryManager::addHistory(QString name,QString url,int uid,QJS
     out.close();
 
     //调用回调函数，修改view层
+    emit addItem(name,url,time,date);
+//    QJSValueList list={name,url,time,date};
 
-    QJSValueList list={name,url,time,date};
-
-    callback.call(list);
+//    callback.call(list);
 
 }
 Q_INVOKABLE void HistoryManager::removeHistory(QString name,QString url,QString date,QString time,int uid,QJSValue callback)

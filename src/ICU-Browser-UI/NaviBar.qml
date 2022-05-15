@@ -195,7 +195,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentTabItem.setState)
+                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentUserId,header.currentTabItem.setState)
                             }
 
                             ToolTip {
@@ -226,7 +226,7 @@ Item {
                         rootWindow.requestActivate()
                     }
                     onAccepted: {
-                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentTabItem.setState)
+                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentUserId,header.currentTabItem.setState)
                     }
 
                     font {
@@ -409,7 +409,7 @@ Item {
 
                         DownloadWindow {
                             y: rootWindow.y + navibar.y + 39
-                            x: rootWindow.x + starButton.parent.x - 200
+                            x: rootWindow.x + downloadButton.parent.x - 105
                             width: 250
                             height: 400
                             id: downloadwindow

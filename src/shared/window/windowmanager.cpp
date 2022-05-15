@@ -1,4 +1,5 @@
 #include "windowmanager.h"
+#include "historymanager.h"
 
 void WindowManager::toggleTab(int windowId){
 //    if(mp.count(currentWindowId)) mp[currentWindowId]->hide();
@@ -61,7 +62,7 @@ void WindowManager::doReLoad(int windowId,QJSValue callback){
     emit setHeaderState(activeBack,activeForward);
 }
 
-void WindowManager::doLoadUrl(int windowId,QString url,QJSValue callback){
+void WindowManager::doLoadUrl(int windowId,QString url,int uid,QJSValue callback){
 //    mp[windowId]->doLoadUrl(url);
     bool activeBack = true;
     bool activeForward = true;
@@ -69,6 +70,7 @@ void WindowManager::doLoadUrl(int windowId,QString url,QJSValue callback){
     QJSValue title(currentTitle);
     QJSValue url_(url);
     QJSValue icon_("qrc:/icons/stackoverflow.svg");
+    HistoryManager::getInstanse()->addHistory(currentTitle,url,uid);
     QJSValueList list;
     list.append(title);
     list.append(url_);

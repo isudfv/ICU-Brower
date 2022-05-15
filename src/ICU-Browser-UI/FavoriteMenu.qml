@@ -108,7 +108,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentTabItem.setState)
+                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentUserId,header.currentTabItem.setState)
                         }
                         onEntered: {
                             parent.enter = true;

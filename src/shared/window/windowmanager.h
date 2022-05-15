@@ -24,7 +24,7 @@ public:
     Q_INVOKABLE void doGoBack(int windowId,QJSValue callback);
     Q_INVOKABLE void doGoForward(int windowId,QJSValue callback);
     Q_INVOKABLE void doReLoad(int windowId,QJSValue callback);
-    Q_INVOKABLE void doLoadUrl(int windowId,QString url,QJSValue callback);
+    Q_INVOKABLE void doLoadUrl(int windowId,QString url,int uid,QJSValue callback);
     Q_INVOKABLE void addWindow(QString url);
     Q_INVOKABLE void addWindowNotInFocus(QString url);
     Q_INVOKABLE void removeWindow(int windowId);

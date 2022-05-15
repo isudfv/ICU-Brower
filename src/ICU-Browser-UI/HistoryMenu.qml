@@ -75,7 +75,7 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                historyManager.addHistory("youtube", ".", header.currentUserId, addHistoryItem)
+                                historyManager.addHistory("youtube", ".", header.currentUserId)
                             }
                         }
                     }
@@ -518,7 +518,7 @@ Window {
     }
 
     function addHistoryItem(name, url, time, date){
-        historyModel.append({"name":name, "url":url, "time": time, "date": date})
+        historyModel.insert(0,{"name":name, "url":url, "time": time, "date": date})
     }
 
     function removeHistoryItem(name, url, time, date){
@@ -543,6 +543,13 @@ Window {
     function clearHistory(){
         //清空视图中的历史记录
         historyModel.clear()
+    }
+
+    Connections {
+        target: historyManager
+        function onAddItem(name,url,time,date){
+            addHistoryItem(name, url, time, date)
+        }
     }
 
      onActiveFocusItemChanged: {
