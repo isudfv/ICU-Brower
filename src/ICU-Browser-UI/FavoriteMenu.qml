@@ -28,7 +28,8 @@ Window {
             Rectangle {
                 Layout.fillWidth: true
                 height: 30
-                color: "transparent"
+                color: "white"
+                z:5
                 Text {
                     height: parent.height
                     x: parent.x + 20
@@ -108,7 +109,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentUserId,header.currentTabItem.setState)
+                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentUserId)
                         }
                         onEntered: {
                             parent.enter = true;

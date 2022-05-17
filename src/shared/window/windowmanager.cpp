@@ -11,71 +11,41 @@ void WindowManager::toggleTab(int windowId){
     emit setHeaderState(activeBack,activeForward);
 }
 
-void WindowManager::doGoBack(int windowId,QJSValue callback){
+void WindowManager::doGoBack(int windowId){
 //    mp[windowId]->doGoBack();
     bool activeBack = true;
     bool activeForward = true;
     QString currentUrl = "GoBack";//获取状态
-
-    QJSValue title(currentUrl);
-    QJSValue url_(currentUrl);
-    QJSValue icon_("qrc:/icons/stackoverflow.svg");
-    QJSValueList list;
-    list.append(title);
-    list.append(url_);
-    list.append(icon_);
-    callback.call(list);
+    emit setTabState(windowId,currentUrl,currentUrl,"qrc:/icons/stackoverflow.svg");
     emit setHeaderState(activeBack,activeForward);
 }
 
-void WindowManager::doGoForward(int windowId,QJSValue callback){
+void WindowManager::doGoForward(int windowId){
 //    mp[windowId]->doGoBack();
     bool activeBack = true;
     bool activeForward = true;
     QString currentUrl = "GoForWard";//获取状态
-
-    QJSValue title(currentUrl);
-    QJSValue url_(currentUrl);
-    QJSValue icon_("qrc:/icons/stackoverflow.svg");
-    QJSValueList list;
-    list.append(title);
-    list.append(url_);
-    list.append(icon_);
-    callback.call(list);
+    emit setTabState(windowId,currentUrl,currentUrl,"qrc:/icons/stackoverflow.svg");
     emit setHeaderState(activeBack,activeForward);
 }
 
-void WindowManager::doReLoad(int windowId,QJSValue callback){
+void WindowManager::doReLoad(int windowId){
 //    mp[windowId]->doReload();
     bool activeBack = true;
     bool activeForward = true;
-    QString currentUrl = "ReLoad";//获取状态
+    QString currentTitle = "ReLoad";//获取状态
 
-    QJSValue title(currentUrl);
-    QJSValue url_(currentUrl);
-    QJSValue icon_("qrc:/icons/stackoverflow.svg");
-    QJSValueList list;
-    list.append(title);
-    list.append(url_);
-    list.append(icon_);
-    callback.call(list);
+    emit setTabState(windowId,currentTitle,currentTitle,"qrc:/icons/stackoverflow.svg");
     emit setHeaderState(activeBack,activeForward);
 }
 
-void WindowManager::doLoadUrl(int windowId,QString url,int uid,QJSValue callback){
+void WindowManager::doLoadUrl(int windowId,QString url,int uid){
 //    mp[windowId]->doLoadUrl(url);
     bool activeBack = true;
     bool activeForward = true;
     QString currentTitle = url;//获取状态
-    QJSValue title(currentTitle);
-    QJSValue url_(url);
-    QJSValue icon_("qrc:/icons/stackoverflow.svg");
     HistoryManager::getInstanse()->addHistory(currentTitle,url,uid);
-    QJSValueList list;
-    list.append(title);
-    list.append(url_);
-    list.append(icon_);
-    callback.call(list);
+    emit setTabState(windowId,currentTitle,url,"qrc:/icons/stackoverflow.svg");
     emit setHeaderState(activeBack,activeForward);
 }
 

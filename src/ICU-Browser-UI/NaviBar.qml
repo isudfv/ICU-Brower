@@ -58,7 +58,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doGoBack(header.currentWindowIndex,header.currentTabItem.setState)
+                                windowManager.doGoBack(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -104,7 +104,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doGoForward(header.currentWindowIndex,header.currentTabItem.setState)
+                                windowManager.doGoForward(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -150,7 +150,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doReLoad(header.currentWindowIndex,header.currentTabItem.setState)
+                                windowManager.doReLoad(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -195,7 +195,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentUserId,header.currentTabItem.setState)
+                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentUserId)
                             }
 
                             ToolTip {
@@ -226,7 +226,7 @@ Item {
                         rootWindow.requestActivate()
                     }
                     onAccepted: {
-                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentUserId,header.currentTabItem.setState)
+                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentUserId)
                     }
 
                     font {

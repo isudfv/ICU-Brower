@@ -86,6 +86,7 @@ Window {
                 Layout.rightMargin: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                spacing: 2
                 model: downloadModel
                 delegate: Rectangle {
                     property bool isChoose: downloadArea.enter
@@ -94,8 +95,8 @@ Window {
                     width: downloadList.width
                     height: 40
                     color: isChoose ? "#dcdcdc" : "white"
-                    border.width: 1
-                    border.color: "black"
+//                    border.width: 1
+//                    border.color: "black"
                     radius: 2
                     MouseArea {
                         id: downloadArea

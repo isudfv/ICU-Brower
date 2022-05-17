@@ -275,6 +275,7 @@ Window {
                 // 布局设置
                 Layout.leftMargin: 12
                 Layout.fillHeight: true
+                Layout.fillWidth: true
 
                 // 选项
                 delegate: Rectangle {
