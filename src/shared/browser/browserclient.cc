@@ -24,7 +24,7 @@ void BrowserClient::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // Add to the list of existing browsers.
   curr_window->setBrowserId(browser->GetIdentifier());
   browser_list_[browser->GetIdentifier()] = {curr_window, browser};
-  curr_window->show();
+  curr_window->OnInitialized();
   window_lock.unlock();
 }
 
@@ -89,7 +89,7 @@ BrowserClient *BrowserClient::GetInstance() {
 }
 
 void BrowserClient::OnCreateBrowserByUrl(const CefString &url) {
-  auto *new_window = new QBrowserWindow(url);
+  auto *new_window = new QBrowserWindow(url.ToString().c_str());
 }
 
 void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,

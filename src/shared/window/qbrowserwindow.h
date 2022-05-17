@@ -15,7 +15,9 @@ class QBrowserWindow : public QWindow {
   QBrowserWindow() = default;
   virtual ~QBrowserWindow() override = default;
 
-  explicit QBrowserWindow(const CefString &url);
+  explicit QBrowserWindow(const QString &url);
+
+  void OnInitialized();
 
   // callback method
   void setBrowserId(int browser_id);
@@ -43,8 +45,11 @@ class QBrowserWindow : public QWindow {
 
   void moveEvent(QMoveEvent *) override;
 
+ public: signals:
+
  private:
-  int browser_id_;
+  bool initialized = false;
+  int browser_id_ = 0;
   QString browser_url_;
   bool is_closing_ = false;
   bool is_loading_ = false;

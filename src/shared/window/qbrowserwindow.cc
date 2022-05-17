@@ -14,16 +14,15 @@
 #endif
 
 void QBrowserWindow::resizeEvent(QResizeEvent *ev) {
+  if (!initialized) return;
 #ifdef __linux__
   ::Display *display = cef_get_xdisplay();
   DCHECK(display);
-  if (browser_id_ <= 0) return;
   ::Window window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
   XResizeWindow(display, window, this->geometry().width() * 1.25, this->geometry().height() * 1.25);
   XFlush(display);
 #endif
 #ifdef _WINDOWS
-  if (browser_id_ < 0) return;
   HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
 
   HDC hdc = ::GetDC(NULL);
@@ -67,8 +66,8 @@ void QBrowserWindow::setClosingState(bool isClosing) {
   this->is_closing_ = isClosing;
 }
 
-QBrowserWindow::QBrowserWindow(const CefString &url) {
-  BrowserClient::GetInstance()->CreateBrowser(this, url);
+QBrowserWindow::QBrowserWindow(const QString &url) {
+  BrowserClient::GetInstance()->CreateBrowser(this, url.toStdString());
 }
 
 void QBrowserWindow::doLoadUrl(const QString &url) {
@@ -90,9 +89,10 @@ void QBrowserWindow::doGoForward() {
 void QBrowserWindow::doStopLoad() {
   if (is_loading_) BrowserClient::GetInstance()->DoBrowserStopLoad(browser_id_);
 }
+
 void QBrowserWindow::moveEvent(QMoveEvent *event) {
+  if (!initialized) return;
 #ifdef _WINDOWS
-  if (browser_id_ < 0) return;
   qDebug() << this->x() << this->y() << this->width() << this->height();
 
   HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
@@ -104,4 +104,10 @@ void QBrowserWindow::moveEvent(QMoveEvent *event) {
   ::MoveWindow(window, 0, 0,
                this->width() * scale, this->height() * scale, true);
 #endif
+}
+
+void QBrowserWindow::OnInitialized() {
+  initialized = true;
+  this->resize(1920, 1080);
+  this->show();
 }
