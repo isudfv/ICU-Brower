@@ -53,7 +53,7 @@ public slots:
                             QString name,
                             QString url,
                             QString path);
-    void updateDowmloadItemState(int id,
+    void updateDownloadItemState(int id,
                                  int precent,
                                  int currentSpeed);
 };

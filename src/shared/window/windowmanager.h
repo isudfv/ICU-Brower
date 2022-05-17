@@ -12,6 +12,9 @@
 #include <QString>
 #include <QWindow>
 #include <map>
+
+#include "qbrowserwindow.h"
+
 class WindowManager : public QObject {
     Q_OBJECT
 public:

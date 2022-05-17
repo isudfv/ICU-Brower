@@ -41,7 +41,7 @@ void DownloadManager::createDownloadItem(int id,
     emit addItem(id,name,url,path);
 }
 
-void DownloadManager::updateDowmloadItemState(int id,
+void DownloadManager::updateDownloadItemState(int id,
                                               int precent,
                                               int currentSpeed){
     emit updateItemState(id, precent, currentSpeed);

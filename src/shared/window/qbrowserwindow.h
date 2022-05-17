@@ -7,53 +7,55 @@
 
 #include <QQuickWindow>
 
-class QBrowserWindow : public QWindow {
- Q_OBJECT
+class QBrowserWindow: public QWindow
+{
+Q_OBJECT
 
- public:
-  QBrowserWindow() = default;
-  virtual ~QBrowserWindow() override = default;
+public:
+    QBrowserWindow() = default;
+    explicit QBrowserWindow(const QString &url);
+    virtual ~QBrowserWindow() override = default;
 
-  explicit QBrowserWindow(const QString &url);
+    void OnInitialized();
 
-  void OnInitialized();
+    // callback method
+    void setBrowserId(int browser_id);
 
-  // callback method
-  void setBrowserId(int browser_id);
+    void setBrowserUrl(const QString &url);
 
-  void setBrowserUrl(const QString &url);
+    void setLoadingState(bool isLoading, bool canGoBack, bool canGoForward);
 
-  void setLoadingState(bool isLoading, bool canGoBack, bool canGoForward);
+    void setClosingState(bool isClosing);
 
-  void setClosingState(bool isClosing);
+    void doLoadUrl(const QString &url);
 
-  void doLoadUrl(const QString &url);
+    void doReload();
 
-  void doReload();
+    void doStopLoad();
 
-  void doStopLoad();
+    void doGoBack();
 
-  void doGoBack();
+    void doGoForward();
 
-  void doGoForward();
+    // Qt event
+    void resizeEvent(QResizeEvent *ev) override;
 
-  // Qt event
-  void resizeEvent(QResizeEvent *ev) override;
+    void closeEvent(QCloseEvent *) override;
 
-  void closeEvent(QCloseEvent *) override;
+    void moveEvent(QMoveEvent *) override;
 
-  void moveEvent(QMoveEvent *) override;
+signals:
+    void onWindowCreated(QBrowserWindow* );
 
- public: signals:
 
- private:
-  bool initialized = false;
-  int browser_id_ = 0;
-  QString browser_url_;
-  bool is_closing_ = false;
-  bool is_loading_ = false;
-  bool can_go_back_ = false;
-  bool can_go_forward_ = false;
+private:
+    bool initialized = false;
+    int browser_id_ = 0;
+    QString browser_url_;
+    bool is_closing_ = false;
+    bool is_loading_ = false;
+    bool can_go_back_ = false;
+    bool can_go_forward_ = false;
 };
 
 #endif //QBROWSERCLIENT__QBROWSERWINDOW_H_

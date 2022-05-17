@@ -109,4 +109,6 @@ void QBrowserWindow::OnInitialized() {
   initialized = true;
   this->resize(1920, 1080);
   this->show();
+//  connect(this, SIGNAL(onWindowCreated(QBrowserWindow*),
+  emit onWindowCreated(this);
 }
