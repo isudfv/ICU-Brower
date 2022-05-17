@@ -16,7 +16,7 @@ public:
     explicit QBrowserWindow(const QString &url);
     virtual ~QBrowserWindow() override = default;
 
-    void OnInitialized();
+    void OnCreateFinish();
 
     // callback method
     void setBrowserId(int browser_id);

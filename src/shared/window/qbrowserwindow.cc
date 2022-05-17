@@ -4,6 +4,7 @@
 
 #include "qbrowserwindow.h"
 #include "browserclient.h"
+#include "windowmanager.h"
 
 #ifdef __linux__
 #include <X11/Xlib.h>
@@ -105,10 +106,11 @@ void QBrowserWindow::moveEvent(QMoveEvent *event) {
 #endif
 }
 
-void QBrowserWindow::OnInitialized() {
+void QBrowserWindow::OnCreateFinish() {
   initialized = true;
   this->resize(1920, 1080);
   this->show();
-//  connect(this, SIGNAL(onWindowCreated(QBrowserWindow*),
+  QObject::connect(this, SIGNAL(onWindowCreated(QBrowserWindow *)),
+                   WindowManager::getInstanse(), SLOT(addWindow(QBrowserWindow *)));
   emit onWindowCreated(this);
 }

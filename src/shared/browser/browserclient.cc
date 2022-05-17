@@ -24,7 +24,7 @@ void BrowserClient::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // Add to the list of existing browsers.
   curr_window->setBrowserId(browser->GetIdentifier());
   browser_list_[browser->GetIdentifier()] = {curr_window, browser};
-  curr_window->OnInitialized();
+    curr_window->OnCreateFinish();
   window_lock.unlock();
 }
 

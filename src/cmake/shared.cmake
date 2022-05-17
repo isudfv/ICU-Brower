@@ -43,9 +43,6 @@ set(SHARED_PROFILE_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.h
         ${CMAKE_SOURCE_DIR}/src/shared/profile/browserprofile.cc)
 
-set(WINDOWS_MANIFEST_DIR
-        ${CMAKE_SOURCE_DIR}/src/shared/manifest)
-
 set(SHARED_AB_BLOCK_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/ad_block_client.h
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/ad_block_client.cc
@@ -58,6 +55,5 @@ set(SHARED_AB_BLOCK_SRCS
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/hash_set.cc
         ${CMAKE_SOURCE_DIR}/src/shared/ad-block/hashFn.cc)
 
-
 set(WINDOWS_MANIFEST_DIR
-        ${CMAKE_SOURCE_DIR}/src/shared/manifest)
+		${CMAKE_SOURCE_DIR}/src/shared/manifest)
