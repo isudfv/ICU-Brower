@@ -6,7 +6,6 @@
 #define QBROWSERCLIENT__QBROWSERWINDOW_H_
 
 #include <QQuickWindow>
-#include "cef_browser.h"
 
 class QBrowserWindow : public QWindow {
  Q_OBJECT

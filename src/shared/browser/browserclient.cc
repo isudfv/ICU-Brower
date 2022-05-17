@@ -172,9 +172,8 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser) {
 }
 
 bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
-
   request->SetHeaderByName("User-Agent",
-                           BrowserProfile::GetInstance()->GetUserAgent(),
+                           BrowserProfile::GetInstance()->GetUserAgent().toStdString(),
                            true);
 
   if (BrowserProfile::GetInstance()->IsAdBlockFlag()

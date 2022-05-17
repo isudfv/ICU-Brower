@@ -4,7 +4,6 @@
 
 #include "qbrowserwindow.h"
 #include "browserclient.h"
-#include <iostream>
 
 #ifdef __linux__
 #include <X11/Xlib.h>

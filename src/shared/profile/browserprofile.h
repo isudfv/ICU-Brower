@@ -5,24 +5,33 @@
 #ifndef ICU_BROWSER_SRC_SHARED_PROFILE_BROWSERPROFILE_H_
 #define ICU_BROWSER_SRC_SHARED_PROFILE_BROWSERPROFILE_H_
 
-#include "cef_app.h"
+#include <QString>
 
 class BrowserProfile {
  public:
   BrowserProfile();
   static BrowserProfile *GetInstance();
 
-  void InitCefSettings(const CefSettings &settings);
+  static int InitFromCommandLine(int argc, char **argv);
+
+  static void RunBrowser();
+  static void ShutdownBrowser();
 
   void SetAdBlockFlag(bool ad_block_flag);
   bool IsAdBlockFlag() const;
 
-  const CefString &GetUserAgent() const;
-  void SetUserAgent(const CefString &user_agent);
+  const QString &GetUserAgent() const;
+  void SetUserAgent(const QString &user_agent);
 
  private:
+  QString user_agent_;
+
   bool ad_block_flag_;
-  CefString user_agent_;
+  QString main_page_url_ = "chrome://version";
+
+ public:
+  const QString &GetMainPageUrl() const;
+  void SetMainPageUrl(const QString &main_page_url);
 };
 
 #endif //ICU_BROWSER_SRC_SHARED_PROFILE_BROWSERPROFILE_H_
