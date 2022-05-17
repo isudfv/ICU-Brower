@@ -14,10 +14,11 @@ Window {
         color: "white"
         radius: 10
         border.width: 3
-        border.color: "black"
+        border.color: "#f7f7f7"
         anchors.fill: parent
 
         ColumnLayout {
+            anchors.fill: parent
             id: historyLayout
             // anchors.fill: parent
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop 
@@ -33,7 +34,7 @@ Window {
                 Layout.topMargin: 10
                 height: 25
                 width: historyRectangle.width - 24
-                color: "red"
+                color: "transparent"
                 RowLayout {
                     anchors.fill: parent               
                     // Layout.alignment: Qt.AlignLeft | Qt.AlignTop 
@@ -44,7 +45,8 @@ Window {
                     Rectangle {
                         visible: !headRectangle.isSearch
                         // 设置样式
-                        color: "pink"
+                        color: "transparent"
+                        // color: "pink"
                         height: 25
                         width: 80
                         radius: 5
@@ -53,10 +55,11 @@ Window {
                             text: "历史记录"
                             font.bold: true
                             font.pixelSize: 15
-                            // 设置在矩形中居中，需要绑定矩形的高度、宽度
+                            // 设置在矩形中垂直居中
+                            // 需要绑定矩形的高度
                             height: parent.height
-                            width: parent.width
-                            horizontalAlignment:  Text.AlignHCenter
+                            // width: parent.width
+                            // horizontalAlignment:  Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
                     }
@@ -66,7 +69,15 @@ Window {
                         width: 221
                         height: 25
                         radius: 5
-                        color: "black"
+                        color: "transparent"
+                        // temporary 测试添加记录
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                historyManager.addHistory("youtube", ".", header.currentUserId)
+                            }
+                        }
                     }
 
                     // 3. 进入搜索
@@ -79,7 +90,7 @@ Window {
                         height: 25
                         width: 30
                         radius: 5
-                        color: enterSearch.enter ? "black" : "purple"
+                        color: enterSearch.enter ? "#f7f7f7" : "transparent"
 
                         Image {
                             source: "qrc:/icons/search.svg"
@@ -120,13 +131,13 @@ Window {
                     Rectangle {
                         visible: !headRectangle.isSearch
 
-                        id: clearHistory
+                        id: clearAll
                         property bool enter: false
                         
                         height: 25
                         width: 30
                         radius: 5
-                        color: clearHistory.enter ? "black" : "blue"
+                        color: clearAll.enter ? "#f7f7f7" : "transparent"
 
                         Image {
                             source: "qrc:/icons/delete.svg"
@@ -139,7 +150,7 @@ Window {
 
                         MouseArea {
                             ToolTip {
-                                visible: clearHistory.enter
+                                visible: clearAll.enter
                                 text: "清空历史记录"
                                 background: Rectangle {
                                     color: "#f7f7f7"
@@ -152,16 +163,17 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                headRectangle.isSearch = true
+                                historyManager.clearHistory(header.currentUserId, clearHistory)
                             }
                             onEntered: {
-                                clearHistory.enter = true
+                                clearAll.enter = true
                             }
                             onExited: {
-                                clearHistory.enter = false 
+                                clearAll.enter = false 
                             }
                         }
                     }
+
                     // 搜索状态时的两个矩形
                     // 1. 返回
                     Rectangle {
@@ -173,7 +185,7 @@ Window {
                         height: 25
                         width: 30
                         radius: 5
-                        color: backNormal.enter ? "black" : "purple"
+                        color: backNormal.enter ? "#f7f7f7" : "transparent"
 
                         Image {
                             source: "qrc:/icons/back.svg"
@@ -230,7 +242,7 @@ Window {
                             // 背景框
                             background: Rectangle {
                                 radius: 5
-                                border.color: "#979797"
+                                border.color: "#f7f7f7"
                                 border.width: 1
                                 MouseArea {
                                     anchors.fill: parent
@@ -251,7 +263,7 @@ Window {
             // 一条分界线
             Rectangle {
                 // color: "#eaeaea"
-                color: "black"
+                color: "#f7f7f7"
                 height: 1.5
                 width: historyRectangle.width 
             }
@@ -259,16 +271,20 @@ Window {
             // 具体的历史记录项
             ListView {
                 model: historyModel
+
                 // 布局设置
                 Layout.leftMargin: 12
                 Layout.fillHeight: true
-                
+                Layout.fillWidth: true
+
+                // 选项
                 delegate: Rectangle {
                     id: detailRectangle
                     property bool enter: false
-                    color: enter || signalDelete.enter ? "#28b0e9" : "black"
+                    color: detailRectangle.enter || signalDelete.enter ? "#f7f7f7" : "transparent"
                     width: historyRectangle.width - 24
-                    height: 25
+                    height: 30
+                    radius: 5
 
                     MouseArea {
                         anchors.fill: parent
@@ -288,30 +304,42 @@ Window {
                         // 具体历史记录由三矩形构成
                         // 1.历史记录的内容信息
                         Rectangle {
-                            color: "pink"
-                            height: 25
-                            width: 330
+                            Layout.leftMargin: 5
+                            color: "transparent"
+                            height: 30
+                            width: 325
                             radius: 5
                             Text {
+                                id: dateText
+                                visible: false
+                                text: date
+                            }
+
+                            Text {
+                                id: nameText
                                 text: name
                                 // 设置在矩形中垂直居中；左对齐（默认）
                                 // 需要绑定矩形的高度、宽度
                                 height: parent.height
                                 width: parent.width
                                 verticalAlignment: Text.AlignVCenter
+                                // 信息太长时进行省略显示
+                                clip: true
+                                elide: Text.ElideRight
                             }
                         }
                         // 2. 历史记录的时间信息
                         Rectangle {
                             id: signalDelete
                             property bool enter: false
-                            color: signalDelete.enter ? "black" : "grey"
-                            height: 25
+                            color: signalDelete.enter ? "#cdcdcd" : "transparent"
+                            height: 30
                             width: 40
                             radius: 5
                             // 鼠标未悬浮时：显示时间信息
                             Text {
                                 visible: !signalDelete.enter && !detailRectangle.enter
+                                id: timeText
                                 text: time
                                 // 设置在矩形中居中，需要绑定矩形的高度、宽度
                                 height: parent.height
@@ -332,6 +360,11 @@ Window {
                             MouseArea {
                                 hoverEnabled: true
                                 anchors.fill: parent
+                                onClicked: {
+                                    // console.info(dateText.text)
+                                    // console.info(nameText.text)
+                                    historyManager.removeHistory(nameText.text, ".", dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
+                                }
                                 onEntered: {
                                     signalDelete.enter = true
                                 }
@@ -341,7 +374,7 @@ Window {
 
                                 ToolTip {
                                     visible: signalDelete.enter
-                                    text: "删除"
+                                    text: "删除此条"
                                     background: Rectangle {
                                         color: "#f7f7f7"
                                         border.color: "black"
@@ -353,42 +386,171 @@ Window {
                         }
                     }
                 }
+
+                // 分组
+                section{
+                    //以日期分组
+                    property: "date"
+                    //指定为完全字符串匹配
+                    criteria: ViewSection.FullString
+
+                    //分组标题
+                    delegate: Rectangle{
+                        id: groupItem
+                        property bool enter: false
+                        width: historyRectangle.width - 24
+                        height: 30
+                        color: groupItem.enter || deleteSignle.enter ? "#f7f7f7" : "transparent"
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                // console.log(groupItem.enter)
+                            }
+                            onEntered: {
+                                groupItem.enter = true
+                            }
+                            onExited: {
+                                groupItem.enter = false
+                            }
+                        }
+
+                        RowLayout {
+                            //文本内容
+                            Rectangle {
+                                color: "transparent"
+                                width: 80
+                                height: 30
+                                radius: 3
+                                Text {
+                                    //对应section.property指定的字段
+                                    text: section
+                                    x: 3
+                                    font.bold: true
+                                    font.pixelSize: 12
+                                    // 设置在矩形中垂直居中
+                                    // 需要绑定矩形的高度
+                                    height: parent.height
+                                    // width: parent.width
+                                    // horizontalAlignment:  Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                }
+                            }
+                            // 占位矩形
+                            Rectangle {
+                                color: "transparent"
+                                width: 246
+                                height: 30
+                                radius: 5
+                            }
+                            // 删除本日的历史记录
+                            Rectangle {
+                                id: deleteSignle
+                                property bool enter: false
+                                color: deleteSignle.enter ? "#cdcdcd" : "transparent"
+                                width: 40
+                                height: 30
+                                radius: 5
+                                Image {
+                                    visible: groupItem.enter || deleteSignle.enter
+                                    source: "qrc:/icons/close.svg"
+                                    width: 16
+                                    height: 16
+                                    // 居中设置
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    anchors.verticalCenter: parent.verticalCenter
+                                }
+
+                                ToolTip {
+                                    visible: deleteSignle.enter
+                                    text: "删除此日所有历史记录"
+                                    background: Rectangle {
+                                        color: "#f7f7f7"
+                                        border.color: "black"
+                                        border.width: 1
+                                        radius: 5
+                                    }
+                                }
+                                MouseArea {
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onEntered: {
+                                        deleteSignle.enter = true
+                                    }
+                                    onExited: {
+                                        deleteSignle.enter = false
+                                    }
+                                    onClicked: {
+                                        // console.info(section)
+                                        historyManager.removeSignalDayHistory(header.currentUserId, section, removeSignalDayHistory)
+                                    }
+                                }
+                            }
+                        }
+                        
+                        
+                    }
+                    //位置
+                    
+                }
             }
         }
     }
 
-
+    // model 
     ListModel {
+        // 如果一个section穿插在Model的不同位置，
+        // ListView不会将一个分组内的元素放到一起，
+        // 而是会显示多个相同的section
         id: historyModel
-
-        ListElement {
-            // img: "qrc:/icons/history.svg"
-            name: "Bilibili"
-            time: "12:00"
-            // url: "bilibili.com"
-        }
+        
+        // ListElement {
+        //     name: "bilibili"
+        //     time: "00:00"
+        //     date: "2001-05-14"
+        //     url: "."
+        // }
+        
     }
 
     function loadHistory(){
-        historyManager.loadHistory(header.userid, clearHistory, addHistoryItem)
+        historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
     }
 
-    function addHistoryItem(name,time,url){
-        historymodel.append({"name":name, "time":time, "url":url})
+    function addHistoryItem(name, url, time, date){
+        historyModel.insert(0,{"name":name, "url":url, "time": time, "date": date})
     }
 
-    function removeHistoryItem(name, time, url){
-        for (let i = 0; i < historymodel.count; ++i) {
-            if (historymodel.get(i).url === url) {
-                historymodel.remove(i)
+    function removeHistoryItem(name, url, time, date){
+        for (let i = 0; i < historyModel.count; ++i) {
+            if (historyModel.get(i).url === url) {
+                historyModel.remove(i)
                 break
+            }
+        }
+    }
+
+    function removeSignalDayHistory(uid, date) {
+        // 删除单日历史记录
+        for (let i = 0; i < historyModel.count; ++i) {
+            if (historyModel.get(i).date === date) {
+                historyModel.remove(i)
+                --i
             }
         }
     }
 
     function clearHistory(){
         //清空视图中的历史记录
-        historymodel.clear()
+        historyModel.clear()
+    }
+
+    Connections {
+        target: historyManager
+        function onAddItem(name,url,time,date){
+            addHistoryItem(name, url, time, date)
+        }
     }
 
      onActiveFocusItemChanged: {

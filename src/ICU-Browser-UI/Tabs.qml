@@ -209,6 +209,9 @@ Row {
         function onRemoveTab(windowId_){
             removeTabItem(windowId_)
         }
+        function onSetTabState(windowId_,title_,url_,icon_){
+            setTabState(windowId_,title_,url_,icon_)
+        }
     }
 
     Component.onCompleted: {
@@ -233,6 +236,16 @@ Row {
         for (var i =0;i < tabBar.count;++i){
             if(tabBar.itemAt(i).windowId === windowId_){
                 tabBar.removeItem(tabBar.itemAt(i));
+                break;
+            }
+        }
+    }
+    function setTabState(windowId_,title_,url_,icon_){
+        for (var i =0;i < tabBar.count;++i){
+            if(tabBar.itemAt(i).windowId === windowId_){
+                tabBar.itemAt(i).windowTitle = title_
+                tabBar.itemAt(i).windowUrl = url_
+                tabBar.itemAt(i).windowIcon = icon_
                 break;
             }
         }

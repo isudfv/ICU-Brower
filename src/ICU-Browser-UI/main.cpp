@@ -15,21 +15,20 @@
 #include "historymanager.h"
 #include "usermanager.h"
 #include "windowmanager.h"
+#include "downloadmanager.h"
 
 int main(int argc, char *argv[])
 {
     QApplication          app(argc, argv);
     QQmlApplicationEngine engine;
 
-    auto favoritesManager = new FavoritesManager;
     auto cefWindow        = new CEFWindow;
-    auto windowManager    = new WindowManager;
-    auto historyManager   = new HistoryManager;
 
     engine.rootContext()->setContextProperty("cefWindow", cefWindow);
-    engine.rootContext()->setContextProperty("favoritesManager", favoritesManager);
-    engine.rootContext()->setContextProperty("windowManager", windowManager);
-    engine.rootContext()->setContextProperty("historyManager", historyManager);
+    engine.rootContext()->setContextProperty("favoritesManager", FavoritesManager::getInstanse());
+    engine.rootContext()->setContextProperty("windowManager", WindowManager::getInstanse());
+    engine.rootContext()->setContextProperty("historyManager", HistoryManager::getInstanse());
+    engine.rootContext()->setContextProperty("downloadManager", DownloadManager::getInstanse());
     UserManager::declareQML();
 
     engine.load("qrc:/main.qml");
@@ -49,7 +48,6 @@ int main(int argc, char *argv[])
     //    qDebug() << "widget before" << cefWindow->pos();
 
     //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));
-
 
     return app.exec();
 }

@@ -1,10 +1,15 @@
 ﻿#include "historymanager.h"
 
-Q_INVOKABLE void HistoryManager::addHistory(QString name,QString time,QString url,int uid,QJSValue callback)
+Q_INVOKABLE void HistoryManager::addHistory(QString name,QString url,int uid)
 {
+    QDateTime datetime=QDateTime::currentDateTime();
+    QString date=datetime.date().toString("yyyy-MM-dd");
+    QString time=datetime.time().toString("hh:mm");
+
     //创建一个history对象
     QJsonObject history;
     history["name"]=name;
+    history["date"]=date;
     history["time"]=time;
     history["url"]=url;
 
@@ -48,17 +53,13 @@ Q_INVOKABLE void HistoryManager::addHistory(QString name,QString time,QString ur
     out.close();
 
     //调用回调函数，修改view层
-    QJSValue _name(name);
-    QJSValue _url(url);
-    QJSValue _time(time);
-    QJSValueList list;
-    list.append(_name);
-    list.append(_time);
-    list.append(_url);
-    callback.call(list);
+    emit addItem(name,url,time,date);
+//    QJSValueList list={name,url,time,date};
+
+//    callback.call(list);
 
 }
-Q_INVOKABLE void HistoryManager::removeHistory(QString name,QString time,QString url,int uid,QJSValue callback)
+Q_INVOKABLE void HistoryManager::removeHistory(QString name,QString url,QString date,QString time,int uid,QJSValue callback)
 {
     QString file_path=QString("./history/%1.json").arg(uid);
     QFile file(file_path);
@@ -66,38 +67,33 @@ Q_INVOKABLE void HistoryManager::removeHistory(QString name,QString time,QString
 
     //打开目标文件
     QJsonParseError error;
-    QJsonDocument doc=QJsonDocument::fromJson(file.readAll(),&error);
-    QJsonObject obj=doc.object();
-    QJsonArray arr=obj["histories"].toArray();
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll(),&error);
+    QJsonObject obj = doc.object();
+    QJsonArray arr = obj["histories"].toArray();
 
     file.close();
     //遍历histories，如果找到符合条件的，就移除
-    for(auto it=arr.begin();it!=arr.end();++it)
+    for(auto it = arr.begin();it!=arr.end();++it)
     {
-         QJsonObject temp=it->toObject();
-         if(temp["name"].toString()==name&&temp["time"].toString()==time&&temp["url"].toString()==url)
+         QJsonObject temp = it->toObject();
+         if(temp["name"].toString() == name && temp["date"].toString() == date && temp["time"].toString()==time && temp["url"].toString() == url)
          {
              arr.erase(it);
              break;
          }
     }
-    obj["histories"]=arr;
+    obj["histories"] = arr;
     doc.setObject(obj);
     //将更新后的json写回源文件
-    QByteArray data=doc.toJson(QJsonDocument::Indented);
+    QByteArray data = doc.toJson(QJsonDocument::Indented);
     QFile out(file_path);
     out.open(QIODevice::WriteOnly|QIODevice::Truncate);
     out.write(data);
     out.close();
 
     //调用回调函数，更新view层的数据
-    QJSValue _name(name);
-    QJSValue _url(url);
-    QJSValue _time(time);
-    QJSValueList list;
-    list.append(_name);
-    list.append(_time);
-    list.append(_url);
+
+    QJSValueList list={name,url,time,date};
 
     callback.call(list);
 
@@ -148,11 +144,51 @@ Q_INVOKABLE void HistoryManager::loadHistory(int uid,QJSValue callbacka,QJSValue
         QJSValue _name(temp["name"].toString());
         QJSValue _url(temp["url"].toString());
         QJSValue _time(temp["time"].toString());
-        QJSValueList list;
-        list.append(_name);
-        list.append(_time);
-        list.append(_url);
+        QJSValue _date(temp["date"].toString());
+
+        QJSValueList list={_name,_url,_time,_date};
         callbackb.call(list);
     }
     file.close();
+}
+Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid,QString date,QJSValue callback)
+{
+    //打开文件
+    QString file_path = QString ("./history/%1.json").arg(uid);
+    QFile file(file_path);
+    file.open(QIODevice::ReadOnly);
+
+    QJsonParseError error;
+    QJsonDocument doc=QJsonDocument::fromJson(file.readAll(),&error);
+    QJsonObject obj=doc.object();
+    QJsonArray array=obj["histories"].toArray();
+    file.close();
+
+    //遍历所有历史记录，将指定date的记录都删除
+    for(auto it=array.begin();it!=array.end();)
+    {
+        QJsonObject temp=it->toObject();
+
+        if(temp["date"].toString()==date)
+        {
+            it=array.erase(it);
+        }
+        else ++it;
+    }
+    obj["histories"]=array;
+    doc.setObject(obj);
+
+    //写回json文件
+    QFile out(file_path);
+    out.open(QIODevice::WriteOnly|QIODevice::Truncate);
+    QByteArray data=doc.toJson(QJsonDocument::Indented);
+    out.write(data);
+    out.close();
+
+    //调用回调函数，修改view层
+
+    QJSValueList list{uid,date};
+    callback.call(list);
+
+
 }

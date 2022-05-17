@@ -21,15 +21,16 @@
 class DownloadManager:public QObject{
     Q_OBJECT
 public:
-    static DownloadManager& getInstanse(){
+    static DownloadManager* getInstanse(){
         static DownloadManager dm;
-        return dm;
+        return &dm;
     }
 
     Q_INVOKABLE void deleteDownloadItem(int id, QString path);
-    Q_INVOKABLE void removeDownloadItem(int id, QString path);
+    Q_INVOKABLE void removeDownloadItem(int id);
     Q_INVOKABLE void clearDownloadItem();
-    Q_INVOKABLE void showDownLoadItemInExplorer(QString path,QJSValue callback);
+    Q_INVOKABLE void showDownLoadItemInExplorer(int id,QString path);
+    Q_INVOKABLE void changeDownloadItemPauseState(int id);
 
 signals:
     void addItem(int id,
@@ -41,6 +42,11 @@ signals:
     void updateItemState(int id,
                          int precent,
                          int currentSpeed);
+    void setFileState(int id,bool exist);
+    void changePauseState(int id);
+
+    //对M层的信号
+    void toChangeDownloadItemPauseState(int id);
 
 public slots:
     void createDownloadItem(int id,
