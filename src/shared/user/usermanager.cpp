@@ -73,7 +73,7 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
     auto         nameLen = username.length();
 
     //创建数据库实例
-    //    Instance inst = {};
+    Instance inst = {};
     //    Uri      uri("mongodb://175.178.155.66:27017");
     //    Client   client(uri);
 
