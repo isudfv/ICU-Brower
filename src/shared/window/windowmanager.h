@@ -19,7 +19,7 @@ class WindowManager: public QObject
 {
 Q_OBJECT
 public:
-    static WindowManager *getInstanse()
+    static WindowManager *getInstance()
     {
         static WindowManager wm;
         return &wm;

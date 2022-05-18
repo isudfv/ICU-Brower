@@ -128,18 +128,18 @@ void QBrowserWindow::OnCreateFinish()
     this->show();
     QObject::connect(this,
                      SIGNAL(onWindowCreated(QBrowserWindow * )),
-                     WindowManager::getInstanse(),
+                     WindowManager::getInstance(),
                      SLOT(addWindow(QBrowserWindow * )));
     QObject::connect(this,
                      SIGNAL(setLoadState(int, bool, bool)),
-                     WindowManager::getInstanse(),
+                     WindowManager::getInstance(),
                      SLOT(loadStateChanged(int, bool, bool)));
     QObject::connect(this,
                      SIGNAL(setTabState(int, const QString &, const QString &, const QString &)),
-                     WindowManager::getInstanse(),
+                     WindowManager::getInstance(),
                      SLOT(tabStateChanged(int, const QString &, const QString &, const QString &)));
-//    QObject::connect(this, SIGNAL(), WindowManager::getInstanse(), SLOT());
-//    QObject::connect(this, SIGNAL(), WindowManager::getInstanse(), SLOT());
+//    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
+//    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
     emit onWindowCreated(this);
 }
 

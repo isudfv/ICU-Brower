@@ -47,8 +47,7 @@ void WindowManager::addWindow(QBrowserWindow *new_window)
 {
     int id = new_window->getBrowserId();
     mp.insert({id, new_window});
-    QString icon = "qrc:/icons/stackoverflow.svg";
-    emit addTab(id, "Loading...", "Loading...", icon, true);
+    emit addTab(id, "Loading...", "Loading...", "", true);
 
     qDebug() << "Add Windows";
 }
@@ -56,6 +55,10 @@ void WindowManager::addWindow(QBrowserWindow *new_window)
 void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon)
 {
     emit setTabState(windowId, title, url, icon);
+
+    if (title != "" && url != "" && icon != "") {
+//        HistoryManager::getInstanse()->addHistory();
+    }
 
     qDebug() << windowId << title << url << icon;
 }
