@@ -55,7 +55,7 @@ public slots:
 
 private:
     int currentWindowId;
-    std::map<int, QBrowserWindow *> mp;
+    std::unordered_map<int, QBrowserWindow *> mp;
 };
 
 #endif// WINDOWMANAGER_H

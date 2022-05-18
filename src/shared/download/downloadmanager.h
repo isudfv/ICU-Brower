@@ -18,10 +18,14 @@
 #include <QProcess>
 #include <QDesktopServices>
 
-class DownloadManager:public QObject{
-    Q_OBJECT
+#include "downloaditem.h"
+
+class DownloadManager: public QObject
+{
+Q_OBJECT
 public:
-    static DownloadManager* getInstanse(){
+    static DownloadManager *getInstance()
+    {
         static DownloadManager dm;
         return &dm;
     }
@@ -29,10 +33,11 @@ public:
     Q_INVOKABLE void deleteDownloadItem(int id, QString path);
     Q_INVOKABLE void removeDownloadItem(int id);
     Q_INVOKABLE void clearDownloadItem();
-    Q_INVOKABLE void showDownLoadItemInExplorer(int id,QString path);
+    Q_INVOKABLE void showDownLoadItemInExplorer(int id, QString path);
     Q_INVOKABLE void changeDownloadItemPauseState(int id);
 
 signals:
+//    to view layer
     void addItem(int id,
                  QString name,
                  QString url,
@@ -40,22 +45,23 @@ signals:
     void removeItem(int id);
     void clearItem();
     void updateItemState(int id,
-                         int precent,
+                         int percent,
                          int currentSpeed);
-    void setFileState(int id,bool exist);
+    void setFileState(int id, bool exist);
     void changePauseState(int id);
 
-    //对M层的信号
+
+//    to model layer
     void toChangeDownloadItemPauseState(int id);
 
 public slots:
-    void createDownloadItem(int id,
-                            QString name,
-                            QString url,
-                            QString path);
-    void updateDownloadItemState(int id,
-                                 int precent,
-                                 int currentSpeed);
+    void downloadItemCreated(int id,
+                            const QString &name,
+                            const QString &url,
+                            const QString &path);
+    void downloadItemStateUpdated(int id,
+                                  int percent,
+                                  int currentSpeed);
 };
 
 #endif//ICU_BROWSER_UI_DOWNLOADMANAGER_H

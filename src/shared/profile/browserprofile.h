@@ -27,7 +27,7 @@ class BrowserProfile {
   QString user_agent_;
 
   bool ad_block_flag_;
-  QString main_page_url_ = "bilibili.com";
+  QString main_page_url_ = "https://mirror.tuna.tsinghua.edu.cn/ubuntu-releases/";
 
  public:
   const QString &GetMainPageUrl() const;
