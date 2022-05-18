@@ -252,3 +252,9 @@ CefResourceRequestHandler::ReturnValue ClientHandler::OnBeforeResourceLoad(CefRe
   }
   return RV_CONTINUE;
 }
+void ClientHandler::OnFaviconURLChange(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls)
+{
+    CEF_REQUIRE_UI_THREAD();
+
+    if (delegate_) delegate_->OnSetFaviconURL(browser, icon_urls);
+}

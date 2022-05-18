@@ -10,70 +10,73 @@
 #include "downloaditem.h"
 #include "ad_block_client.h"
 
-class BrowserClient : public ClientHandler::Delegate {
- public:
-  explicit BrowserClient();
+class BrowserClient: public ClientHandler::Delegate
+{
+public:
+    explicit BrowserClient();
 
 //  impl the SimpleHandler::Delegate
 
-  bool CheckRequestIntercept(CefRefPtr<CefRequest> request) override;
+    bool CheckRequestIntercept(CefRefPtr<CefRequest> request) override;
 
-  void OnBrowserCreated(CefRefPtr<CefBrowser> browser) override;
+    void OnBrowserCreated(CefRefPtr<CefBrowser> browser) override;
 
-  void OnBeforeBrowserPopup(CefWindowInfo &windowInfo) override;
+    void OnBeforeBrowserPopup(CefWindowInfo &windowInfo) override;
 
-  void OnDoBrowserClose(CefRefPtr<CefBrowser> browser) override;
+    void OnDoBrowserClose(CefRefPtr<CefBrowser> browser) override;
 
-  void OnBrowserClosed(CefRefPtr<CefBrowser> browser) override;
+    void OnBrowserClosed(CefRefPtr<CefBrowser> browser) override;
 
-  void OnSetAddress(CefRefPtr<CefBrowser> browser, const CefString &url) override;
+    void OnSetAddress(CefRefPtr<CefBrowser> browser, const CefString &url) override;
 
-  void OnSetTitle(CefRefPtr<CefBrowser> browser, const CefString &title) override;
+    void OnSetTitle(CefRefPtr<CefBrowser> browser, const CefString &title) override;
 
-  void OnCreateBrowserByUrl(const CefString &url) override;
+    void OnCreateBrowserByUrl(const CefString &url) override;
 
-  void OnSetLoadingState(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) override;
+    void OnSetLoadingState(CefRefPtr<CefBrowser> browser, bool isLoading, bool canGoBack, bool canGoForward) override;
 
-  void OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
-                       const CefString &suggested_name,
-                       CefRefPtr<CefBeforeDownloadCallback> callback) override;
+    void OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
+                         const CefString &suggested_name,
+                         CefRefPtr<CefBeforeDownloadCallback> callback) override;
 
-  void OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item,
-                             CefRefPtr<CefDownloadItemCallback> callback) override;
+    void OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item,
+                               CefRefPtr<CefDownloadItemCallback> callback) override;
 
-  // QBrowserWindow user method
-  void CreateBrowser(QBrowserWindow *target_window, const CefString &url);
+    void OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls) override;
 
-  void TryCloseBrowser(int browser_id);
+    // QBrowserWindow user method
+    void CreateBrowser(QBrowserWindow *target_window, const CefString &url);
 
-  CefWindowHandle GetBrowserWindowHandler(int browser_id);
+    void TryCloseBrowser(int browser_id);
 
-  void DoBrowserLoadUrl(int browser_id, const QString &url);
+    CefWindowHandle GetBrowserWindowHandler(int browser_id);
 
-  void DoBrowserReload(int browser_id);
+    void DoBrowserLoadUrl(int browser_id, const QString &url);
 
-  void DoBrowserStopLoad(int browser_id);
+    void DoBrowserReload(int browser_id);
 
-  void DoBrowserGoBack(int browser_id);
+    void DoBrowserStopLoad(int browser_id);
 
-  void DoBrowserGoForward(int browser_id);
+    void DoBrowserGoBack(int browser_id);
 
-  static BrowserClient *GetInstance();
+    void DoBrowserGoForward(int browser_id);
 
-  BrowserClient(const BrowserClient &) = delete;
-  ~BrowserClient() override;
-  const BrowserClient &operator=(const BrowserClient &) = delete;
+    static BrowserClient *GetInstance();
 
- private:
-  ClientHandler *handler_;
+    BrowserClient(const BrowserClient &) = delete;
+    ~BrowserClient() override;
+    const BrowserClient &operator=(const BrowserClient &) = delete;
 
-  AdBlockClient ad_block_client_;
+private:
+    ClientHandler *handler_;
 
-  std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
+    AdBlockClient ad_block_client_;
 
-  std::unordered_map<DownloadItem::Id, std::pair<DownloadItem *, CefRefPtr<CefDownloadItem>>> download_item_list_;
+    std::unordered_map<int, std::pair<QBrowserWindow *, CefRefPtr<CefBrowser>>> browser_list_;
 
-  void InitAdBlockClient();
+    std::unordered_map<DownloadItem::Id, std::pair<DownloadItem *, CefRefPtr<CefDownloadItem>>> download_item_list_;
+
+    void InitAdBlockClient();
 };
 
 #endif //BROWSERCLIENT__BROWSERCLIENT_H_

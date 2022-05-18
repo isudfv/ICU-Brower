@@ -26,6 +26,8 @@ public:
 
     void setBrowserUrl(const QString &url);
 
+    void setIconUrls(const QString &icon_url);
+
     void setLoadingState(bool isLoading, bool canGoBack, bool canGoForward);
 
     void setClosingState(bool isClosing);
@@ -65,6 +67,7 @@ private:
     int browser_id_ = 0;
 
     QString browser_url_;
+    QString icon_url_;
     bool is_closing_ = false;
     bool is_loading_ = false;
     bool can_go_back_ = false;

@@ -203,3 +203,8 @@ void BrowserClient::InitAdBlockClient() {
 BrowserClient::~BrowserClient() {
   delete[]ad_block_buffer;
 }
+
+void BrowserClient::OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls)
+{
+    browser_list_[browser->GetIdentifier()].first->setIconUrls(icon_urls[0].ToString().c_str());
+}

@@ -55,9 +55,9 @@ void WindowManager::addWindow(QBrowserWindow *new_window)
 
 void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon)
 {
-    emit setTabState(windowId, title, url, "qrc:/icons/stackoverflow.svg");
+    emit setTabState(windowId, title, url, icon);
 
-    qDebug() << windowId << title << url;
+    qDebug() << windowId << title << url << icon;
 }
 
 void WindowManager::loadStateChanged(int windowId, bool activeBack, bool activeForward)

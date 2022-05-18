@@ -33,7 +33,6 @@ public:
     Q_INVOKABLE void addWindow(QString url);
     Q_INVOKABLE void addWindowNotInFocus(QString url);
     Q_INVOKABLE void removeWindow(int windowId);
-    int getIndex();
 
 signals:
     void addTab(int newWindowId, QString newWindowTitle, QString newWindowUrl, QString icon, bool toToggle);
