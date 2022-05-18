@@ -44,7 +44,7 @@ void BrowserClient::OnBeforeBrowserPopup(CefWindowInfo &window_info) {
 }
 
 void BrowserClient::OnSetTitle(CefRefPtr<CefBrowser> browser, const CefString &title) {
-  browser_list_[browser->GetIdentifier()].first->setTitle(QString::fromStdString(title.ToString()));
+  browser_list_[browser->GetIdentifier()].first->setBrowserTitle(QString::fromStdString(title.ToString()));
 }
 
 void BrowserClient::OnSetAddress(CefRefPtr<CefBrowser> browser, const CefString &url) {

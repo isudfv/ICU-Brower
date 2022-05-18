@@ -47,6 +47,12 @@ signals:
 
 public slots:
     void addWindow(QBrowserWindow *new_window);
+    void tabStateChanged(int windowId,
+                         const QString& title,
+                         const QString& url,
+                         const QString& icon);
+    void loadStateChanged(int windowId, bool activeBack,
+                          bool activeForward);
 
 private:
     int currentWindowId;

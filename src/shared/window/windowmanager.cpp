@@ -3,96 +3,68 @@
 
 void WindowManager::toggleTab(int windowId)
 {
-//    if(mp.count(currentWindowId)) mp[currentWindowId]->hide();
-//    currentWindowId = windowId;
-//    mp[currentWindowId]->show();
-    bool activeBack = true;
-    bool activeForward = true;//获取状态
-
-    emit setHeaderState(activeBack, activeForward);
+    if (mp.count(currentWindowId)) mp[currentWindowId]->hide();
+    currentWindowId = windowId;
+    mp[currentWindowId]->activeWindow();
 }
 
 void WindowManager::doGoBack(int windowId)
 {
-//    mp[windowId]->doGoBack();
-    bool activeBack = true;
-    bool activeForward = true;
-    QString currentUrl = "GoBack";//获取状态
-    emit setTabState(windowId, currentUrl, currentUrl, "qrc:/icons/stackoverflow.svg");
-    emit setHeaderState(activeBack, activeForward);
+    mp[windowId]->doGoBack();
 }
 
 void WindowManager::doGoForward(int windowId)
 {
-//    mp[windowId]->doGoBack();
-    bool activeBack = true;
-    bool activeForward = true;
-    QString currentUrl = "GoForWard";//获取状态
-    emit setTabState(windowId, currentUrl, currentUrl, "qrc:/icons/stackoverflow.svg");
-    emit setHeaderState(activeBack, activeForward);
+    mp[windowId]->doGoForward();
 }
 
 void WindowManager::doReLoad(int windowId)
 {
-//    mp[windowId]->doReload();
-    bool activeBack = true;
-    bool activeForward = true;
-    QString currentTitle = "ReLoad";//获取状态
-
-    emit setTabState(windowId, currentTitle, currentTitle, "qrc:/icons/stackoverflow.svg");
-    emit setHeaderState(activeBack, activeForward);
+    mp[windowId]->doReload();
 }
 
 void WindowManager::doLoadUrl(int windowId, QString url, int uid)
 {
-//    mp[windowId]->doLoadUrl(url);
-    bool activeBack = true;
-    bool activeForward = true;
-    QString currentTitle = url;//获取状态
-//    HistoryManager::getInstanse()->addHistory(currentTitle, url, uid);
-    emit setTabState(windowId, currentTitle, url, "qrc:/icons/stackoverflow.svg");
-    emit setHeaderState(activeBack, activeForward);
+    mp[windowId]->doLoadUrl(url);
 }
 
 void WindowManager::addWindow(QString url)
 {
-   QBrowserWindow *w = new QBrowserWindow(url);
+    auto *w = new QBrowserWindow(url);
 }
 
 void WindowManager::addWindowNotInFocus(QString url)
 {
-
 }
 
 void WindowManager::removeWindow(int windowId)
 {
-    //~mp[windowId]
     mp.erase(windowId);
     emit removeTab(windowId);
 }
 
-int WindowManager::getIndex()
-{
-    for (int i = 0; i < INT_MAX; ++i) {
-        if (mp.count(i) == 0) {
-            return i;
-        }
-    }
-    return -1;
-}
-
 void WindowManager::addWindow(QBrowserWindow *new_window)
 {
-    int id = getIndex();
+    int id = new_window->getBrowserId();
     mp.insert({id, new_window});
     QString icon = "qrc:/icons/stackoverflow.svg";
-    emit addTab(id, "", "", icon, true);
-    //    if(mp.count(currentWindowId)) mp[currentWindowId]->hide();
-    //    currentWindowId = id;
-    //    mp[currentWindowId]->show();
-//    bool activeBack = true;
-//    bool activeForward = true;;//获取状态
-//    emit setHeaderState(activeBack, activeForward);
+    emit addTab(id, "Loading...", "Loading...", icon, true);
 
     qDebug() << "Add Windows";
+}
+
+void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon)
+{
+    emit setTabState(windowId, title, url, "qrc:/icons/stackoverflow.svg");
+
+    qDebug() << windowId << title << url;
+}
+
+void WindowManager::loadStateChanged(int windowId, bool activeBack, bool activeForward)
+{
+    if (currentWindowId == windowId) {
+        emit setHeaderState(activeBack, activeForward);
+    }
+
+    qDebug() << activeForward << activeBack;
 }

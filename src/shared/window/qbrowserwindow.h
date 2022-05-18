@@ -18,8 +18,11 @@ public:
 
     void OnCreateFinish();
 
-    // callback method
+    // cef callback
     void setBrowserId(int browser_id);
+    int getBrowserId() const;
+
+    void setBrowserTitle(const QString &title);
 
     void setBrowserUrl(const QString &url);
 
@@ -27,6 +30,7 @@ public:
 
     void setClosingState(bool isClosing);
 
+    // user method
     void doLoadUrl(const QString &url);
 
     void doReload();
@@ -37,6 +41,8 @@ public:
 
     void doGoForward();
 
+    void activeWindow();
+
     // Qt event
     void resizeEvent(QResizeEvent *ev) override;
 
@@ -46,11 +52,18 @@ public:
 
 signals:
     void onWindowCreated(QBrowserWindow* );
+    void setTabState(int windowId,
+                         const QString& title,
+                         const QString& url,
+                         const QString& icon);
+    void setLoadState(int windowId, bool activeBack,
+                          bool activeForward);
 
 
 private:
     bool initialized = false;
     int browser_id_ = 0;
+
     QString browser_url_;
     bool is_closing_ = false;
     bool is_loading_ = false;
