@@ -222,15 +222,26 @@ Window {
                     }
                     // 2.搜索框
                     Rectangle {
-                        visible: headRectangle.isSearch
-                        height: 25
-                        width: 340
+
+                        height: 30
+                        width: 300
                         radius: 5
                         
                         TextField {
+                            visible: headRectangle.isSearch
                             id: input
-                            height: 25
-                            width: 340
+                            anchors.fill: parent
+
+                            // 回车即完成
+                            onEditingFinished: {
+                                console.info("finished")
+                            }
+
+                            // 改变即发送信号
+                            onTextEdited: {
+                                console.info("edited")
+                                historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem, input.text)
+                            }
 
                             // 光标居中
                             verticalAlignment: TextField.AlignVCenter 
@@ -242,7 +253,7 @@ Window {
                             // 背景框
                             background: Rectangle {
                                 radius: 5
-                                border.color: "#f7f7f7"
+                                border.color: "#424242"
                                 border.width: 1
                                 MouseArea {
                                     anchors.fill: parent
@@ -255,6 +266,19 @@ Window {
                                     }
                                 }
                             }                      
+                        }
+                    }
+
+                    // 测试用
+                    Rectangle {
+                        width: 40
+                        height:25
+                        color: "pink"
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                console.info(input.text)
+                            }
                         }
                     }
                 }
@@ -494,6 +518,8 @@ Window {
                     //位置
                     
                 }
+
+                flickableDirection: Flickable.AutoFlickDirection
             }
         }
     }
@@ -561,7 +587,7 @@ Window {
     onVisibleChanged: {
         if(visible) {
            loadHistory()
-        }
+        } 
     }
     Component.onCompleted: {
         loadHistory()
