@@ -24,7 +24,7 @@ void BrowserClient::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // Add to the list of existing browsers.
   curr_window->setBrowserId(browser->GetIdentifier());
   browser_list_[browser->GetIdentifier()] = {curr_window, browser};
-    curr_window->OnCreateFinish();
+  curr_window->OnCreateFinish();
   window_lock.unlock();
 }
 
@@ -39,7 +39,7 @@ void BrowserClient::OnBeforeBrowserPopup(CefWindowInfo &window_info) {
 #endif
 
 #ifdef _WINDOWS
-  window_info.SetAsChild((HWND)w->winId(), {0, 0, 0, 0});
+  window_info.SetAsChild((HWND) w->winId(), {0, 0, 0, 0});
 #endif
 }
 
@@ -68,7 +68,7 @@ void BrowserClient::CreateBrowser(QBrowserWindow *target_window, const CefString
 
 #ifdef _WINDOWS
   window_info.SetAsPopup(nullptr, "sdf");
-  window_info.SetAsChild((HWND)target_window->winId(), {0, 0, 0, 0});
+  window_info.SetAsChild((HWND) target_window->winId(), {0, 0, 0, 0});
 #endif
 
   curr_window = target_window;
@@ -175,8 +175,6 @@ bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
   request->SetHeaderByName("User-Agent",
                            BrowserProfile::GetInstance()->GetUserAgent().toStdString(),
                            true);
-  auto a = request->GetURL();
-  auto b =  request->GetReferrerURL();
 
   if (BrowserProfile::GetInstance()->IsAdBlockFlag()
       && request->GetURL().IsOwner() && request->GetReferrerURL().IsOwner()
@@ -207,7 +205,6 @@ BrowserClient::~BrowserClient() {
   delete[]ad_block_buffer;
 }
 
-void BrowserClient::OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls)
-{
-    browser_list_[browser->GetIdentifier()].first->setIconUrls(icon_urls[0].ToString().c_str());
+void BrowserClient::OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls) {
+  browser_list_[browser->GetIdentifier()].first->setIconUrls(icon_urls[0].ToString().c_str());
 }

@@ -108,8 +108,6 @@ void QBrowserWindow::moveEvent(QMoveEvent *event)
 {
     if (!initialized) return;
 #ifdef _WINDOWS
-    qDebug() << this->x() << this->y() << this->width() << this->height();
-
     HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
 
     HDC hdc = ::GetDC(NULL);
@@ -147,16 +145,19 @@ int QBrowserWindow::getBrowserId() const
 {
     return browser_id_;
 }
+
 void QBrowserWindow::activeWindow()
 {
     emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
     emit setLoadState(this->browser_id_, this->can_go_back_, this->can_go_forward_);
 }
+
 void QBrowserWindow::setBrowserTitle(const QString &title)
 {
     this->setTitle(title);
     emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
 }
+
 void QBrowserWindow::setIconUrls(const QString &icon_url)
 {
     icon_url_ = icon_url;
