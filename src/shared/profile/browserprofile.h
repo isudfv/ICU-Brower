@@ -27,7 +27,7 @@ class BrowserProfile {
   QString user_agent_;
 
   bool ad_block_flag_;
-  QString main_page_url_ = "chrome://version";
+  QString main_page_url_ = "bilibili.com";
 
  public:
   const QString &GetMainPageUrl() const;

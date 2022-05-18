@@ -91,6 +91,7 @@ void BrowserProfile::SetMainPageUrl(const QString &main_page_url)
 
 void BrowserProfile::RunBrowser()
 {
+    CefEnableHighDPISupport();
     QBrowserWindow w(GetInstance()->main_page_url_);
     CefRunMessageLoop();
 }
