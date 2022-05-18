@@ -24,7 +24,7 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev)
     XFlush(display);
 #endif
 #ifdef _WINDOWS
-    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
 
     HDC hdc = ::GetDC(NULL);
     int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
@@ -110,7 +110,7 @@ void QBrowserWindow::moveEvent(QMoveEvent *event)
 #ifdef _WINDOWS
     qDebug() << this->x() << this->y() << this->width() << this->height();
 
-    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHanlder(browser_id_);
+    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
 
     HDC hdc = ::GetDC(NULL);
     int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);

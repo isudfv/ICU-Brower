@@ -175,8 +175,11 @@ bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
   request->SetHeaderByName("User-Agent",
                            BrowserProfile::GetInstance()->GetUserAgent().toStdString(),
                            true);
+  auto a = request->GetURL();
+  auto b =  request->GetReferrerURL();
 
   if (BrowserProfile::GetInstance()->IsAdBlockFlag()
+      && request->GetURL().IsOwner() && request->GetReferrerURL().IsOwner()
       && ad_block_client_.matches(request->GetURL().ToString().c_str(),
                                   FONoFilterOption,
                                   request->GetReferrerURL().ToString().c_str())) {
@@ -187,10 +190,10 @@ bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request) {
 
 void BrowserClient::InitAdBlockClient() {
   // load ad-blocker dat file
-  std::fstream in("ABPFilterParserData.dat", std::ios::in | std::ios::out);
+  std::ifstream in("ABPFilterParserData.dat", std::ios::in | std::ios::binary);
   if (in) {
     in.seekg(0, std::ios::end);
-    auto len = in.tellg();
+    int len = in.tellg();
     ad_block_buffer = new char[len];
     in.seekg(0, std::ios::beg);
     in.read(ad_block_buffer, len);
