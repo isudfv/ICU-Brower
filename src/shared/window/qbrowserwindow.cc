@@ -15,7 +15,7 @@
 
 void QBrowserWindow::resizeEvent(QResizeEvent *ev)
 {
-    if (!initialized) return;
+    if (!initialized || is_closing_) return;
 #ifdef __linux__
     ::Display *display = cef_get_xdisplay();
     DCHECK(display);
@@ -35,9 +35,19 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev)
 #endif
 }
 
-void QBrowserWindow::setBrowserId(int browser_id)
+void QBrowserWindow::moveEvent(QMoveEvent *event)
 {
-    this->browser_id_ = browser_id;
+    if (!initialized || is_closing_) return;
+#ifdef _WINDOWS
+    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
+
+    HDC hdc = ::GetDC(nullptr);
+    int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
+    float scale = float(hdpi) / 96;
+
+    ::MoveWindow(window, 0, 0,
+                 this->width() * scale, this->height() * scale, true);
+#endif
 }
 
 void QBrowserWindow::closeEvent(QCloseEvent *ev)
@@ -52,6 +62,15 @@ void QBrowserWindow::closeEvent(QCloseEvent *ev)
         ev->accept();
     }
 #endif
+
+#ifdef Q_OS_WIN
+    is_closing_ = true;
+#endif
+}
+
+void QBrowserWindow::setBrowserId(int browser_id)
+{
+    this->browser_id_ = browser_id;
 }
 
 void QBrowserWindow::setBrowserUrl(const QString &url)
@@ -102,21 +121,6 @@ void QBrowserWindow::doGoForward()
 void QBrowserWindow::doStopLoad()
 {
     if (is_loading_) BrowserClient::GetInstance()->DoBrowserStopLoad(browser_id_);
-}
-
-void QBrowserWindow::moveEvent(QMoveEvent *event)
-{
-    if (!initialized) return;
-#ifdef _WINDOWS
-    HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
-
-    HDC hdc = ::GetDC(NULL);
-    int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
-    float scale = float(hdpi) / 96;
-
-    ::MoveWindow(window, 0, 0,
-                 this->width() * scale, this->height() * scale, true);
-#endif
 }
 
 void QBrowserWindow::OnCreateFinish()
