@@ -27,7 +27,7 @@ Window {
 
             Rectangle {
                 Layout.fillWidth: true
-                height: 30
+                height: 40
                 color: "white"
                 z:5
                 Text {
@@ -82,18 +82,20 @@ Window {
                         }
                     }
                 }
+                Rectangle {
+                    color: "#f7f7f7"
+                    height: 1.5
+                    width: parent.width
+                    y:parent.y + 30
+                }
             }
 
-            Rectangle {
-                color: "#f7f7f7"
-                height: 1.5
-                Layout.fillWidth: true
-            }
+
 
             ListView {
                 id:favoritelist
-                Layout.leftMargin: 5
-                Layout.rightMargin: 5
+                Layout.leftMargin: 2
+                Layout.rightMargin: 2
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 // 滚动条

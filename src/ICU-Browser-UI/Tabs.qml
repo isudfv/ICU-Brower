@@ -90,11 +90,11 @@ Row {
                                 enter = false
                                 parent.color = "transparent"
                             }
-                            ToolTip{
+                            ToolTip {
                                 visible: parent.enter
                                 text: "关闭标签页"
                                 delay: 500
-                                background: Rectangle{
+                                background: Rectangle {
                                     color: "#f7f7f7"
                                     border.color: "black"
                                     border.width: 1
@@ -106,7 +106,7 @@ Row {
                 }
             }
             background: Rectangle {
-//                id: bg
+                //                id: bg
                 anchors.fill: parent
                 color: button.focus ? "#f7f7f7" : "transparent"
                 focus: true
@@ -122,11 +122,11 @@ Row {
                         enter = false
                     }
                     onClicked: parent.clicked()
-                    ToolTip{
+                    ToolTip {
                         visible: parent.enter
                         text: button.windowTitle + "\n" + button.windowUrl
                         delay: 1000
-                        background: Rectangle{
+                        background: Rectangle {
                             color: "#f7f7f7"
                             border.color: "black"
                             border.width: 1
@@ -185,32 +185,37 @@ Row {
                     radius: 6
                 }
             }
-            function setState(title_,url_,windowIcon_){
+            function setState(title_, url_, windowIcon_) {
                 windowTitle = title_
                 windowUrl = url_
                 windowIcon = windowIcon_
             }
 
             onWindowUrlChanged: {
-                header.currentUrl = windowUrl
+                if (tabBar.currentItem === this) {
+                    header.currentUrl = windowUrl
+                }
             }
 
             onWindowTitleChanged: {
-                header.currentTitle = windowTitle
+                if (tabBar.currentItem === this) {
+                    header.currentTitle = windowTitle
+                }
             }
         }
     }
 
-    Connections{
+    Connections {
         target: windowManager
-        function onAddTab(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_){
-            addTabItem(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_)
+        function onAddTab(windowId_, windowTitle_, windowUrl_, windowIcon_, toToggle_) {
+            addTabItem(windowId_, windowTitle_, windowUrl_, windowIcon_,
+                       toToggle_)
         }
-        function onRemoveTab(windowId_){
+        function onRemoveTab(windowId_) {
             removeTabItem(windowId_)
         }
-        function onSetTabState(windowId_,title_,url_,icon_){
-            setTabState(windowId_,title_,url_,icon_)
+        function onSetTabState(windowId_, title_, url_, icon_) {
+            setTabState(windowId_, title_, url_, icon_)
         }
     }
 
@@ -221,32 +226,32 @@ Row {
         // todo: 玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 
-    function addTabItem(windowId_,windowTitle_,windowUrl_,windowIcon_,toToggle_) {
+    function addTabItem(windowId_, windowTitle_, windowUrl_, windowIcon_, toToggle_) {
         tabBar.addItem(tabButton.createObject(tabBar))
         tabBar.itemAt(tabBar.count - 1).windowTitle = windowTitle_
         tabBar.itemAt(tabBar.count - 1).windowId = windowId_
         tabBar.itemAt(tabBar.count - 1).windowUrl = windowUrl_
         tabBar.itemAt(tabBar.count - 1).windowIcon = windowIcon_
-        if(toToggle_){
+        if (toToggle_) {
             tabBar.setCurrentIndex(tabBar.count - 1)
         }
     }
 
-    function removeTabItem(windowId_){
-        for (var i =0;i < tabBar.count;++i){
-            if(tabBar.itemAt(i).windowId === windowId_){
-                tabBar.removeItem(tabBar.itemAt(i));
-                break;
+    function removeTabItem(windowId_) {
+        for (var i = 0; i < tabBar.count; ++i) {
+            if (tabBar.itemAt(i).windowId === windowId_) {
+                tabBar.removeItem(tabBar.itemAt(i))
+                break
             }
         }
     }
-    function setTabState(windowId_,title_,url_,icon_){
-        for (var i =0;i < tabBar.count;++i){
-            if(tabBar.itemAt(i).windowId === windowId_){
+    function setTabState(windowId_, title_, url_, icon_) {
+        for (var i = 0; i < tabBar.count; ++i) {
+            if (tabBar.itemAt(i).windowId === windowId_) {
                 tabBar.itemAt(i).windowTitle = title_
                 tabBar.itemAt(i).windowUrl = url_
                 tabBar.itemAt(i).windowIcon = icon_
-                break;
+                break
             }
         }
     }
@@ -258,20 +263,18 @@ Row {
             for (var i = 0; i < tabBar.count; ++i) {
                 tabBar.itemAt(i).implicitWidth = equal_width
             }
-        }else {
+        } else {
             for (var j = 0; j < tabBar.count; ++j) {
                 tabBar.itemAt(j).implicitWidth = 300
             }
         }
     }
 
-//    function setBrowserIdToTab(browserId_,tabIndex_){
-//        tabBar.itemAt(tabIndex_).browserId = browserId_
-//    }
-
-
-    Window.onWidthChanged:{
+    //    function setBrowserIdToTab(browserId_,tabIndex_){
+    //        tabBar.itemAt(tabIndex_).browserId = browserId_
+    //    }
+    Window.onWidthChanged: {
         adjustItem()
     }
-//    function
+    //    function
 }
