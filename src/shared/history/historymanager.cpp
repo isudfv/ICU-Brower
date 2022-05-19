@@ -189,17 +189,9 @@ Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date, Q
 
 bool HistoryManager::findSimilar(QString& name, QString& url, QString& time, QString& date, QString& keyword) {
     // 待改进的查找算法
-    if (name == keyword) {
+    if (name.contains(keyword)|| url.contains(keyword) || time.contains(keyword) || date.contains(keyword)) {
         return true;
     }
-    if (url == keyword) {
-        return true;
-    }
-    if (time == keyword) {
-        return true;
-    }
-    if (date == keyword) {
-        return true;
-    }
+
     return false;
 }

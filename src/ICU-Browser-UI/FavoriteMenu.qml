@@ -96,6 +96,8 @@ Window {
                 Layout.rightMargin: 5
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                // 滚动条
+                ScrollIndicator.vertical: ScrollIndicator { }
                 model: favoritemodel
                 delegate: Rectangle {
                     id: backGround
