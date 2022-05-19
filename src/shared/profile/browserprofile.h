@@ -27,7 +27,12 @@ class BrowserProfile {
   QString user_agent_;
 
   bool ad_block_flag_;
-  QString main_page_url_ = "https://mirror.tuna.tsinghua.edu.cn/ubuntu-releases/";
+  QString main_page_url_ = "https://arxiv.org/pdf/1301.3781.pdf";
+
+  QString download_path_;
+ public:
+  const QString &GetDownloadPath() const;
+  void SetDownloadPath(const QString &download_path);
 
  public:
   const QString &GetMainPageUrl() const;

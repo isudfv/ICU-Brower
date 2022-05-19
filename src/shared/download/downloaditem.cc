@@ -6,6 +6,7 @@
 
 #include "downloaditem.h"
 #include "downloadmanager.h"
+#include "browserprofile.h"
 
 DownloadItem::DownloadItem(DownloadItem::Id id, CefRefPtr<CefDownloadItemCallback> callback)
 {
@@ -58,7 +59,7 @@ void DownloadItem::SetPercent(int percent)
 void DownloadItem::InitDownload(CefRefPtr<CefDownloadItem> download_item, const CefString &suggested_name)
 {
     SetFileName(QString::fromStdString(suggested_name));
-    SetFullPath("/home/liang/" + file_name_);
+    SetFullPath( QDir::toNativeSeparators(BrowserProfile::GetInstance()->GetDownloadPath()+'/' + file_name_));
     SetStartTime(QDateTime::fromSecsSinceEpoch(download_item->GetStartTime().GetTimeT()));
     SetPercent(download_item->GetPercentComplete());
     SetCurrSpeed(download_item->GetCurrentSpeed());

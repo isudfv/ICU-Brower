@@ -1,7 +1,7 @@
 //
 // Created by liang on 22-5-12.
 //
-
+#include <QStandardPaths>
 #include <qbrowserwindow.h>
 #include "browserprofile.h"
 #include "cef_app.h"
@@ -25,10 +25,11 @@ void BrowserProfile::SetAdBlockFlag(bool ad_block_flag)
 BrowserProfile::BrowserProfile()
 {
     ad_block_flag_ = true;
-//  user_agent_ = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36";
 
-    user_agent_ = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36";
-//  user_agent_ = "CEF";
+    user_agent_ =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36";
+
+    download_path_ = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
 
 const QString &BrowserProfile::GetUserAgent() const
@@ -67,6 +68,7 @@ int BrowserProfile::InitFromCommandLine(int argc, char **argv)
     command_line->InitFromArgv(argc, argv);
 #endif
 #ifdef _WINDOWS
+    command_line->InitFromString(::GetCommandLineW());
 #endif
 
     // Specify CEF global settings here.
@@ -100,3 +102,14 @@ void BrowserProfile::ShutdownBrowser()
 {
     CefShutdown();
 }
+
+const QString &BrowserProfile::GetDownloadPath() const
+{
+    return download_path_;
+}
+
+void BrowserProfile::SetDownloadPath(const QString &download_path)
+{
+    download_path_ = download_path;
+}
+

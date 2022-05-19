@@ -217,6 +217,9 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
                                           CefRefPtr<CefDownloadItemCallback> callback)
 {
     DownloadItem *p_download_item = nullptr;
+
+    qDebug() << download_item->GetFullPath().ToString().c_str();
+
     if (download_item_list_.find(download_item->GetId()) == download_item_list_.end()) {
         p_download_item = new DownloadItem(download_item->GetId(), callback);
         download_item_list_[download_item->GetId()] = {p_download_item, download_item};
@@ -224,12 +227,17 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
     }
 
     p_download_item = download_item_list_[download_item->GetId()].first;
-    p_download_item->SetPercent(download_item->GetPercentComplete());
-    p_download_item->SetCurrSpeed(download_item->GetCurrentSpeed());
 
     if (download_item->IsComplete()) {
+        qDebug() << "Compelete!";
         p_download_item->SetEndTime(
             QDateTime::fromSecsSinceEpoch(download_item->GetEndTime().GetTimeT()));
+        download_item_list_[download_item->GetId()].second = nullptr;
         download_item_list_.erase(download_item->GetId());
+        return;
     }
+
+
+    p_download_item->SetPercent(download_item->GetPercentComplete());
+    p_download_item->SetCurrSpeed(download_item->GetCurrentSpeed());
 }
