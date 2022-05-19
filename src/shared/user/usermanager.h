@@ -39,7 +39,7 @@ typedef bsoncxx::document::view            DocumentView;
 class UserManager : public QObject {
     Q_OBJECT
 public:
-    explicit UserManager(const char *address) : client(Uri(address))
+    explicit UserManager(const char *address) : inst(),client(Uri(address))
     {}
 
     static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
@@ -77,6 +77,7 @@ public:
     Q_ENUM(loginState)
 
 public:
+    Instance inst;
     Client client;
 };
 
