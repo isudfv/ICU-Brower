@@ -1,6 +1,8 @@
 ﻿#include "usermanager.h"
 #include <iostream>
 
+
+ UserManager* UserManager::p=nullptr;
 int getNumber(Database &database)
 {
     Collection   coll   = database["counter"];
