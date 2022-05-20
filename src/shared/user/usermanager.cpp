@@ -47,8 +47,8 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
     }
 
     ele = find_one->view()["password"];
-    //用户存在，则判断密码是否正确
-    if (ele.get_utf8().value != password.toStdString()) {
+    //用户存在，则判断密码是否正
+    if (ele.get_utf8().value.to_string() != password.toStdString()) {
         list = {PasswordError};
         goto CALLBACK;
     }
