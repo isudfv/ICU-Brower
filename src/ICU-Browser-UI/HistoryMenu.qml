@@ -20,25 +20,23 @@ Window {
         ColumnLayout {
             anchors.fill: parent
             id: historyLayout
-            // anchors.fill: parent
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             spacing: 2
 
             // 历史记录头部
             Rectangle {
-                z: 5
+                z: 2    // 避免被listView覆盖
                 id: headRectangle
                 // 判断用户是否在进行历史的搜索
                 property bool isSearch: false
-                // 与历史记录框的左留白、上留白
-                // Layout.leftMargin: 12
-                // Layout.topMargin: 10
+
+                // 外观设置
                 height: 45
                 width: historyRectangle.width
                 color: "white"
                 radius: 5
                 border.width: 2
                 border.color: "#cdcdcd"
+
                 RowLayout {
                     anchors.fill: parent
                     // Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -47,12 +45,14 @@ Window {
                     // 未搜索状态的由三矩形组成
                     // 1. 历史记录
                     Rectangle {
+                        id: title
+                        property bool enter: false
+                        // 布局设置
                         Layout.leftMargin: 12
                         visible: !headRectangle.isSearch
-                        // 设置样式
-                        color: "white"
-                        // color: "pink"
-                        height: 25
+                        // 外观设置
+                        color: title.enter ? "#cdcdcd" : "white"
+                        height: 30
                         width: 70
                         radius: 5
                         Text {
@@ -67,17 +67,43 @@ Window {
                             horizontalAlignment:  Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }
+
+                        ToolTip {
+                            visible: title.enter
+                            text: "回到顶部"
+                            delay: 500
+                            background: Rectangle {
+                                color: "#f7f7f7"
+                                border.color: "black"
+                                border.width: 1
+                                radius: 5
+                            }
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            onClicked: {
+                                // 回到记录顶部
+                                myList.positionViewAtBeginning()
+                            }
+                            onEntered: {
+                                title.enter = true
+                            }
+                            onExited: {
+                                title.enter = false
+                            }
+                        }
                     }
 
                     // 2. 进入搜索
                     Rectangle {
-                        visible: !headRectangle.isSearch
-                        
-                        Layout.leftMargin: 240
                         id: enterSearch
+                        Layout.leftMargin: 240              // 布局设置，一个较大间隔使得靠右
+                        visible: !headRectangle.isSearch                        
                         property bool enter: false
 
-                        height: 25
+                        height: 30
                         width: 30
                         radius: 5
                         color: enterSearch.enter ? "#cdcdcd" : "white"
@@ -90,21 +116,21 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
                         }
+                        
+                        ToolTip {
+                            visible: enterSearch.enter
+                            text: "搜索历史记录"
+                            delay: 500
+                            background: Rectangle {
+                                color: "#f7f7f7"
+                                border.color: "black"
+                                border.width: 1
+                                radius: 5
+                            }
+                        }
 
                         MouseArea {
-                            ToolTip {
-                                visible: enterSearch.enter
-                                text: "搜索历史记录"
-                                delay: 500
-                                background: Rectangle {
-                                    color: "#f7f7f7"
-                                    border.color: "black"
-                                    border.width: 1
-                                    radius: 5
-                                }
-                            }
-
-                            anchors.fill: parent
+                            anchors.fill: parent            // 充满父类
                             hoverEnabled: true
                             onClicked: {
                                 headRectangle.isSearch = true
@@ -120,12 +146,13 @@ Window {
 
                     // 3.清空历史记录
                     Rectangle {
-                        visible: !headRectangle.isSearch
-                        Layout.rightMargin: 12
                         id: clearAll
+                        Layout.rightMargin: 12              // 布局设置
+                        visible: !headRectangle.isSearch                        
                         property bool enter: false
 
-                        height: 25
+                        // 外观设置
+                        height: 30
                         width: 30
                         radius: 5
                         color: clearAll.enter ? "#d96b6a" : "white"
@@ -139,19 +166,19 @@ Window {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        MouseArea {
-                            ToolTip {
-                                visible: clearAll.enter
-                                text: "清空历史记录"
-                                delay: 500
-                                background: Rectangle {
-                                    color: "#f7f7f7"
-                                    border.color: "black"
-                                    border.width: 1
-                                    radius: 5
-                                }
+                        ToolTip {
+                            visible: clearAll.enter
+                            text: "清空历史记录"
+                            delay: 500
+                            background: Rectangle {
+                                color: "#f7f7f7"
+                                border.color: "black"
+                                border.width: 1
+                                radius: 5
                             }
+                        }
 
+                        MouseArea {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
@@ -169,12 +196,13 @@ Window {
                     // 搜索状态时的两个矩形
                     // 1. 返回
                     Rectangle {
-                        visible: headRectangle.isSearch
-                        Layout.leftMargin: 12
                         id: backNormal
+                        Layout.leftMargin: 12
                         property bool enter: false
-
-                        height: 25
+                        visible: headRectangle.isSearch
+                        
+                        // 外观设置
+                        height: 30
                         width: 30
                         radius: 5
                         color: backNormal.enter ? "#cdcdcd" : "white"
@@ -188,19 +216,21 @@ Window {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        MouseArea {
-                            ToolTip {
-                                visible: backNormal.enter
-                                text: "退出搜索"
-                                delay: 500
+                        ToolTip {
+                            visible: backNormal.enter
+                            text: "退出搜索"
+                            delay: 500
 
-                                background: Rectangle {
-                                    color: "#f7f7f7"
-                                    border.color: "black"
-                                    border.width: 1
-                                    radius: 5
-                                }
+                            background: Rectangle {
+                                color: "#f7f7f7"
+                                border.color: "black"
+                                border.width: 1
+                                radius: 5
                             }
+                        }
+
+                        MouseArea {
+                            
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
@@ -221,42 +251,63 @@ Window {
                         width: 330
                         radius: 5
 
-                        TextField {
-                            
+                        TextField {                            
                             id: input
                             anchors.fill: parent
+                            leftPadding: 40                 // 左侧留白
+                            focusReason: Qt.MouseFocusReason
 
                             // 回车即完成
                             onEditingFinished: {
-                                console.info("finished")
+                                // console.info("finished")
                             }
 
                             // 改变即发送信号
                             onTextEdited: {
-                                console.info("edited")
+                                // console.info("edited")
                                 historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem, input.text)
                             }
 
-                            // 光标居中
+                            // 居中
                             verticalAlignment: TextField.AlignVCenter
                             // 设置光标、输入文字大小
                             font.pixelSize: 14
-                            placeholderText: "搜索历史记录"
-                            placeholderTextColor: "#767676"
 
                             // 背景框
                             background: Rectangle {
+                                // 左侧的搜索图标
+                                Rectangle {
+                                    x: 10
+                                    width: 20
+                                    height: 20
+                                    // 垂直居中设置
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    Image {
+                                        source: "qrc:/icons/search.svg"
+                                        width: 20
+                                        height: 20
+                                        // 居中设置
+                                        anchors.horizontalCenter: parent.horizontalCenter
+                                        anchors.verticalCenter: parent.verticalCenter
+                                    }
+                                }
+                                // 圆角以及边框设置
                                 radius: 5
-                                border.color: "#424242"
-                                border.width: 1
+                                border.color: input.focus ? "#404142" : "#cdcdcd"
+                                border.width: input.focus ? 2 : 1
+                                // 鼠标悬浮时设置一个边框大小的变换
                                 MouseArea {
                                     anchors.fill: parent
                                     hoverEnabled: true
                                     onEntered: {
-                                        parent.border.width = 2
+                                        if (!input.focus) {
+                                            parent.border.width = 2
+                                        }
                                     }
                                     onExited: {
-                                        parent.border.width = 1
+                                        if (!input.focus) {
+                                            parent.border.width = 1
+                                        }
                                     }
                                 }
                             }
@@ -266,17 +317,9 @@ Window {
                 }
             }
 
-            // 一条分界线
-//            Rectangle {
-//                z: 2
-//                // color: "#eaeaea"
-//                color: "#f7f7f7"
-//                height: 1.5
-//                width: historyRectangle.width
-//            }
-
             // 具体的历史记录项
             ListView {
+                id: myList
                 model: historyModel
 
                 // 布局设置
@@ -284,8 +327,17 @@ Window {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                // 滚动条
-                ScrollIndicator.vertical: ScrollIndicator { }
+                // 滚动显示条
+                 ScrollIndicator.vertical: ScrollIndicator { }
+
+
+                
+                // ScrollBar.vertical: ScrollBar {
+                //     size: 0.5
+                //     anchors.top: headRectangle.bottom
+                //     policy: ScrollBar.AsNeeded
+                // }
+
 
                 // 选项
                 delegate: Rectangle {
@@ -372,9 +424,9 @@ Window {
                                 hoverEnabled: true
                                 anchors.fill: parent
                                 onClicked: {
-                                    // console.info(dateText.text)
-                                    // console.info(nameText.text)
-                                    historyManager.removeHistory(nameText.text, ".", dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
+                                    console.info(dateText.text)
+                                    console.info(nameText.text)
+                                    historyManager.removeHistory(nameText.text, url, dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
                                 }
                                 onEntered: {
                                     signalDelete.enter = true
@@ -531,6 +583,7 @@ Window {
     }
 
     function loadHistory(){
+        headRectangle.isSearch = false;
         historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
     }
 
