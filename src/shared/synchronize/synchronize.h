@@ -1,4 +1,0 @@
-#ifndef SYNCHRONIZE_H
-#define SYNCHRONIZE_H
-
-#endif // SYNCHRONIZE_H

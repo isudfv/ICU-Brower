@@ -1,6 +1,8 @@
 ﻿#include "usermanager.h"
 #include <iostream>
 
+
+ UserManager* UserManager::p=nullptr;
 int getNumber(Database &database)
 {
     Collection   coll   = database["counter"];
@@ -27,7 +29,7 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
     qDebug() << "here1";
 
     //创建数据库实例
-    Instance inst = {};
+    //Instance inst = {};
     //    Uri      uri("mongodb://175.178.155.66:27017");
     qDebug() << "here2";
 
@@ -73,7 +75,7 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
     auto         nameLen = username.length();
 
     //创建数据库实例
-    //    Instance inst = {};
+//    Instance inst = {};
     //    Uri      uri("mongodb://175.178.155.66:27017");
     //    Client   client(uri);
 

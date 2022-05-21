@@ -39,15 +39,20 @@ typedef bsoncxx::document::view            DocumentView;
 class UserManager : public QObject {
     Q_OBJECT
 public:
-    explicit UserManager(const char *address) : client(Uri(address))
+    explicit UserManager(const char *address) : inst(),client(Uri(address))
     {}
 
     static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
     {
-        static UserManager um("mongodb://175.178.155.66:27017");
+//        static UserManager um("mongodb://175.178.155.66:27017");
+//        Q_UNUSED(engine)
+//        Q_UNUSED(scriptEngine)
+//        return &um;
+        if(!p)
+            p=new UserManager("mongodb://175.178.155.66:27017");
         Q_UNUSED(engine)
         Q_UNUSED(scriptEngine)
-        return &um;
+        return p;
     }
 
     Q_INVOKABLE void doLogin(const QString &username, const QString &password, QJSValue callback);
@@ -77,7 +82,9 @@ public:
     Q_ENUM(loginState)
 
 public:
+    Instance inst;
     Client client;
+    static UserManager*p;
 };
 
 #endif// USERMANAGER_H
