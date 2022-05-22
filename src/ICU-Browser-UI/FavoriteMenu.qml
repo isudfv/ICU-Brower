@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import Managers
 
 Window {
     id: rootwindow
@@ -41,7 +42,7 @@ Window {
 
                 Rectangle{
                     id: favoritetitle
-                    property bool canfavorite: favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
+                    property bool canfavorite: FavoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
                     anchors.verticalCenter :parent.verticalCenter
                     x:parent.x + parent.width - 30
                     width: 20
@@ -59,7 +60,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            favoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.currentUserId)
+                            FavoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.currentUserId)
                         }
                         onEntered: {
                             enter = true
@@ -113,7 +114,7 @@ Window {
                         anchors.fill: parent
                         hoverEnabled: true
                         onClicked: {
-                            windowManager.doLoadUrl(header.currentWindowIndex,url,header.currentUserId)
+                            WindowManager.doLoadUrl(header.currentWindowIndex,url,header.currentUserId)
                         }
                         onEntered: {
                             parent.enter = true;
@@ -150,7 +151,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    favoritesManager.removeFavoriteItem(header.currentUserId,url,removeFavariteItem)
+                                    FavoritesManager.removeFavoriteItem(header.currentUserId,url,removeFavariteItem)
                                 }
                                 onEntered: {
                                     enter = true
@@ -191,7 +192,7 @@ Window {
     }
 
     function loadFavorite(){
-        favoritesManager.loadFavorite(header.currentUserId,addFavoriteItem,clearFavorite)
+        FavoritesManager.loadFavorite(header.currentUserId,addFavoriteItem,clearFavorite)
     }
 
     function addFavoriteItem(name,url){
@@ -211,7 +212,7 @@ Window {
     }
 
     function updataFavoriteState(){
-        favoritetitle.canfavorite = favoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
+        favoritetitle.canfavorite = FavoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
     }
 
     onActiveFocusItemChanged: {

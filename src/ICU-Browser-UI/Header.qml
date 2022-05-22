@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
+import Managers
 
 Item {
 //    property QtObject rootWindow
@@ -61,7 +62,7 @@ Item {
     }
 
     Connections{
-        target: windowManager
+        target: WindowManager
         function onSetHeaderState(activeBack_,activeForward_){
             setWindowState(activeBack_,activeForward_)
         }

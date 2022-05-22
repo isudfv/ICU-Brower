@@ -2,13 +2,15 @@ cmake_minimum_required(VERSION 3.19)
 
 project(ICU-Browser-UI VERSION 0.1 LANGUAGES CXX)
 
+add_compile_definitions(NOMINMAX)
+
 include(../cmake/cef.cmake)
 include(../cmake/shared.cmake)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
 
 find_package(bsoncxx CONFIG REQUIRED)
 find_package(mongocxx CONFIG REQUIRED)
@@ -27,12 +29,14 @@ qt_add_executable(
 	main.cpp
 	cefwindow.h cefwindow.cpp
 	resource.qrc
-#    ${SHARED_BROWSER_SRCS}
-    ${SHARED_WINDOW_SRCS}
-    ${SHARED_DOWNLOAD_SRCS}
+	${SHARED_BROWSER_SRCS}
+	${SHARED_WINDOW_SRCS}
+	${SHARED_DOWNLOAD_SRCS}
 	${SHARED_FAVORITES_SRCS}
 	${SHARED_HISTORY_SRCS}
 	${SHARED_USER_SRCS}
+	${SHARED_AB_BLOCK_SRCS}
+	${SHARED_PROFILE_SRCS}
 )
 
 #qt_add_qml_module(apptest3
@@ -64,8 +68,13 @@ target_link_libraries(
 	Qt6::Quick
 	Qt6::Widgets
 	Qt6::QuickWidgets
-    ${CEF_STANDARD_LIBS}
-    ${CEF_LIBS}
+	${CEF_STANDARD_LIBS}
+	${CEF_LIBS}
 	mongo::bsoncxx_shared
 	mongo::mongocxx_shared
 )
+
+
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	ADD_WINDOWS_MANIFEST("${WINDOWS_MANIFEST_DIR}" "ICU-Browser-UI" "exe")
+endif ()

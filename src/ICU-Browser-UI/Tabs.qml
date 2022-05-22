@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
+import Managers
 
 Row {
     Layout.leftMargin: 5
@@ -20,7 +21,7 @@ Row {
             header.currentTabItem = currentItem
             header.currentWindowIndex = currentItem.windowId
             header.currentUrl = currentItem.windowUrl
-            windowManager.toggleTab(currentItem.windowId)
+            WindowManager.toggleTab(currentItem.windowId)
         }
 
         onCountChanged: {
@@ -79,7 +80,7 @@ Row {
                             property bool enter: false
                             anchors.fill: parent
                             onClicked: {
-                                windowManager.removeWindow(button.windowId)
+                                WindowManager.removeWindow(button.windowId)
                             }
                             hoverEnabled: true
                             onEntered: {
@@ -206,10 +207,11 @@ Row {
     }
 
     Connections {
-        target: windowManager
+        target: WindowManager
         function onAddTab(windowId_, windowTitle_, windowUrl_, windowIcon_, toToggle_) {
             addTabItem(windowId_, windowTitle_, windowUrl_, windowIcon_,
                        toToggle_)
+        WindowManager.resizeWindow(rootWindow.width, rootWindow.height - 74)
         }
         function onRemoveTab(windowId_) {
             removeTabItem(windowId_)
@@ -217,12 +219,20 @@ Row {
         function onSetTabState(windowId_, title_, url_, icon_) {
             setTabState(windowId_, title_, url_, icon_)
         }
+        function onParentWindowSet()  {
+        WindowManager.addWindow(header.defaultUrl)
+        }
+//        function onWindowCreated() {
+//            console.info("====================================")
+//        WindowManager.resizeWindow(0, 74, rootWindow.width, rootWindow.height - 74)
+//        }
     }
 
     Component.onCompleted: {
-        windowManager.addWindow(header.defaultUrl)
-        windowManager.addWindow(header.defaultUrl)
-        windowManager.removeWindow(tabBar.itemAt(tabBar.count - 1).windowId)
+//        WindowManager.addWindow(header.defaultUrl)
+//        WindowManager.resizeWindow(0, 74, width, height - 74)
+//        WindowManager.addWindow(header.defaultUrl)
+//        WindowManager.removeWindow(tabBar.itemAt(tabBar.count - 1).windowId)
         // todo: 玄学问题：只有一个tab时虽然有focus但无法正确显示颜色。
     }
 

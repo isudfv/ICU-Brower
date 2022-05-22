@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import Managers
 
 Window {
     id: rootwindow
@@ -182,7 +183,7 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                historyManager.clearHistory(header.currentUserId, clearHistory)
+                                HistoryManager.clearHistory(header.currentUserId, clearHistory)
                             }
                             onEntered: {
                                 clearAll.enter = true
@@ -265,7 +266,7 @@ Window {
                             // 改变即发送信号
                             onTextEdited: {
                                 // console.info("edited")
-                                historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem, input.text)
+                                HistoryManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem, input.text)
                             }
 
                             // 居中
@@ -426,7 +427,7 @@ Window {
                                 onClicked: {
                                     console.info(dateText.text)
                                     console.info(nameText.text)
-                                    historyManager.removeHistory(nameText.text, url, dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
+                                    HistoryManager.removeHistory(nameText.text, url, dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
                                 }
                                 onEntered: {
                                     signalDelete.enter = true
@@ -549,7 +550,7 @@ Window {
                                     }
                                     onClicked: {
                                         // console.info(section)
-                                        historyManager.removeSignalDayHistory(header.currentUserId, section, removeSignalDayHistory)
+                                        HistoryManager.removeSignalDayHistory(header.currentUserId, section, removeSignalDayHistory)
                                     }
                                 }
                             }
@@ -584,7 +585,7 @@ Window {
 
     function loadHistory(){
         headRectangle.isSearch = false;
-        historyManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
+        HistoryManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
     }
 
     function addHistoryItem(name, url, time, date){
@@ -616,7 +617,7 @@ Window {
     }
 
     Connections {
-        target: historyManager
+        target: HistoryManager
         function onAddItem(name,url,time,date){
             addHistoryItem(name, url, time, date)
         }

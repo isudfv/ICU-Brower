@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import Managers
 
 Window {
     id: rootwindow
@@ -40,7 +41,7 @@ Window {
 
                 Rectangle {
                     id: favoritetitle
-                    property bool canfavorite: favoritesManager.getCanFavorite(
+                    property bool canfavorite: FavoritesManager.getCanFavorite(
                                                    header.currentUserId,
                                                    header.currentUrl)
                     anchors.verticalCenter: parent.verticalCenter
@@ -106,10 +107,10 @@ Window {
                         enabled: exist
                         onClicked: {
                             if (downloadItemPrecent === 100) {
-                                downloadManager.showDownLoadItemInExplorer(
+                                DownloadManager.showDownLoadItemInExplorer(
                                             downloadItemId, downloadItemPath)
                             } else {
-                                downloadManager.changeDownloadItemPauseState(downloadItemId)
+                                DownloadManager.changeDownloadItemPauseState(downloadItemId)
                             }
                         }
                         onEntered: {
@@ -187,7 +188,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-//                                    downloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
+//                                    DownloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
                                 }
                                 onEntered: {
                                     enter = true
@@ -228,7 +229,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    downloadManager.removeDownloadItem(downloadItemId);
+                                    DownloadManager.removeDownloadItem(downloadItemId);
                                 }
                                 onEntered: {
                                     enter = true
@@ -343,7 +344,7 @@ Window {
     }
 
     Connections {
-        target: downloadManager
+        target: DownloadManager
         function onAddItem(id, name, url, path) {}
         function onRemoveItem(id) {
             removeDownloadItem(id)

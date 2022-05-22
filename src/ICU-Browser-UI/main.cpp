@@ -11,43 +11,36 @@
 //#include <QQuickItem>
 #include <QQuickWidget>
 
+#include "browserprofile.h"
+#include "downloadmanager.h"
 #include "favoritesmanager.h"
 #include "historymanager.h"
 #include "usermanager.h"
 #include "windowmanager.h"
-#include "downloadmanager.h"
 
 int main(int argc, char *argv[])
 {
+    BrowserProfile::InitFromCommandLine(argc, argv);
     QApplication          app(argc, argv);
     QQmlApplicationEngine engine;
 
-    auto cefWindow        = new CEFWindow;
-
-    engine.rootContext()->setContextProperty("cefWindow", cefWindow);
-    engine.rootContext()->setContextProperty("favoritesManager", FavoritesManager::getInstanse());
-    engine.rootContext()->setContextProperty("windowManager", WindowManager::getInstanse());
-    engine.rootContext()->setContextProperty("historyManager", HistoryManager::getInstanse());
-    engine.rootContext()->setContextProperty("downloadManager", DownloadManager::getInstanse());
+    DownloadManager::declareQML();
+    FavoritesManager::declareQML();
+    HistoryManager::declareQML();
+    WindowManager::declareQML();
     UserManager::declareQML();
+
 
     engine.load("qrc:/main.qml");
 
-    QObject *QmlObj    = engine.rootObjects().first();
-    QWindow *QmlWindow = qobject_cast<QWindow *>(QmlObj);
+    QObject *QmlObj         = engine.rootObjects().first();
+    QWindow *QmlWindow      = qobject_cast<QWindow *>(QmlObj);
+    WindowManager::g_parent = QmlWindow;
+    emit WindowManager::getInstance()->parentWindowSet();
 
-    cefWindow->winId();
-    cefWindow->setParent(QmlWindow);
-    cefWindow->show();
+    BrowserProfile::RunBrowser(QmlWindow);
 
-    cefWindow->setGeometry(0, 111, QmlWindow->width(), QmlWindow->height() - 111);
+    BrowserProfile::ShutdownBrowser();
 
-    //    cefWindow->resize(QmlWindow->width(), QmlWindow->height() - 111);
-    //    cefWindow->move(0, 111);
-    //    cefWindow->setGeometry(0,111,QmlWindow->width(), QmlWindow->height() - 111);
-    //    qDebug() << "widget before" << cefWindow->pos();
-
-    //    mywi.setProperty("_q_embedded_native_parent_handle", QVariant(parent_HWND));
-
-    return app.exec();
+    //    return app.exec();
 }

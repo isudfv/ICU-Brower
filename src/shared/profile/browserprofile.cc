@@ -1,10 +1,10 @@
 //
 // Created by liang on 22-5-12.
 //
-#include <QStandardPaths>
-#include <qbrowserwindow.h>
 #include "browserprofile.h"
 #include "cef_app.h"
+#include <QStandardPaths>
+#include <qbrowserwindow.h>
 
 BrowserProfile *BrowserProfile::GetInstance()
 {
@@ -48,7 +48,7 @@ int BrowserProfile::InitFromCommandLine(int argc, char **argv)
     CefMainArgs main_args(argc, argv);
 #endif
 #ifdef _WINDOWS
-    HINSTANCE h = GetModuleHandle(nullptr);
+    HINSTANCE   h = GetModuleHandle(nullptr);
     CefMainArgs main_args(h);
 #endif
 
@@ -91,10 +91,10 @@ void BrowserProfile::SetMainPageUrl(const QString &main_page_url)
     main_page_url_ = main_page_url;
 }
 
-void BrowserProfile::RunBrowser()
+void BrowserProfile::RunBrowser(QWindow *parent)
 {
     CefEnableHighDPISupport();
-    QBrowserWindow w(GetInstance()->main_page_url_);
+    //    QBrowserWindow w(GetInstance()->main_page_url_, parent);
     CefRunMessageLoop();
 }
 
@@ -112,4 +112,3 @@ void BrowserProfile::SetDownloadPath(const QString &download_path)
 {
     download_path_ = download_path;
 }
-

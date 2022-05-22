@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
+import Managers
 
 Item {
 
@@ -60,7 +61,8 @@ Item {
                     }
 
                     onClicked: {
-                        windowManager.addWindow(header.defaultUrl)
+                        WindowManager.addWindow(header.defaultUrl)
+                        WindowManager.resizeWindow(rootWindow.width, rootWindow.height - 74)
 //                        root.addaaa()
                     }
                     ToolTip{

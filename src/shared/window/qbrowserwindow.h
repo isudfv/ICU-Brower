@@ -7,20 +7,19 @@
 
 #include <QQuickWindow>
 
-class QBrowserWindow: public QWindow
-{
-Q_OBJECT
+class QBrowserWindow : public QWindow {
+    Q_OBJECT
 
 public:
     QBrowserWindow() = default;
-    explicit QBrowserWindow(const QString &url);
+    explicit QBrowserWindow(const QString &url, QWindow *parent = nullptr);
     virtual ~QBrowserWindow() override = default;
 
     void OnCreateFinish();
 
     // cef callback
     void setBrowserId(int browser_id);
-    int getBrowserId() const;
+    int  getBrowserId() const;
 
     void setBrowserTitle(const QString &title);
 
@@ -53,25 +52,24 @@ public:
     void moveEvent(QMoveEvent *) override;
 
 signals:
-    void onWindowCreated(QBrowserWindow* );
-    void setTabState(int windowId,
-                         const QString& title,
-                         const QString& url,
-                         const QString& icon);
-    void setLoadState(int windowId, bool activeBack,
-                          bool activeForward);
+    void windowCreated(QBrowserWindow *);
+    void setTabState(int            windowId,
+                     const QString &title,
+                     const QString &url,
+                     const QString &icon);
+    void setLoadState(int windowId, bool activeBack, bool activeForward);
 
 
 private:
     bool initialized = false;
-    int browser_id_ = 0;
+    int  browser_id_ = 0;
 
     QString browser_url_;
     QString icon_url_;
-    bool is_closing_ = false;
-    bool is_loading_ = false;
-    bool can_go_back_ = false;
-    bool can_go_forward_ = false;
+    bool    is_closing_     = false;
+    bool    is_loading_     = false;
+    bool    can_go_back_    = false;
+    bool    can_go_forward_ = false;
 };
 
-#endif //QBROWSERCLIENT__QBROWSERWINDOW_H_
+#endif//QBROWSERCLIENT__QBROWSERWINDOW_H_

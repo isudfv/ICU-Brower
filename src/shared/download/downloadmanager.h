@@ -5,29 +5,41 @@
 #ifndef ICU_BROWSER_UI_DOWNLOADMANAGER_H
 #define ICU_BROWSER_UI_DOWNLOADMANAGER_H
 
-#include <QCoreApplication>
-#include<QDebug>
-#include <QString>
 #include <QByteArray>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFile>
+#include <QJSValue>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QFile>
-#include <QJsonArray>
-#include <QJSValue>
-#include <QDir>
 #include <QProcess>
-#include <QDesktopServices>
+#include <QQmlEngine>
+#include <QString>
 
 #include "downloaditem.h"
 
-class DownloadManager: public QObject
-{
-Q_OBJECT
+class DownloadManager : public QObject {
+    Q_OBJECT
 public:
     static DownloadManager *getInstance()
     {
         static DownloadManager dm;
         return &dm;
+    }
+    static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+    {
+        static auto *dm = new DownloadManager;
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+        return dm;
+    }
+
+    static void declareQML()
+    {
+        qmlRegisterSingletonType<DownloadManager>("Managers", 1, 0, "DownloadManager", getInstance);
     }
 
     Q_INVOKABLE void deleteDownloadItem(int id, QString path);
@@ -37,8 +49,8 @@ public:
     Q_INVOKABLE void changeDownloadItemPauseState(int id);
 
 signals:
-//    to view layer
-    void addItem(int id,
+    //    to view layer
+    void addItem(int     id,
                  QString name,
                  QString url,
                  QString path);
@@ -51,14 +63,14 @@ signals:
     void changePauseState(int id);
 
 
-//    to model layer
+    //    to model layer
     void toChangeDownloadItemPauseState(int id);
 
 public slots:
-    void downloadItemCreated(int id,
-                            const QString &name,
-                            const QString &url,
-                            const QString &path);
+    void downloadItemCreated(int            id,
+                             const QString &name,
+                             const QString &url,
+                             const QString &path);
     void downloadItemStateUpdated(int id,
                                   int percent,
                                   int currentSpeed);

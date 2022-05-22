@@ -26,8 +26,8 @@ void QBrowserWindow::resizeEvent(QResizeEvent *ev)
 #ifdef _WINDOWS
     HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
 
-    HDC hdc = ::GetDC(NULL);
-    int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
+    HDC   hdc   = ::GetDC(NULL);
+    int   hdpi  = GetDeviceCaps(hdc, LOGPIXELSX);
     float scale = float(hdpi) / 96;
 
     ::MoveWindow(window, 0, 0,
@@ -41,8 +41,8 @@ void QBrowserWindow::moveEvent(QMoveEvent *event)
 #ifdef _WINDOWS
     HWND window = BrowserClient::GetInstance()->GetBrowserWindowHandler(browser_id_);
 
-    HDC hdc = ::GetDC(nullptr);
-    int hdpi = GetDeviceCaps(hdc, LOGPIXELSX);
+    HDC   hdc   = ::GetDC(nullptr);
+    int   hdpi  = GetDeviceCaps(hdc, LOGPIXELSX);
     float scale = float(hdpi) / 96;
 
     ::MoveWindow(window, 0, 0,
@@ -57,8 +57,7 @@ void QBrowserWindow::closeEvent(QCloseEvent *ev)
     if (!is_closing_) {
         BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
         ev->ignore();
-    }
-    else {
+    } else {
         ev->accept();
     }
 #endif
@@ -81,8 +80,8 @@ void QBrowserWindow::setBrowserUrl(const QString &url)
 
 void QBrowserWindow::setLoadingState(bool isLoading, bool canGoBack, bool canGoForward)
 {
-    this->is_loading_ = isLoading;
-    this->can_go_back_ = canGoBack;
+    this->is_loading_     = isLoading;
+    this->can_go_back_    = canGoBack;
     this->can_go_forward_ = canGoForward;
 
     emit setLoadState(this->browser_id_, this->can_go_back_, this->can_go_forward_);
@@ -93,9 +92,11 @@ void QBrowserWindow::setClosingState(bool isClosing)
     this->is_closing_ = isClosing;
 }
 
-QBrowserWindow::QBrowserWindow(const QString &url)
+QBrowserWindow::QBrowserWindow(const QString &url, QWindow *parent)
 {
+    setParent(parent);
     BrowserClient::GetInstance()->CreateBrowser(this, url.toStdString());
+    setPosition(0, 74);
 }
 
 void QBrowserWindow::doLoadUrl(const QString &url)
@@ -129,9 +130,9 @@ void QBrowserWindow::OnCreateFinish()
     this->resize(1920, 1080);
     this->show();
     QObject::connect(this,
-                     SIGNAL(onWindowCreated(QBrowserWindow * )),
+                     SIGNAL(windowCreated(QBrowserWindow *)),
                      WindowManager::getInstance(),
-                     SLOT(addWindow(QBrowserWindow * )));
+                     SLOT(addWindow(QBrowserWindow *)));
     QObject::connect(this,
                      SIGNAL(setLoadState(int, bool, bool)),
                      WindowManager::getInstance(),
@@ -140,9 +141,9 @@ void QBrowserWindow::OnCreateFinish()
                      SIGNAL(setTabState(int, const QString &, const QString &, const QString &)),
                      WindowManager::getInstance(),
                      SLOT(tabStateChanged(int, const QString &, const QString &, const QString &)));
-//    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
-//    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
-    emit onWindowCreated(this);
+    //    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
+    //    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
+    emit windowCreated(this);
 }
 
 int QBrowserWindow::getBrowserId() const

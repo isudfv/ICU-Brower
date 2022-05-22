@@ -4,20 +4,35 @@
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QJSValue>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QQmlEngine>
 #include <QString>
-#include <QDir>
 using Qt::endl;
 class FavoritesManager : public QObject {
     Q_OBJECT
 public:
-    static FavoritesManager* getInstanse(){
+    static FavoritesManager *getInstanse()
+    {
         static FavoritesManager fm;
         return &fm;
+    }
+
+    static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+    {
+        static auto *fm = new FavoritesManager;
+        Q_UNUSED(engine)
+        Q_UNUSED(scriptEngine)
+        return fm;
+    }
+
+    static void declareQML()
+    {
+        qmlRegisterSingletonType<FavoritesManager>("Managers", 1, 0, "FavoritesManager", getInstance);
     }
 
     Q_INVOKABLE void addFavoriteItem(QString url, QString name, QJSValue callBack, int uid);

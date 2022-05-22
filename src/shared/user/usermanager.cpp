@@ -2,7 +2,6 @@
 #include <iostream>
 
 
- UserManager* UserManager::p=nullptr;
 int getNumber(Database &database)
 {
     Collection   coll   = database["counter"];
@@ -26,12 +25,12 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
     QJSValueList list;
     int          uid;
 
-    qDebug() << "here1";
+    //    qDebug() << "here1";
 
     //创建数据库实例
     //Instance inst = {};
     //    Uri      uri("mongodb://175.178.155.66:27017");
-    qDebug() << "here2";
+    //    qDebug() << "here2";
 
     //连接数据库实例
     Database                       db   = client["browser"];
@@ -42,7 +41,7 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
     //先查找用户名是否存在
     find_one = coll.find_one(document{} << "username" << username.toStdString() << finalize);
     //用户不存在
-    qDebug() << "here3";
+    //    qDebug() << "here3";
     if (!find_one) {
         list = {UserNotExist};
         goto CALLBACK;
@@ -61,7 +60,7 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
 //调用回调函数，返回给view层用户的uid
 CALLBACK:
     callback.call(list);
-    qDebug() << "called";
+    //    qDebug() << "called";
 }
 Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString &password, QJSValue callback)
 {
@@ -75,7 +74,7 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
     auto         nameLen = username.length();
 
     //创建数据库实例
-//    Instance inst = {};
+    //    Instance inst = {};
     //    Uri      uri("mongodb://175.178.155.66:27017");
     //    Client   client(uri);
 
@@ -88,7 +87,7 @@ Q_INVOKABLE void UserManager::doRegister(const QString &username, const QString 
 
     //先判断名字是否合法
     if (nameLen < 6 || nameLen > 16) {
-        qDebug() << username << nameLen;
+        //        qDebug() << username << nameLen;
         list = {UserNameLengthViolation};
         goto CALLBACK;
     }

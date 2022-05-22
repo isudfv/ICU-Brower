@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
+import Managers
 
 //import Qt5Compat.GraphicalEffects
 Item {
@@ -58,7 +59,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doGoBack(header.currentWindowIndex)
+                                WindowManager.doGoBack(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -104,7 +105,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doGoForward(header.currentWindowIndex)
+                                WindowManager.doGoForward(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -150,7 +151,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doReLoad(header.currentWindowIndex)
+                                WindowManager.doReLoad(header.currentWindowIndex)
                             }
 
                             ToolTip {
@@ -195,7 +196,7 @@ Item {
                             }
 
                             onClicked: {
-                                windowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentUserId)
+                                WindowManager.doLoadUrl(header.currentWindowIndex,header.defaultUrl,header.currentUserId)
                             }
 
                             ToolTip {
@@ -226,7 +227,7 @@ Item {
                         rootWindow.requestActivate()
                     }
                     onAccepted: {
-                        windowManager.doLoadUrl(header.currentWindowIndex,text,header.currentUserId)
+                        WindowManager.doLoadUrl(header.currentWindowIndex,text,header.currentUserId)
                     }
 
                     font {

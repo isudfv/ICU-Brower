@@ -18,6 +18,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import Managers
 
 
 Window {
@@ -50,8 +51,11 @@ Window {
             height: 20
         }
     }
-    onWidthChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
-    onHeightChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
+
+    onWidthChanged: WindowManager.resizeWindow(width, height - 74)
+    onHeightChanged: WindowManager.resizeWindow(width, height - 74)
+//    onWidthChanged: .resizeCEFWindow(0, 111, width, height)
+//    onHeightChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
 
     onActiveFocusItemChanged: {
 
