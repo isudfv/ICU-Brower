@@ -220,12 +220,10 @@ Row {
             setTabState(windowId_, title_, url_, icon_)
         }
         function onParentWindowSet()  {
-            WindowManager.addWindow(header.defaultUrl)
+            WindowManager.initWindow(header.defaultUrl)
         }
-//        function onWindowCreated() {
-//            console.info("====================================")
-//        WindowManager.resizeWindow(0, 74, rootWindow.width, rootWindow.height - 74)
-//        }
+        function onWindowCreated() {
+        }
     }
 
     Component.onCompleted: {
@@ -244,6 +242,11 @@ Row {
         tabBar.itemAt(tabBar.count - 1).windowIcon = windowIcon_
         if (toToggle_) {
             tabBar.setCurrentIndex(tabBar.count - 1)
+        }
+        //初始化情况下删除第一个tab，保证程序的正确运行
+        if(tabBar.itemAt(0).windowId === -1 && tabBar.count === 2){
+            tabBar.removeItem(tabBar.itemAt(0))
+            tabBar.setCurrentIndex(0)
         }
     }
 

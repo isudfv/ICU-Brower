@@ -47,7 +47,8 @@ void WindowManager::addWindowNotInFocus(QString url)
 
 void WindowManager::removeWindow(int windowId)
 {
-    mp[windowId]->hide();
+    if(mp.count(windowId))
+        mp[windowId]->destroy();
     mp[windowId]->destroy();
     mp.erase(windowId);
     emit removeTab(windowId);
@@ -61,13 +62,10 @@ void WindowManager::resizeWindow(int width, int height)
 
 void WindowManager::addWindow(QBrowserWindow *new_window)
 {
-    new_window->setParent(QBrowserWindow::g_parent);
-    new_window->setFramePosition({0, 74});
+    new_window->setFramePosition({0,74});
     int id = new_window->getBrowserId();
     mp.insert({id, new_window});
     emit addTab(id, "Loading...", "Loading...", "", true);
-
-    //    qDebug() << "Add Windows";
 }
 
 void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon)
@@ -88,4 +86,9 @@ void WindowManager::loadStateChanged(int windowId, bool activeBack, bool activeF
     }
 
     qDebug() << activeForward << activeBack;
+}
+
+void WindowManager::initWindow(QString url){
+    addWindow(url);
+    emit addTab(-1,"","","",true);
 }

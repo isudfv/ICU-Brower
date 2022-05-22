@@ -41,6 +41,7 @@ public:
     Q_INVOKABLE void addWindowNotInFocus(QString url);
     Q_INVOKABLE void removeWindow(int windowId);
     Q_INVOKABLE void resizeWindow(int width, int height);
+    Q_INVOKABLE void initWindow(QString url);
 
 signals:
     void windowCreated();
