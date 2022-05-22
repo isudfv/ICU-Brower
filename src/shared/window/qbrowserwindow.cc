@@ -92,11 +92,12 @@ void QBrowserWindow::setClosingState(bool isClosing)
     this->is_closing_ = isClosing;
 }
 
-QBrowserWindow::QBrowserWindow(const QString &url, QWindow *parent)
+QBrowserWindow::QBrowserWindow(const QString &url)
 {
-    setParent(parent);
+    qDebug() << "PARENT================" << g_parent;
+    setParent(g_parent);
     BrowserClient::GetInstance()->CreateBrowser(this, url.toStdString());
-    setPosition(0, 74);
+    setFramePosition({0, 74});
 }
 
 void QBrowserWindow::doLoadUrl(const QString &url)

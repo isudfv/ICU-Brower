@@ -19,8 +19,7 @@
 class WindowManager : public QObject {
     Q_OBJECT
 public:
-    inline static QWindow *g_parent = nullptr;
-    static WindowManager  *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
+    static WindowManager *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *wm = new WindowManager;
         Q_UNUSED(engine)

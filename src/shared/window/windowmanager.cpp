@@ -33,7 +33,7 @@ void WindowManager::doLoadUrl(int windowId, QString url, int uid)
 
 void WindowManager::addWindow(QString url)
 {
-    auto *w = new QBrowserWindow(url, g_parent);
+    auto *w = new QBrowserWindow(url);
     QObject::connect(w, &QBrowserWindow::windowCreated, this, &WindowManager::windowCreated);
     //    QObject::connect(w, &QBrowserWindow::windowCreated, this, [](QBrowserWindow *w) {
     //        qDebug() << w->size();
@@ -48,6 +48,7 @@ void WindowManager::addWindowNotInFocus(QString url)
 void WindowManager::removeWindow(int windowId)
 {
     mp[windowId]->hide();
+    mp[windowId]->destroy();
     mp.erase(windowId);
     emit removeTab(windowId);
 }
@@ -60,6 +61,8 @@ void WindowManager::resizeWindow(int width, int height)
 
 void WindowManager::addWindow(QBrowserWindow *new_window)
 {
+    new_window->setParent(QBrowserWindow::g_parent);
+    new_window->setFramePosition({0, 74});
     int id = new_window->getBrowserId();
     mp.insert({id, new_window});
     emit addTab(id, "Loading...", "Loading...", "", true);

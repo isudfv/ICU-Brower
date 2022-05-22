@@ -220,7 +220,7 @@ Row {
             setTabState(windowId_, title_, url_, icon_)
         }
         function onParentWindowSet()  {
-        WindowManager.addWindow(header.defaultUrl)
+            WindowManager.addWindow(header.defaultUrl)
         }
 //        function onWindowCreated() {
 //            console.info("====================================")

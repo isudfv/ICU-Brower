@@ -11,8 +11,8 @@ class QBrowserWindow : public QWindow {
     Q_OBJECT
 
 public:
-    QBrowserWindow() = default;
-    explicit QBrowserWindow(const QString &url, QWindow *parent = nullptr);
+    QBrowserWindow() { setParent(g_parent); }
+    explicit QBrowserWindow(const QString &url);
     virtual ~QBrowserWindow() override = default;
 
     void OnCreateFinish();
@@ -51,6 +51,7 @@ public:
 
     void moveEvent(QMoveEvent *) override;
 
+    inline static QWindow *g_parent = nullptr;
 signals:
     void windowCreated(QBrowserWindow *);
     void setTabState(int            windowId,

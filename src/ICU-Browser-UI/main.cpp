@@ -33,9 +33,9 @@ int main(int argc, char *argv[])
 
     engine.load("qrc:/main.qml");
 
-    QObject *QmlObj         = engine.rootObjects().first();
-    QWindow *QmlWindow      = qobject_cast<QWindow *>(QmlObj);
-    WindowManager::g_parent = QmlWindow;
+    QObject *QmlObj          = engine.rootObjects().first();
+    QWindow *QmlWindow       = qobject_cast<QWindow *>(QmlObj);
+    QBrowserWindow::g_parent = QmlWindow;
     emit WindowManager::getInstance()->parentWindowSet();
 
     BrowserProfile::RunBrowser(QmlWindow);
