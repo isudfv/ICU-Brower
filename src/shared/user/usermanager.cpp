@@ -180,9 +180,9 @@ void UserManager::syncHistoryFromLocal(int uid)
 //    qDebug()<<QString::fromStdString(bsoncxx::to_json(value));
 
     //和数据库建立连接
-    Instance inst{};
-    Uri uri("mongodb://175.178.155.66:27017");
-    Client client(uri);
+//    Instance inst{};
+//    Uri uri("mongodb://175.178.155.66:27017");
+//    Client client(uri);
 
     Database db=client["browser"];
 
@@ -213,9 +213,9 @@ void UserManager::syncHistoryFromLocal(int uid)
 void UserManager::syncHistoryToLocal(int uid)
 {
     //建立数据库的连接
-    Instance inst={};
-    Uri uri("mongodb://175.178.155.66:27017");
-    Client client(uri);
+//    Instance inst={};
+//    Uri uri("mongodb://175.178.155.66:27017");
+//    Client client(uri);
 
 
     Database db=client["browser"];
@@ -269,9 +269,9 @@ void UserManager::syncFavouriteFromLocal(int uid)
 
     file.close();
     //与数据库建立连接
-    Instance inst{};
-    Uri uri("mongodb://175.178.155.66:27017");
-    Client client(uri);
+//    Instance inst{};
+//    Uri uri("mongodb://175.178.155.66:27017");
+//    Client client(uri);
 
     Database db=client["browser"];
     Collection coll=db["favourite"];
@@ -291,9 +291,9 @@ void UserManager::syncFavouriteFromLocal(int uid)
 void UserManager::syncFavouriteToLocal(int uid)
 {
     //和数据库建立连接
-    Instance inst={};
-    Uri uri("mongodb://175.178.155.66:27017");
-    Client client(uri);
+//    Instance inst={};
+//    Uri uri("mongodb://175.178.155.66:27017");
+//    Client client(uri);
 
     Database db=client["browser"];
     Collection coll=db["favourite"];
