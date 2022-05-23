@@ -237,6 +237,7 @@ Window {
         }
         function onCurrentUserIdChanged(){
             loadFavorite()
+            favoritetitle.canfavorite = FavoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
         }
     }
 

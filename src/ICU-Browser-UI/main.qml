@@ -41,15 +41,15 @@ Window {
 
             //            rootWindow: rootWindow
         }
-        Rectangle {
-            color: "red"
-            Layout.fillWidth: true
-            //            Layout.fillHeight: parent
-            anchors.top: Header.bottom
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            //            Layout.alignment: Qt.AlignTop
-            height: 20
-        }
+//        Rectangle {
+//            color: "red"
+//            Layout.fillWidth: true
+//            //            Layout.fillHeight: parent
+//            anchors.top: Header.bottom
+//            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+//            //            Layout.alignment: Qt.AlignTop
+//            height: 20
+//        }
     }
 
     onWidthChanged: WindowManager.resizeWindow(width, height - 74)

@@ -18,10 +18,12 @@ Row {
             color: "#cdcdcd"
         }
         onCurrentItemChanged: {
-            header.currentTabItem = currentItem
-            header.currentWindowIndex = currentItem.windowId
-            header.currentUrl = currentItem.windowUrl
-            WindowManager.toggleTab(currentItem.windowId)
+            if(count != 0){
+                header.currentTabItem = currentItem
+                header.currentWindowIndex = currentItem.windowId
+                header.currentUrl = currentItem.windowUrl
+                WindowManager.toggleTab(currentItem.windowId)
+            }
         }
 
         onCountChanged: {
@@ -37,9 +39,9 @@ Row {
         id: tabButton
         TabButton {
             id: button
-            property int windowId: 0
-            property string windowTitle: " "
-            property string windowUrl: " "
+            property int windowId: -1
+            property string windowTitle: ""
+            property string windowUrl: ""
             property string windowIcon: "qrc:/icons/stackoverflow.svg"
             implicitWidth: 300
             implicitHeight: 32
@@ -122,8 +124,11 @@ Row {
                     onExited: {
                         enter = false
                     }
-                    onClicked: parent.clicked()
+                    onClicked: {
+                        parent.clicked()
+                    }
                     ToolTip {
+                        y: parent.y+20
                         visible: parent.enter
                         text: button.windowTitle + "\n" + button.windowUrl
                         delay: 1000

@@ -27,7 +27,6 @@ link_directories(${CMAKE_CURRENT_BINARY_DIR})
 qt_add_executable(
 	ICU-Browser-UI
 	main.cpp
-	cefwindow.h cefwindow.cpp
 	resource.qrc
 	${SHARED_BROWSER_SRCS}
 	${SHARED_WINDOW_SRCS}

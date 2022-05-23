@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
-import UserManager 1.0
+import Managers
 
 Window {
     id: rootWindow

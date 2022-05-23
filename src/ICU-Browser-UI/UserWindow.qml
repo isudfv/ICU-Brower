@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
+import Managers
 
 Window {
     id: rootWindow
@@ -168,7 +169,7 @@ Window {
                     }
 
                     onCurrentTextChanged: {
-                        console.info(uaControl.currentValue)
+                        UserManager.setUserAgent(uaControl.currentValue)
                     }
                 }
             }
@@ -204,7 +205,8 @@ Window {
                         }
                     }
                     onToggled: {
-                        console.info(adControl.position)
+                        UserManager.setAdBlockFlag(adControl.position ? true : false)
+
                     }
                 }
             }
@@ -216,6 +218,11 @@ Window {
                 Button{
                     text:"同步到云端"
 
+                    onClicked:{
+                        UserManager.syncHistoryFromLocal(header.currentUserId);
+                        UserManager.syncFavouriteFromLocal(header.currentUserId);
+                    }
+
                     background: Rectangle {
                         width: 70
                         height: 25
@@ -226,6 +233,11 @@ Window {
                 }
                 Button{
                     text:"从云端同步"
+
+                    onClicked:{
+                        UserManager.syncHistoryToLocal(header.currentUserId);
+                        UserManager.syncFavouriteToLocal(header.currentUserId);
+                    }
 
                     background: Rectangle {
                         width: 70
@@ -244,6 +256,10 @@ Window {
                 Layout.topMargin: 20
                 Button{
                     text:"退出登录"
+
+                    onClicked:{
+                        UserManager.doLogout(header.setUserInfo)
+                    }
 
                     background: Rectangle {
                         width: 60

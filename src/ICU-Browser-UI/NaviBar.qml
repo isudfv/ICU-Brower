@@ -450,7 +450,7 @@ Item {
                             }
 
                             onClicked: {
-                                if (currentUserId) {
+                                if (currentUserId !== 0) {
                                     userButton.isUserWindow = true
                                 }
                                 else {

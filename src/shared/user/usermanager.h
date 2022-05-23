@@ -6,6 +6,9 @@
 #include <QJSValue>
 #include <QQmlEngine>
 #include <QString>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QFile>
 
 #include <bsoncxx/builder/basic/document.hpp>
 #include <bsoncxx/builder/basic/impl.hpp>
@@ -24,6 +27,9 @@
 using bsoncxx::to_json;
 using bsoncxx::builder::basic::kvp;
 using Qt::endl;
+using bsoncxx::builder::stream::finalize;
+using bsoncxx::builder::stream::open_document;
+using bsoncxx::builder::stream::close_document;
 
 typedef mongocxx::instance                 Instance;
 typedef mongocxx::client                   Client;
@@ -50,13 +56,24 @@ public:
         return um;
     }
 
+    //登录接口
     Q_INVOKABLE void doLogin(const QString &username, const QString &password, QJSValue callback);
     Q_INVOKABLE void doRegister(const QString &username, const QString &password, QJSValue callback);
     Q_INVOKABLE void doLogout(QJSValue callback);
 
+    //同步接口
+    Q_INVOKABLE void syncHistoryFromLocal(int uid);
+    Q_INVOKABLE void syncHistoryToLocal(int uid);
+    Q_INVOKABLE void syncFavouriteFromLocal(int uid);
+    Q_INVOKABLE void syncFavouriteToLocal(int uid);
+
+    //设置接口
+    Q_INVOKABLE void setUserAgent(QString ua);
+    Q_INVOKABLE void setAdBlockFlag(bool flag);
+
     static void declareQML()
     {
-        qmlRegisterSingletonType<UserManager>("UserManager", 1, 0, "UserManager", getInstance);
+        qmlRegisterSingletonType<UserManager>("Managers", 1, 0, "UserManager", getInstance);
     }
 
     enum registerState {

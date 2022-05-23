@@ -51,7 +51,7 @@ Window {
                     color: "transparent"
                     radius: 2
                     Image {
-                        source: "qrc:/icons/star.svg"
+                        source: "qrc:/icons/delete.svg"
                         width: 20
                         height: 20
                     }
@@ -61,7 +61,7 @@ Window {
                         hoverEnabled: true
                         enabled: true
                         onClicked: {
-                            insertDownloadItem(0, "good", "?", "?")
+//                            insertDownloadItem(0, "good", "?", "?")
                         }
                         onEntered: {
                             enter = true
