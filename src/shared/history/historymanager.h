@@ -17,7 +17,7 @@ using Qt::endl;
 class HistoryManager : public QObject {
     Q_OBJECT
 public:
-    static QObject *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
+    static HistoryManager *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *hm = new HistoryManager;
         Q_UNUSED(engine)

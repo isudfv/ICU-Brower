@@ -17,7 +17,7 @@ class FavoritesManager : public QObject {
     Q_OBJECT
 public:
 
-    static QObject *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
+    static FavoritesManager *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *fm = new FavoritesManager;
         Q_UNUSED(engine)
@@ -30,10 +30,15 @@ public:
         qmlRegisterSingletonType<FavoritesManager>("Managers", 1, 0, "FavoritesManager", getInstance);
     }
 
-    Q_INVOKABLE void addFavoriteItem(QString url, QString name, QJSValue callBack, int uid);
+    Q_INVOKABLE void addFavoriteItem(QString url, QString name, int uid);
     Q_INVOKABLE bool getCanFavorite(int uid, QString url);
-    Q_INVOKABLE void removeFavoriteItem(int uid, QString url, QJSValue callBack);
-    Q_INVOKABLE void loadFavorite(int uid, QJSValue addFavorite, QJSValue callBack);
+    Q_INVOKABLE void removeFavoriteItem(int uid, QString url);
+    Q_INVOKABLE void loadFavorite(int uid);
+
+signals:
+    void addFavorite(QString name,QString url);
+    void clearFavorite();
+    void removeFavorite(QString url);
 };
 
 #endif// SURFACESFORBOOKMARKS_H

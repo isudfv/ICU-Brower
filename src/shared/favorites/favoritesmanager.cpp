@@ -1,5 +1,5 @@
 ﻿#include "favoritesmanager.h"
-void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callBack, int uid = 0){
+void FavoritesManager::addFavoriteItem(QString url, QString name, int uid = 0){
     //json文件
     QJsonDocument jDoc;
     //存放书签列表
@@ -47,12 +47,7 @@ void FavoritesManager::addFavoriteItem(QString url, QString name, QJSValue callB
     out.close();
 
     //回调函数，操作view
-    QJSValue     _name(name);
-    QJSValue     _url(url);
-    QJSValueList p;
-    p.append(_name);
-    p.append(_url);
-    callBack.call(p);
+    emit addFavorite(name,url);
 }
 
 bool FavoritesManager::getCanFavorite(int uid, QString url){
@@ -78,7 +73,7 @@ bool FavoritesManager::getCanFavorite(int uid, QString url){
     return true;
 }
 
-void FavoritesManager::removeFavoriteItem(int uid, QString url, QJSValue callBack){
+void FavoritesManager::removeFavoriteItem(int uid, QString url){
     //打开文件，读取书签列表
     QString file_path = QString("./favourite/%1.json").arg(uid);
     QFile   file(file_path);
@@ -111,15 +106,12 @@ void FavoritesManager::removeFavoriteItem(int uid, QString url, QJSValue callBac
     out.close();
 
     //回调函数操作view
-    QJSValue     _url(url);
-    QJSValueList p;
-    p.append(_url);
-    callBack.call(p);
+    emit removeFavorite(url);
 }
 
-void FavoritesManager::loadFavorite(int uid, QJSValue addFavorite, QJSValue callBack){
+void FavoritesManager::loadFavorite(int uid){
     //回调函数，清空view层的数据
-    callBack.call();
+    emit clearFavorite();
 	
 	
     //打开文件，获取到书签列表
@@ -141,14 +133,7 @@ void FavoritesManager::loadFavorite(int uid, QJSValue addFavorite, QJSValue call
         QJsonObject temp = JsValue.toObject();
         qDebug() << temp["name"].toString();
         //调用回调函数，给view层添加单个书签的显示
-        QJSValue     _name(temp["name"].toString());
-        QJSValue     _url(temp["url"].toString());
-        QJSValue     _uid(uid);
-        QJSValueList list;
-        list.append(_name);
-        list.append(_url);
-        list.append(_uid);
-        addFavorite.call(list);
+        emit addFavorite(temp["name"].toString(),temp["url"].toString());
     }
     file.close();
 }

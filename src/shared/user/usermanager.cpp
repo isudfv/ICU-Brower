@@ -1,5 +1,6 @@
 ﻿#include "usermanager.h"
 #include "browserprofile.h"
+#include "favoritesmanager.h"
 #include <iostream>
 
 
@@ -322,6 +323,8 @@ void UserManager::syncFavouriteToLocal(int uid)
     file.write(data);
 
     file.close();
+
+    FavoritesManager::getInstance()->loadFavorite(uid);
 }
 
 void UserManager::setUserAgent(QString ua)

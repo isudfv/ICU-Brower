@@ -28,7 +28,7 @@ Row {
 
         onCountChanged: {
             if(count === 0){
-                Qt.quit()
+                rootWindow.close()
             }
 
             adjustItem()
@@ -216,7 +216,7 @@ Row {
         function onAddTab(windowId_, windowTitle_, windowUrl_, windowIcon_, toToggle_) {
             addTabItem(windowId_, windowTitle_, windowUrl_, windowIcon_,
                        toToggle_)
-        WindowManager.resizeWindow(rootWindow.width, rootWindow.height - 74)
+            WindowManager.resizeWindow(rootWindow.width, rootWindow.height - 74)
         }
         function onRemoveTab(windowId_) {
             removeTabItem(windowId_)
@@ -230,6 +230,17 @@ Row {
         function onWindowCreated() {
         }
     }
+
+    Connections {
+        target:rootWindow
+        function onCloseWindow(){
+            for (var i = 0; i < tabBar.count; ++i) {
+                WindowManager.removeWindow(tabBar.itemAt(i).windowId)
+                i --;
+            }
+        }
+    }
+
 
     Component.onCompleted: {
 //        WindowManager.addWindow(header.defaultUrl)

@@ -25,7 +25,7 @@ class DownloadManager : public QObject {
     Q_OBJECT
 public:
 
-    static QObject *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
+    static DownloadManager *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *dm = new DownloadManager;
         Q_UNUSED(engine)

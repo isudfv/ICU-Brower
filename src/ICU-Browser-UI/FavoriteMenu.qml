@@ -60,7 +60,7 @@ Window {
                         hoverEnabled: favoritetitle.canfavorite
                         enabled: favoritetitle.canfavorite
                         onClicked: {
-                            FavoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,rootwindow.addFavoriteItem,header.currentUserId)
+                            FavoritesManager.addFavoriteItem(header.currentUrl,header.currentTitle,header.currentUserId)
                         }
                         onEntered: {
                             enter = true
@@ -151,7 +151,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    FavoritesManager.removeFavoriteItem(header.currentUserId,url,removeFavariteItem)
+                                    FavoritesManager.removeFavoriteItem(header.currentUserId,url)
                                 }
                                 onEntered: {
                                     enter = true
@@ -192,7 +192,7 @@ Window {
     }
 
     function loadFavorite(){
-        FavoritesManager.loadFavorite(header.currentUserId,addFavoriteItem,clearFavorite)
+        FavoritesManager.loadFavorite(header.currentUserId)
     }
 
     function addFavoriteItem(name,url){
@@ -238,6 +238,19 @@ Window {
         function onCurrentUserIdChanged(){
             loadFavorite()
             favoritetitle.canfavorite = FavoritesManager.getCanFavorite(header.currentUserId,header.currentUrl)
+        }
+    }
+
+    Connections{
+        target:FavoritesManager
+        function onAddFavorite(name,url){
+            addFavoriteItem(name,url)
+        }
+        function onClearFavorite(){
+            clearFavorite()
+        }
+        function onRemoveFavorite(url){
+            removeFavariteItem(url)
         }
     }
 

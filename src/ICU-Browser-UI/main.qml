@@ -26,6 +26,7 @@ Window {
     width: 960
     height: 540
     visible: true
+    signal closeWindow()
     color: "#cdcdcd"
     //    flags: Qt.Window | Qt.CustomizeWindowHint
 
@@ -51,15 +52,18 @@ Window {
 //            height: 20
 //        }
     }
-
-    onWidthChanged: WindowManager.resizeWindow(width, height - 74)
-    onHeightChanged: WindowManager.resizeWindow(width, height - 74)
-//    onWidthChanged: .resizeCEFWindow(0, 111, width, height)
-//    onHeightChanged: cefWindow.resizeCEFWindow(0, 111, width, height)
-
-    onActiveFocusItemChanged: {
-
+    onClosing: function(closeEvent){
+        closeEvent.accepted = false
+        closeWindow()
     }
+
+    onWidthChanged: {
+        WindowManager.resizeWindow(width, height - 74)
+    }
+    onHeightChanged: {
+        WindowManager.resizeWindow(width, height - 74)
+    }
+
 }
 
 /*##^##
