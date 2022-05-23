@@ -49,7 +49,6 @@ void WindowManager::removeWindow(int windowId)
 {
     if(mp.count(windowId))
         mp[windowId]->destroy();
-    mp[windowId]->destroy();
     mp.erase(windowId);
     emit removeTab(windowId);
 }
