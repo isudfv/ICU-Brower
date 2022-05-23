@@ -152,6 +152,7 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser)
 
     if (browser_list_.empty()) {
         CefQuitMessageLoop();
+//        exit(0);
     }
 }
 

@@ -15,6 +15,7 @@
 
 void QBrowserWindow::resizeEvent(QResizeEvent *ev)
 {
+    qDebug("resizing......");
     if (!initialized || is_closing_) return;
 #ifdef __linux__
     ::Display *display = cef_get_xdisplay();
@@ -52,7 +53,8 @@ void QBrowserWindow::moveEvent(QMoveEvent *event)
 
 void QBrowserWindow::closeEvent(QCloseEvent *ev)
 {
-    qDebug("closing");
+    qDebug("closing......");
+
 #ifdef __linux__
     if (!is_closing_) {
         BrowserClient::GetInstance()->TryCloseBrowser(browser_id_);
@@ -128,8 +130,6 @@ void QBrowserWindow::doStopLoad()
 void QBrowserWindow::OnCreateFinish()
 {
     initialized = true;
-    this->resize(1920, 1080);
-    this->show();
     QObject::connect(this,
                      SIGNAL(windowCreated(QBrowserWindow *)),
                      WindowManager::getInstance(),
