@@ -34,7 +34,7 @@ void syncManager::syncHistoryFromLocal(int uid)
     //打开用户的历史记录文件
     QString file_path=QString("./history/%1.json").arg(uid);
     QFile file(file_path);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
     //获取到用户的历史记录
     QJsonParseError error;
@@ -125,7 +125,7 @@ void syncManager::syncFavouriteFromLocal(int uid)
     //打开文件
     QString file_path=QString("./favourite/%1.json").arg(uid);
     QFile file(file_path);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
     //获取json文件对象
     QJsonParseError error;
