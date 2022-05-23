@@ -49,12 +49,21 @@ void WindowManager::removeWindow(int windowId)
 {
     if(mp.count(windowId))
     {
-        mp[windowId]->setParent(nullptr);
-        mp[windowId]->close();
-    }
+        auto closing_window = mp[windowId];
+        mp.erase(windowId);
+        if (windowId == currentWindowId && !mp.empty()) {
+                toggleTab(mp.cbegin()->first);
+        }
 
-    mp.erase(windowId);
-    emit removeTab(windowId);
+        closing_window->setVisible(false);
+        if (mp.empty()) {
+            closing_window->parent()->setVisible(false);
+        }
+
+        closing_window->setParent(nullptr);
+        closing_window->close();
+        emit removeTab(windowId);
+    }
 }
 
 void WindowManager::resizeWindow(int width, int height)
