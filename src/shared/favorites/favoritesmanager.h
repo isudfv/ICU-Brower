@@ -16,13 +16,8 @@ using Qt::endl;
 class FavoritesManager : public QObject {
     Q_OBJECT
 public:
-    static FavoritesManager *getInstanse()
-    {
-        static FavoritesManager fm;
-        return &fm;
-    }
 
-    static QObject *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+    static QObject *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *fm = new FavoritesManager;
         Q_UNUSED(engine)

@@ -51,7 +51,7 @@ Window {
                     color: "transparent"
                     radius: 2
                     Image {
-                        source: parent.canfavorite ? "qrc:/icons/star.svg" : "qrc:/icons/fillstar.svg"
+                        source: "qrc:/icons/star.svg"
                         width: 20
                         height: 20
                     }
@@ -159,7 +159,7 @@ Window {
                                 visible: (downloadItemPrecent !== 100) && exist && !pause
                                 x: parent.x + 115
                                 y: parent.y + 20
-                                text: (downloadItemCurrentSpeed > 1000000) ? ((downloadItemCurrentSpeed / 1000000) + "MB/s") : (downloadItemCurrentSpeed > 1000) ? ((downloadItemCurrentSpeed / 1000) + "KB/s") : (downloadItemCurrentSpeed + "B/s")
+                                text: (downloadItemCurrentSpeed > 1000000) ? ((downloadItemCurrentSpeed / 1000000).toFixed(2) + "MB/s") : (downloadItemCurrentSpeed > 1000) ? ((downloadItemCurrentSpeed / 1000).toFixed(2) + "KB/s") : (downloadItemCurrentSpeed.toFixed(2) + "B/s")
                             }
                             Image{
                                 visible: (downloadItemPrecent !== 100) && exist && pause
@@ -188,7 +188,7 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-//                                    DownloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
+                                    DownloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
                                 }
                                 onEntered: {
                                     enter = true
@@ -258,37 +258,6 @@ Window {
 
             ListModel {
                 id: downloadModel
-                ListElement {
-                    downloadItemId: 0
-                    downloadItemName: "harmoe111111111111111111111"
-                    downloadItemPrecent: 50
-                    downloadItemCurrentSpeed: 500000
-                    downloadItemUrl: "www.fuck.com"
-                    downloadItemPath: "C:/Users/Administrator/Desktop/notes/c++.md"
-                    exist: false
-                    pause: false
-                }
-                ListElement {
-                    downloadItemId: 2
-                    downloadItemName: "harmoe"
-                    downloadItemPrecent: 100
-                    downloadItemCurrentSpeed: 500
-                    downloadItemUrl: "www.fuck.com"
-                    downloadItemPath: "C:/Users/Administrator/Desktop/notes/c++.md"
-                    exist: true
-                    pause: false
-                }
-                ListElement {
-                    downloadItemId: 3
-                    downloadItemName: "harmoe111111111111111111111"
-                    downloadItemPrecent: 50
-                    downloadItemCurrentSpeed: 5000000
-                    downloadItemUrl: "www.fuck.com"
-                    downloadItemPath: "C:/Users/Administrator/Desktop/notes/test.md"
-                    exist:true
-                    pause: true
-
-                }
             }
         }
     }
@@ -345,7 +314,9 @@ Window {
 
     Connections {
         target: DownloadManager
-        function onAddItem(id, name, url, path) {}
+        function onAddItem(id, name, url, path) {
+            insertDownloadItem(id, name, url, path)
+        }
         function onRemoveItem(id) {
             removeDownloadItem(id)
         }
