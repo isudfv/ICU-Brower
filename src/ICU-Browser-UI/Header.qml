@@ -66,6 +66,9 @@ Item {
         function onSetHeaderState(activeBack_,activeForward_){
             setWindowState(activeBack_,activeForward_)
         }
+        function onAddHistory(title_,url_){
+            HistoryManager.addHistory(title_,url_,currentUserId)
+        }
     }
 
     function setWindowState(activeBack_,activeForward_){

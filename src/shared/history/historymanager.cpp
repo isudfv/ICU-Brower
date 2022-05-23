@@ -55,7 +55,7 @@ Q_INVOKABLE void HistoryManager::addHistory(QString name, QString url, int uid) 
 Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QString date, QString time, int uid, QJSValue callback) {
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
     //打开目标文件
     QJsonParseError error;
@@ -113,7 +113,7 @@ Q_INVOKABLE void HistoryManager::loadHistory(int uid, QJSValue callbacka, QJSVal
     //打开文件
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
     //获取指定用户的所有history列表
     QJsonParseError error;
@@ -153,7 +153,7 @@ Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date, Q
     //打开文件
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
-    file.open(QIODevice::ReadOnly);
+    file.open(QIODevice::ReadWrite);
 
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);

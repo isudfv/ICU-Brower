@@ -135,12 +135,12 @@ Window {
                         }
                     model: ListModel {
                         ListElement {
-                            key: "ICU"
-                            value: "Mozilla/5.0 (Windows NT 10.0; WOW64) ICU/1.0"
-                        }
-                        ListElement {
                             key: "Edge"
                             value: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36 Edg/101.0.100.0"
+                        }
+                        ListElement {
+                            key: "ICU"
+                            value: "Mozilla/5.0 (Windows NT 10.0; WOW64) ICU/1.0"
                         }
                         ListElement {
                             key: "Chrome"

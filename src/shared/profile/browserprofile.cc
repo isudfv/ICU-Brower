@@ -24,10 +24,10 @@ void BrowserProfile::SetAdBlockFlag(bool ad_block_flag)
 
 BrowserProfile::BrowserProfile()
 {
-    ad_block_flag_ = true;
+    ad_block_flag_ = false;
 
     user_agent_ =
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.88 Safari/537.36";
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36 Edg/101.0.100.0";
 
     download_path_ = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }

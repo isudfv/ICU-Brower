@@ -44,6 +44,7 @@ public:
     Q_INVOKABLE void initWindow(QString url);
 
 signals:
+    void addHistory(QString title,QString url);
     void windowCreated();
     void parentWindowSet();
     void addTab(int newWindowId, QString newWindowTitle, QString newWindowUrl, QString icon, bool toToggle);
