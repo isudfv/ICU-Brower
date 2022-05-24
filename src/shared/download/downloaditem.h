@@ -47,6 +47,7 @@ signals:
 
 public slots:
     void DownloadItemPauseStateChanged(int id);
+    void DownloadItemCancel(int id);
 
 
 private:

@@ -124,3 +124,9 @@ void DownloadItem::DownloadItemPauseStateChanged(int id)
         }
     }
 }
+
+void DownloadItem::DownloadItemCancel(int id) {
+    if (id == item_id_) {
+        callback_->Cancel();
+    }
+}

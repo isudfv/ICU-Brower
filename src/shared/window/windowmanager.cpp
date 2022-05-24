@@ -34,7 +34,7 @@ void WindowManager::doLoadUrl(int windowId, QString url, int uid)
 void WindowManager::addWindow(QString url)
 {
     auto *w = new QBrowserWindow(url);
-//    QObject::connect(w, &QBrowserWindow::windowCreated, this, &WindowManager::windowCreated);
+    //    QObject::connect(w, &QBrowserWindow::windowCreated, this, &WindowManager::windowCreated);
     //    QObject::connect(w, &QBrowserWindow::windowCreated, this, [](QBrowserWindow *w) {
     //        qDebug() << w->size();
     //        qDebug("++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -47,8 +47,7 @@ void WindowManager::addWindowNotInFocus(QString url)
 
 void WindowManager::removeWindow(int windowId)
 {
-    if(mp.count(windowId))
-    {
+    if (mp.count(windowId)) {
         auto closing_window = mp[windowId];
         mp.erase(windowId);
         if (windowId == currentWindowId && !mp.empty()) {
@@ -75,7 +74,7 @@ void WindowManager::resizeWindow(int width, int height)
 void WindowManager::addWindow(QBrowserWindow *new_window)
 {
     new_window->show();
-    new_window->setFramePosition({0,74});
+    new_window->setFramePosition({0, 74});
     int id = new_window->getBrowserId();
     mp.insert({id, new_window});
     emit addTab(id, "Loading...", "Loading...", "", true);
@@ -86,7 +85,7 @@ void WindowManager::tabStateChanged(int windowId, const QString &title, const QS
     emit setTabState(windowId, title, url, icon);
 
     if (title != "" && url != "" && icon != "") {
-        emit addHistory(title,url);
+        emit addHistory(title, url);
     }
 
     qDebug() << windowId << title << url << icon;
@@ -101,7 +100,8 @@ void WindowManager::loadStateChanged(int windowId, bool activeBack, bool activeF
     qDebug() << activeForward << activeBack;
 }
 
-void WindowManager::initWindow(QString url){
+void WindowManager::initWindow(QString url)
+{
     addWindow(url);
-    emit addTab(-1,"","","",true);
+    emit addTab(-1, "", "", "", true);
 }

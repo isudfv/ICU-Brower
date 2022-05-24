@@ -229,8 +229,8 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
 
     p_download_item = download_item_list_[download_item->GetId()].first;
 
-    if (download_item->IsComplete()) {
-        qDebug() << "Compelete!";
+    if (download_item->IsComplete() || download_item->IsCanceled()) {
+        qDebug() << "Download Item Done!";
         p_download_item->SetEndTime(
             QDateTime::fromSecsSinceEpoch(download_item->GetEndTime().GetTimeT()));
         download_item_list_[download_item->GetId()].second = nullptr;
