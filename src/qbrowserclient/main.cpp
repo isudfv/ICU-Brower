@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 
   QApplication a(argc, argv);
 
-  QBrowserWindow w("bilibili.com");
+  QBrowserWindow w("https://mirror.tuna.tsinghua.edu.cn/ubuntu-releases/22.04/");
 
   BrowserProfile::RunBrowser();
 

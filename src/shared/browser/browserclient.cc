@@ -3,20 +3,19 @@
 //
 
 #include "browserclient.h"
-#include "cef_app.h"
 #include "browserprofile.h"
+#include "cef_app.h"
 
-#include <mutex>
 #include <fstream>
+#include <mutex>
 
-namespace
-{
-std::mutex window_lock;
+namespace {
+    std::mutex window_lock;
 
-QBrowserWindow *curr_window;
+    QBrowserWindow *curr_window;
 
-char *ad_block_buffer;
-} // namespace
+    char *ad_block_buffer;
+}// namespace
 
 BrowserClient::BrowserClient()
 {
@@ -37,7 +36,7 @@ void BrowserClient::OnBeforeBrowserPopup(CefWindowInfo &window_info)
 {
     window_lock.lock();
 
-    auto *w = new QBrowserWindow;
+    auto *w     = new QBrowserWindow;
     curr_window = w;
 
 #ifdef __linux__
@@ -60,9 +59,9 @@ void BrowserClient::OnSetAddress(CefRefPtr<CefBrowser> browser, const CefString 
 }
 
 void BrowserClient::OnSetLoadingState(CefRefPtr<CefBrowser> browser,
-                                      bool isLoading,
-                                      bool canGoBack,
-                                      bool canGoForward)
+                                      bool                  isLoading,
+                                      bool                  canGoBack,
+                                      bool                  canGoForward)
 {
     browser_list_[browser->GetIdentifier()].first->setLoadingState(isLoading, canGoBack, canGoForward);
 }
@@ -152,7 +151,7 @@ void BrowserClient::OnBrowserClosed(CefRefPtr<CefBrowser> browser)
 
     if (browser_list_.empty()) {
         CefQuitMessageLoop();
-//        exit(0);
+        //        exit(0);
     }
 }
 
@@ -162,11 +161,7 @@ bool BrowserClient::CheckRequestIntercept(CefRefPtr<CefRequest> request)
                              BrowserProfile::GetInstance()->GetUserAgent().toStdString(),
                              true);
 
-    if (BrowserProfile::GetInstance()->IsAdBlockFlag()
-        && request->GetURL().IsOwner() && request->GetReferrerURL().IsOwner()
-        && ad_block_client_.matches(request->GetURL().ToString().c_str(),
-                                    FONoFilterOption,
-                                    request->GetReferrerURL().ToString().c_str())) {
+    if (BrowserProfile::GetInstance()->IsAdBlockFlag() && request->GetURL().IsOwner() && request->GetReferrerURL().IsOwner() && ad_block_client_.matches(request->GetURL().ToString().c_str(), FONoFilterOption, request->GetReferrerURL().ToString().c_str())) {
         return true;
     }
     return false;
@@ -178,7 +173,7 @@ void BrowserClient::InitAdBlockClient()
     std::ifstream in("ABPFilterParserData.dat", std::ios::in | std::ios::binary);
     if (in) {
         in.seekg(0, std::ios::end);
-        int len = in.tellg();
+        int len         = in.tellg();
         ad_block_buffer = new char[len];
         in.seekg(0, std::ios::beg);
         in.read(ad_block_buffer, len);
@@ -190,7 +185,7 @@ void BrowserClient::InitAdBlockClient()
 
 BrowserClient::~BrowserClient()
 {
-    delete[]ad_block_buffer;
+    delete[] ad_block_buffer;
 }
 
 void BrowserClient::OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::vector<CefString> &icon_urls)
@@ -198,8 +193,8 @@ void BrowserClient::OnSetFaviconURL(CefRefPtr<CefBrowser> browser, const std::ve
     browser_list_[browser->GetIdentifier()].first->setIconUrls(icon_urls[0].ToString().c_str());
 }
 
-void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
-                                    const CefString &suggested_name,
+void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem>           download_item,
+                                    const CefString                     &suggested_name,
                                     CefRefPtr<CefBeforeDownloadCallback> callback)
 {
     auto t = download_item_list_[download_item->GetId()].first;
@@ -214,7 +209,7 @@ void BrowserClient::OnStartDownload(CefRefPtr<CefDownloadItem> download_item,
     callback->Continue(full_path, false);
 }
 
-void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_item,
+void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem>         download_item,
                                           CefRefPtr<CefDownloadItemCallback> callback)
 {
     DownloadItem *p_download_item = nullptr;
@@ -222,7 +217,7 @@ void BrowserClient::OnUpdateDownloadState(CefRefPtr<CefDownloadItem> download_it
     qDebug() << download_item->GetFullPath().ToString().c_str();
 
     if (download_item_list_.find(download_item->GetId()) == download_item_list_.end()) {
-        p_download_item = new DownloadItem(download_item->GetId(), callback);
+        p_download_item                             = new DownloadItem(download_item->GetId(), callback);
         download_item_list_[download_item->GetId()] = {p_download_item, download_item};
         return;
     }
