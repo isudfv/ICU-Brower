@@ -63,8 +63,8 @@ signals:
 
 
 private:
-    bool initialized = false;
     int  browser_id_ = 0;
+    bool initialized = false;
 
     QString browser_url_;
     QString icon_url_;
@@ -72,6 +72,8 @@ private:
     bool    is_loading_     = false;
     bool    can_go_back_    = false;
     bool    can_go_forward_ = false;
+
+    void reset();
 };
 
 #endif//QBROWSERCLIENT__QBROWSERWINDOW_H_

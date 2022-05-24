@@ -98,6 +98,7 @@ QBrowserWindow::QBrowserWindow(const QString &url)
 
 void QBrowserWindow::doLoadUrl(const QString &url)
 {
+    reset();
     BrowserClient::GetInstance()->DoBrowserLoadUrl(browser_id_, url);
 }
 
@@ -108,16 +109,19 @@ void QBrowserWindow::doReload()
 
 void QBrowserWindow::doGoBack()
 {
+    reset();
     if (can_go_back_) BrowserClient::GetInstance()->DoBrowserGoBack(browser_id_);
 }
 
 void QBrowserWindow::doGoForward()
 {
+    reset();
     if (can_go_forward_) BrowserClient::GetInstance()->DoBrowserGoForward(browser_id_);
 }
 
 void QBrowserWindow::doStopLoad()
 {
+    reset();
     if (is_loading_) BrowserClient::GetInstance()->DoBrowserStopLoad(browser_id_);
 }
 
@@ -154,18 +158,28 @@ void QBrowserWindow::activeWindow()
 
 void QBrowserWindow::setBrowserTitle(const QString &title)
 {
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, !is_loading_ && title != this->title());
     this->setTitle(title);
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
 }
 
 void QBrowserWindow::setIconUrls(const QString &icon_url)
 {
-    icon_url_ = icon_url;
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, icon_url, icon_url_.isEmpty());
+    this->icon_url_ = icon_url;
 }
 
 void QBrowserWindow::setBrowserUrl(const QString &url)
 {
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, !is_loading_ && url != browser_url_);
     this->browser_url_ = url;
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
+}
+
+void QBrowserWindow::reset()
+{
+    browser_url_    = "";
+    icon_url_       = "";
+    is_closing_     = false;
+    is_loading_     = false;
+    can_go_back_    = false;
+    can_go_forward_ = false;
 }
