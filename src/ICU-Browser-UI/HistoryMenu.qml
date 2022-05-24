@@ -359,6 +359,9 @@ Window {
                         onExited: {
                             detailRectangle.enter = false
                         }
+                        onClicked: {
+                            WindowManager.doLoadUrl(header.currentWindowIndex, url, header.currentUserId)
+                        }
                     }
 
                     RowLayout {
