@@ -29,12 +29,12 @@ Q_INVOKABLE void HistoryManager::addHistory(QString name, QString url, int uid) 
 
     file.close();
     //如果源文件中已经有内容，则在原有基础上添加
-    if (obj.contains("histories")) {
-        arr = obj["histories"].toArray();
+    if (obj.contains("history")) {
+        arr = obj["history"].toArray();
     }
     arr.append(history);
-    obj["histories"] = arr;
-    obj["uid"] = uid;
+    obj["history"] = arr;
+    obj["_id"] = uid;
 
     doc.setObject(obj);
 
@@ -61,10 +61,10 @@ Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QStrin
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
     QJsonObject obj = doc.object();
-    QJsonArray arr = obj["histories"].toArray();
+    QJsonArray arr = obj["history"].toArray();
 
     file.close();
-    //遍历histories，如果找到符合条件的，就移除
+    //遍历history，如果找到符合条件的，就移除
     for (auto it = arr.begin(); it != arr.end(); ++it) {
         QJsonObject temp = it->toObject();
         if (temp["name"].toString() == name && temp["date"].toString() == date && temp["time"].toString() == time && temp["url"].toString() == url) {
@@ -72,7 +72,7 @@ Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QStrin
             break;
         }
     }
-    obj["histories"] = arr;
+    obj["history"] = arr;
     doc.setObject(obj);
     //将更新后的json写回源文件
     QByteArray data = doc.toJson(QJsonDocument::Indented);
@@ -94,7 +94,7 @@ Q_INVOKABLE void HistoryManager::clearHistory(int uid) {
     QJsonDocument doc;
     QJsonObject obj;
     QJsonArray array;
-    obj["uid"] = uid;
+    obj["_id"] = uid;
     obj["history"] = array;
     doc.setObject(obj);
 
@@ -118,7 +118,7 @@ Q_INVOKABLE void HistoryManager::loadHistory(int uid, QString keyword) {
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
 
     QJsonObject obj = doc.object();
-    QJsonArray arr = obj["histories"].toArray();
+    QJsonArray arr = obj["history"].toArray();
 
     //调用回调函数，在view层清空上一个用户的列表，并显示当前用户的历史记录列表
     emit clearItem();
@@ -149,7 +149,7 @@ Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date) {
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
     QJsonObject obj = doc.object();
-    QJsonArray array = obj["histories"].toArray();
+    QJsonArray array = obj["history"].toArray();
     file.close();
 
     //遍历所有历史记录，将指定date的记录都删除
@@ -161,7 +161,7 @@ Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date) {
         } else
             ++it;
     }
-    obj["histories"] = array;
+    obj["history"] = array;
     doc.setObject(obj);
 
     //写回json文件

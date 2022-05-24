@@ -202,13 +202,13 @@ void UserManager::syncHistoryFromLocal(int uid)
     */
 
     DocumentStreamBuilder doc_builder;
-    auto result=coll.find_one(DocumentStreamBuilder{}<<"uid"<<uid<<finalize);
+    auto result=coll.find_one(DocumentStreamBuilder{}<<"_id"<<uid<<finalize);
 
     if(!result)
         coll.insert_one(value.view());
     else
     {
-        coll.find_one_and_update(DocumentStreamBuilder{}<<"uid"<<uid<<finalize,value.view());
+        coll.find_one_and_update(DocumentStreamBuilder{}<<"_id"<<uid<<finalize,value.view());
     }
 
 }

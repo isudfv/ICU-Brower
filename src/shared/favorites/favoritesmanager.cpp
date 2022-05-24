@@ -34,7 +34,7 @@ void FavoritesManager::addFavoriteItem(QString url, QString name, int uid = 0){
     }
     arr.append(member);
 
-    obj["uid"]       = uid;
+    obj["_id"]       = uid;
     obj["bookmarks"] = arr;
     jDoc.setObject(obj);
 
