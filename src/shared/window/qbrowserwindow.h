@@ -57,7 +57,8 @@ signals:
     void setTabState(int            windowId,
                      const QString &title,
                      const QString &url,
-                     const QString &icon);
+                     const QString &icon,
+                     bool add_history);
     void setLoadState(int windowId, bool activeBack, bool activeForward);
 
 

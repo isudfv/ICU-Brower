@@ -44,7 +44,7 @@ public:
     Q_INVOKABLE void initWindow(QString url);
 
 signals:
-    void addHistory(QString title,QString url);
+    void addHistory(QString title, QString url);
     void windowCreated();
     void parentWindowSet();
     void addTab(int newWindowId, QString newWindowTitle, QString newWindowUrl, QString icon, bool toToggle);
@@ -58,10 +58,7 @@ signals:
 
 public slots:
     void addWindow(QBrowserWindow *new_window);
-    void tabStateChanged(int            windowId,
-                         const QString &title,
-                         const QString &url,
-                         const QString &icon);
+    void tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon, bool add_history);
     void loadStateChanged(int windowId, bool activeBack, bool activeForward);
 
 private:

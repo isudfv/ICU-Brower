@@ -76,6 +76,9 @@ void DownloadItem::InitDownload(CefRefPtr<CefDownloadItem> download_item, const 
     QObject::connect(DownloadManager::getInstance(),
                      SIGNAL(toChangeDownloadItemPauseState(int)),
                      this, SLOT(DownloadItemPauseStateChanged(int)));
+    QObject::connect(DownloadManager::getInstance(),
+                     SIGNAL(toStopDownloadItem(int)),
+                     this, SLOT(DownloadItemCancel(int)));
 
     emit CreateDownloadItem(item_id_, file_name_, url_, full_path_);
 }

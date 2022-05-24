@@ -6,6 +6,7 @@ void WindowManager::toggleTab(int windowId)
     if (mp.count(currentWindowId)) mp[currentWindowId]->hide();
     currentWindowId = windowId;
     if (mp.count(currentWindowId)) {
+
         mp[currentWindowId]->activeWindow();
         mp[currentWindowId]->show();
     }
@@ -73,6 +74,7 @@ void WindowManager::resizeWindow(int width, int height)
 
 void WindowManager::addWindow(QBrowserWindow *new_window)
 {
+    new_window->resize(400, 400);
     new_window->show();
     new_window->setFramePosition({0, 74});
     int id = new_window->getBrowserId();
@@ -80,15 +82,14 @@ void WindowManager::addWindow(QBrowserWindow *new_window)
     emit addTab(id, "Loading...", "Loading...", "", true);
 }
 
-void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon)
+void WindowManager::tabStateChanged(int windowId, const QString &title, const QString &url, const QString &icon, bool add_history)
 {
     emit setTabState(windowId, title, url, icon);
 
-    if (title != "" && url != "" && icon != "") {
+    if (add_history && title != "" && url != "" && icon != "") {
+        qDebug() << "history" << title << url << icon;
         emit addHistory(title, url);
     }
-
-    qDebug() << windowId << title << url << icon;
 }
 
 void WindowManager::loadStateChanged(int windowId, bool activeBack, bool activeForward)

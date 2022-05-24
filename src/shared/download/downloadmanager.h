@@ -24,7 +24,6 @@
 class DownloadManager : public QObject {
     Q_OBJECT
 public:
-
     static DownloadManager *getInstance(QQmlEngine *engine = nullptr, QJSEngine *scriptEngine = nullptr)
     {
         static auto *dm = new DownloadManager;
@@ -44,6 +43,7 @@ public:
     Q_INVOKABLE void showDownLoadItemInExplorer(int id, QString path);
     Q_INVOKABLE void changeDownloadItemPauseState(int id);
     Q_INVOKABLE void stopDownload(int id);
+
 signals:
     //    to view layer
     void addItem(int     id,
@@ -61,6 +61,7 @@ signals:
 
     //    to model layer
     void toChangeDownloadItemPauseState(int id);
+    void toStopDownloadItem(int id);
 
 public slots:
     void downloadItemCreated(int            id,

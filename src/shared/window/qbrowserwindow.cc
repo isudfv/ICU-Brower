@@ -74,12 +74,6 @@ void QBrowserWindow::setBrowserId(int browser_id)
     this->browser_id_ = browser_id;
 }
 
-void QBrowserWindow::setBrowserUrl(const QString &url)
-{
-    this->browser_url_ = url;
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
-}
-
 void QBrowserWindow::setLoadingState(bool isLoading, bool canGoBack, bool canGoForward)
 {
     this->is_loading_     = isLoading;
@@ -139,9 +133,9 @@ void QBrowserWindow::OnCreateFinish()
                      WindowManager::getInstance(),
                      SLOT(loadStateChanged(int, bool, bool)));
     QObject::connect(this,
-                     SIGNAL(setTabState(int, const QString &, const QString &, const QString &)),
+                     SIGNAL(setTabState(int, const QString &, const QString &, const QString &, bool)),
                      WindowManager::getInstance(),
-                     SLOT(tabStateChanged(int, const QString &, const QString &, const QString &)));
+                     SLOT(tabStateChanged(int, const QString &, const QString &, const QString &, bool)));
     //    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
     //    QObject::connect(this, SIGNAL(), WindowManager::getInstance(), SLOT());
     emit windowCreated(this);
@@ -154,18 +148,24 @@ int QBrowserWindow::getBrowserId() const
 
 void QBrowserWindow::activeWindow()
 {
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, false);
     emit setLoadState(this->browser_id_, this->can_go_back_, this->can_go_forward_);
 }
 
 void QBrowserWindow::setBrowserTitle(const QString &title)
 {
     this->setTitle(title);
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
 }
 
 void QBrowserWindow::setIconUrls(const QString &icon_url)
 {
     icon_url_ = icon_url;
-    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_);
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
+}
+
+void QBrowserWindow::setBrowserUrl(const QString &url)
+{
+    this->browser_url_ = url;
+    emit setTabState(this->browser_id_, this->title(), this->browser_url_, this->icon_url_, true);
 }

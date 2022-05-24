@@ -30,7 +30,7 @@ void DownloadManager::showDownLoadItemInExplorer(int id, QString path)
     }
     //打开目录并高亮选中文件
     const QString explorer = "explorer";
-    QStringList param;
+    QStringList   param;
     if (!QFileInfo(path).isDir()) {
         param << QLatin1String("/select,");
     }
@@ -38,7 +38,7 @@ void DownloadManager::showDownLoadItemInExplorer(int id, QString path)
     QProcess::startDetached(explorer, param);
 }
 
-void DownloadManager::downloadItemCreated(int id,
+void DownloadManager::downloadItemCreated(int            id,
                                           const QString &name,
                                           const QString &url,
                                           const QString &path)
@@ -61,7 +61,8 @@ void DownloadManager::changeDownloadItemPauseState(int id)
     emit changePauseState(id);
 }
 
-void DownloadManager::stopDownload(int id){
-    //code here
+void DownloadManager::stopDownload(int id)
+{
+    emit toStopDownloadItem(id);
     emit removeItem(id);
 }
