@@ -232,6 +232,7 @@ Window {
 
                     onClicked: {
                         UserManager.doLogout(header.setUserInfo)
+                        userButton.isUserWindow = false
                     }
 
                     background: Rectangle {
@@ -286,7 +287,7 @@ Window {
                            "key": "Android Mobile",
                            "value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Mobile Safari/537.36"
                        })
-        uaModel.sync()
+        uaControl.currentIndex = 0
     }
 
     onActiveFocusItemChanged: {

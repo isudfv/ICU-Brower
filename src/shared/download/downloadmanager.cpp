@@ -60,3 +60,8 @@ void DownloadManager::changeDownloadItemPauseState(int id)
     emit toChangeDownloadItemPauseState(id);
     emit changePauseState(id);
 }
+
+void DownloadManager::stopDownload(int id){
+    //code here
+    emit removeItem(id);
+}

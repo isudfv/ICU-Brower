@@ -188,7 +188,13 @@ Window {
                                 anchors.fill: parent
                                 hoverEnabled: true
                                 onClicked: {
-                                    DownloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
+                                    if (downloadItemPrecent === 100){
+                                        DownloadManager.deleteDownloadItem(downloadItemId,downloadItemPath)
+                                    }
+                                    else{
+                                        DownloadManager.stopDownload(downloadItemId)
+                                    }
+
                                 }
                                 onEntered: {
                                     enter = true
