@@ -183,7 +183,7 @@ Window {
                             anchors.fill: parent
                             hoverEnabled: true
                             onClicked: {
-                                HistoryManager.clearHistory(header.currentUserId, clearHistory)
+                                HistoryManager.clearHistory(header.currentUserId)
                             }
                             onEntered: {
                                 clearAll.enter = true
@@ -266,7 +266,7 @@ Window {
                             // 改变即发送信号
                             onTextEdited: {
                                 // console.info("edited")
-                                HistoryManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem, input.text)
+                                HistoryManager.loadHistory(header.currentUserId, input.text)
                             }
 
                             // 居中
@@ -430,7 +430,7 @@ Window {
                                 onClicked: {
                                     console.info(dateText.text)
                                     console.info(nameText.text)
-                                    HistoryManager.removeHistory(nameText.text, url, dateText.text, timeText.text, header.currentUserId, removeHistoryItem)
+                                    HistoryManager.removeHistory(nameText.text, url, dateText.text, timeText.text, header.currentUserId)
                                 }
                                 onEntered: {
                                     signalDelete.enter = true
@@ -553,7 +553,7 @@ Window {
                                     }
                                     onClicked: {
                                         // console.info(section)
-                                        HistoryManager.removeSignalDayHistory(header.currentUserId, section, removeSignalDayHistory)
+                                        HistoryManager.removeSignalDayHistory(header.currentUserId, section)
                                     }
                                 }
                             }
@@ -588,7 +588,7 @@ Window {
 
     function loadHistory(){
         headRectangle.isSearch = false;
-        HistoryManager.loadHistory(header.currentUserId, clearHistory, addHistoryItem)
+        HistoryManager.loadHistory(header.currentUserId)
     }
 
     function addHistoryItem(name, url, time, date){
@@ -604,7 +604,7 @@ Window {
         }
     }
 
-    function removeSignalDayHistory(uid, date) {
+    function removeSignalDayHistory(date) {
         // 删除单日历史记录
         for (let i = 0; i < historyModel.count; ++i) {
             if (historyModel.get(i).date === date) {
@@ -623,6 +623,15 @@ Window {
         target: HistoryManager
         function onAddItem(name,url,time,date){
             addHistoryItem(name, url, time, date)
+        }
+        function onClearItem(){
+            clearHistory()
+        }
+        function onRemoveItem(name, url, time, date){
+            removeHistoryItem(name, url, time, date)
+        }
+        function onRemoveItemByDate(date){
+            removeSignalDayHistory(date)
         }
     }
 

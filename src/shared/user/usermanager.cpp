@@ -1,6 +1,7 @@
 ﻿#include "usermanager.h"
 #include "browserprofile.h"
 #include "favoritesmanager.h"
+#include "historymanager.h"
 #include <iostream>
 
 
@@ -246,11 +247,7 @@ void UserManager::syncHistoryToLocal(int uid)
     file.write(data);
     file.close();
 
-
-
-
-
-
+    HistoryManager::getInstance()->loadHistory(uid);
 }
 void UserManager::syncFavouriteFromLocal(int uid)
 {

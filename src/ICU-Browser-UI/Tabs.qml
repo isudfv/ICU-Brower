@@ -20,9 +20,11 @@ Row {
         onCurrentItemChanged: {
             if(count != 0){
                 header.currentTabItem = currentItem
-                header.currentWindowIndex = currentItem.windowId
-                header.currentUrl = currentItem.windowUrl
-                WindowManager.toggleTab(currentItem.windowId)
+                if(currentItem){
+                    header.currentWindowIndex = currentItem.windowId
+                    header.currentUrl = currentItem.windowUrl
+                    WindowManager.toggleTab(currentItem.windowId)
+                }
             }
         }
 

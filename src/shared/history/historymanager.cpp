@@ -52,7 +52,7 @@ Q_INVOKABLE void HistoryManager::addHistory(QString name, QString url, int uid) 
 
     //    callback.call(list);
 }
-Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QString date, QString time, int uid, QJSValue callback) {
+Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QString date, QString time, int uid) {
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
     file.open(QIODevice::ReadWrite);
@@ -83,11 +83,9 @@ Q_INVOKABLE void HistoryManager::removeHistory(QString name, QString url, QStrin
 
     //调用回调函数，更新view层的数据
 
-    QJSValueList list = {name, url, time, date};
-
-    callback.call(list);
+    emit removeItem(name, url, time, date);
 }
-Q_INVOKABLE void HistoryManager::clearHistory(int uid, QJSValue callback) {
+Q_INVOKABLE void HistoryManager::clearHistory(int uid) {
     //以覆盖写方式打开文件
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
@@ -107,9 +105,9 @@ Q_INVOKABLE void HistoryManager::clearHistory(int uid, QJSValue callback) {
     file.close();
 
     //调用回调函数，更新view层
-    callback.call();
+    emit clearItem();
 }
-Q_INVOKABLE void HistoryManager::loadHistory(int uid, QJSValue callbacka, QJSValue callbackb, QString keyword) {
+Q_INVOKABLE void HistoryManager::loadHistory(int uid, QString keyword) {
     //打开文件
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
@@ -123,7 +121,7 @@ Q_INVOKABLE void HistoryManager::loadHistory(int uid, QJSValue callbacka, QJSVal
     QJsonArray arr = obj["histories"].toArray();
 
     //调用回调函数，在view层清空上一个用户的列表，并显示当前用户的历史记录列表
-    callbacka.call();
+    emit clearItem();
 
     for (auto it = arr.begin(); it != arr.end(); ++it) {
 
@@ -138,18 +136,11 @@ Q_INVOKABLE void HistoryManager::loadHistory(int uid, QJSValue callbacka, QJSVal
             continue;
         }
 
-
-        QJSValue _name(name);
-        QJSValue _url(url);
-        QJSValue _time(time);
-        QJSValue _date(date);
-
-        QJSValueList list = {_name, _url, _time, _date};
-        callbackb.call(list);
+        emit addItem(name,url,time,date);
     }
     file.close();
 }
-Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date, QJSValue callback) {
+Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date) {
     //打开文件
     QString file_path = QString("./history/%1.json").arg(uid);
     QFile file(file_path);
@@ -182,8 +173,7 @@ Q_INVOKABLE void HistoryManager::removeSignalDayHistory(int uid, QString date, Q
 
     //调用回调函数，修改view层
 
-    QJSValueList list{uid, date};
-    callback.call(list);
+    emit removeItemByDate(date);
 }
 
 
