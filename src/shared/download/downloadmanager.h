@@ -43,7 +43,7 @@ public:
     Q_INVOKABLE void clearDownloadItem();
     Q_INVOKABLE void showDownLoadItemInExplorer(int id, QString path);
     Q_INVOKABLE void changeDownloadItemPauseState(int id);
-
+    Q_INVOKABLE void stopDownload(int id);
 signals:
     //    to view layer
     void addItem(int     id,

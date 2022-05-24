@@ -1,14 +1,7 @@
-#include "cefwindow.h"
-//#include "form.h"
 #include <QApplication>
-//#include <QDateTime>
-//#include <QGuiApplication>
 #include <QLabel>
-//#include <QLineEdit>
-//#include <QPushButton>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-//#include <QQuickItem>
 #include <QQuickWidget>
 
 #include "browserprofile.h"
