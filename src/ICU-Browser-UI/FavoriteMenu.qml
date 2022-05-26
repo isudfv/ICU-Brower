@@ -12,8 +12,8 @@ Window {
     Rectangle {
         color: "white"
         radius: 6
-        border.width: 3
-        border.color: "#f7f7f7"
+        border.width: 2
+        border.color: "#cdcdcd"
         anchors.fill: parent
         ColumnLayout {
             anchors.fill: parent
@@ -28,6 +28,8 @@ Window {
 
             Rectangle {
                 Layout.fillWidth: true
+                Layout.leftMargin: 5
+                Layout.rightMargin: 5
                 height: 40
                 color: "white"
                 z:5
@@ -84,9 +86,10 @@ Window {
                     }
                 }
                 Rectangle {
-                    color: "#f7f7f7"
-                    height: 1.5
-                    width: parent.width
+                    color: "#cdcdcd"
+                    height: 2
+                    width: parent.width + 10
+                    x:parent.x - 10
                     y:parent.y + 30
                 }
             }

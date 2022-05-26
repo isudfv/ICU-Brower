@@ -12,8 +12,8 @@ Window {
     Rectangle {
         color: "white"
         radius: 6
-        border.width: 3
-        border.color: "#f7f7f7"
+        border.width: 2
+        border.color: "#cdcdcd"
         anchors.fill: parent
         ColumnLayout {
             anchors.fill: parent
@@ -61,7 +61,7 @@ Window {
                         hoverEnabled: true
                         enabled: true
                         onClicked: {
-//                            insertDownloadItem(0, "good", "?", "?")
+                            DownloadManager.clearDownloadItem()
                         }
                         onEntered: {
                             enter = true
@@ -76,8 +76,8 @@ Window {
             }
 
             Rectangle {
-                color: "#f7f7f7"
-                height: 1.5
+                color: "#cdcdcd"
+                height: 2
                 Layout.fillWidth: true
             }
 
