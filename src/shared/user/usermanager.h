@@ -50,7 +50,7 @@ public:
 
     static UserManager *getInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
     {
-        static UserManager *um = new UserManager("mongodb://175.178.155.66:27017");
+        static UserManager *um = new UserManager("mongodb://client:icuBrowser@175.178.155.66:27017/browser");
         Q_UNUSED(engine)
         Q_UNUSED(scriptEngine)
         return um;
