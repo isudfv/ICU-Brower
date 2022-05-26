@@ -179,7 +179,4 @@ void QBrowserWindow::reset()
     browser_url_    = "";
     icon_url_       = "";
     is_closing_     = false;
-    is_loading_     = false;
-    can_go_back_    = false;
-    can_go_forward_ = false;
 }
