@@ -28,6 +28,7 @@ Window {
     visible: true
     signal closeWindow()
     color: "#cdcdcd"
+    title: "ICU-Browser"
     //    flags: Qt.Window | Qt.CustomizeWindowHint
 
     //    property int headHeight: 111

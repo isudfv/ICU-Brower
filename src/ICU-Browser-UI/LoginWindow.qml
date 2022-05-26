@@ -146,6 +146,7 @@ Window {
 
             onClicked: {
                 UserManager.doLogin(userName.text, password.text, loginStateCheck)
+                password.text = ""
             }
         }
 

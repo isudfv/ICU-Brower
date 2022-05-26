@@ -3,6 +3,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWidget>
+#include <QIcon>
 
 #include "browserprofile.h"
 #include "downloadmanager.h"
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 
 
     engine.load("qrc:/main.qml");
-
+    app.setWindowIcon(QIcon(":/icons/ICU.png"));
     QObject *QmlObj          = engine.rootObjects().first();
     QWindow *QmlWindow       = qobject_cast<QWindow *>(QmlObj);
     QBrowserWindow::g_parent = QmlWindow;

@@ -194,6 +194,9 @@ Window {
                 } else {
                     UserManager.doRegister(userName.text, password.text,
                                            registerStateCheck)
+                    userName.text = ""
+                    password.text = ""
+                    rePassword.text = ""
                 }
             }
         }

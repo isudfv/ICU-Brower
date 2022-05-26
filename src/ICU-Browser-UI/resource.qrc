@@ -34,5 +34,6 @@
         <file alias="locker.svg">assets/icons/locker.svg</file>
         <file alias="back.svg">assets/icons/back.svg</file>
         <file alias="pause.svg">assets/icons/pause.svg</file>
+        <file alias="ICU.png">assets/icons/ICU.png</file>
     </qresource>
 </RCC>
