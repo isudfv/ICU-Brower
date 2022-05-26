@@ -43,6 +43,10 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
 
     //先查找用户名是否存在
     find_one = coll.find_one(document{} << "username" << username.toStdString() << finalize);
+    if (!find_one) {
+        list = {UserNotExist};
+        goto CALLBACK;
+    }
     //用户不存在
     //    qDebug() << "here3";
 
