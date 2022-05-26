@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(ICU-Browser-UI VERSION 0.1 LANGUAGES CXX)
+project(ICU-Browser VERSION 0.1 LANGUAGES CXX)
 
 add_compile_definitions(NOMINMAX)
 
@@ -25,7 +25,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR} ${SHARED_INC
 link_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 qt_add_executable(
-	ICU-Browser-UI
+	ICU-Browser
 	main.cpp
 	resource.qrc
 	${SHARED_BROWSER_SRCS}
@@ -45,7 +45,7 @@ qt_add_executable(
 #)
 
 set_target_properties(
-	ICU-Browser-UI PROPERTIES
+	ICU-Browser PROPERTIES
 	MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
 	MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
 	MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -54,7 +54,7 @@ set_target_properties(
 )
 
 target_compile_definitions(
-	ICU-Browser-UI
+	ICU-Browser
 	PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>
 )
 
@@ -62,7 +62,7 @@ COPY_FILES("${PROJECT_NAME}" "${CEF_BINARY_FILES}" "${CEF_BINARY_DIR}" "${CMAKE_
 COPY_FILES("${PROJECT_NAME}" "${CEF_RESOURCE_FILES}" "${CEF_RESOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
 
 target_link_libraries(
-	ICU-Browser-UI
+	ICU-Browser
 	PRIVATE
 	Qt6::Quick
 	Qt6::Widgets
@@ -75,5 +75,5 @@ target_link_libraries(
 
 
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-	ADD_WINDOWS_MANIFEST("${WINDOWS_MANIFEST_DIR}" "ICU-Browser-UI" "exe")
+	ADD_WINDOWS_MANIFEST("${WINDOWS_MANIFEST_DIR}" "ICU-Browser" "exe")
 endif ()
