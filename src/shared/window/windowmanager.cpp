@@ -87,7 +87,6 @@ void WindowManager::tabStateChanged(int windowId, const QString &title, const QS
     emit setTabState(windowId, title, url, icon);
 
     if (add_history && title != "" && url != "" && icon != "") {
-        qDebug() << "history" << title << url << icon;
         emit addHistory(title, url);
     }
 }
