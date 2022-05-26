@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-project(ICU-Browser-UI VERSION 0.1 LANGUAGES CXX)
+project(ICU-Browser VERSION 0.1 LANGUAGES CXX)
 
 add_compile_definitions(NOMINMAX)
 

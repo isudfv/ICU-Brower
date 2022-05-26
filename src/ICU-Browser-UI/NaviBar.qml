@@ -59,6 +59,8 @@ Item {
                             }
 
                             onClicked: {
+                                parent.color = "#f7f7f7"
+                                enter = false
                                 WindowManager.doGoBack(header.currentWindowIndex)
                             }
 
@@ -105,6 +107,8 @@ Item {
                             }
 
                             onClicked: {
+                                parent.color = "#f7f7f7"
+                                enter = false
                                 WindowManager.doGoForward(header.currentWindowIndex)
                             }
 
