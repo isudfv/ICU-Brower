@@ -45,11 +45,6 @@ Q_INVOKABLE void UserManager::doLogin(const QString &username, const QString &pa
     find_one = coll.find_one(document{} << "username" << username.toStdString() << finalize);
     //用户不存在
     //    qDebug() << "here3";
-    Uri      uri("mongodb://175.178.155.66:27017");
-    if (!find_one) {
-        list = {UserNotExist};
-        goto CALLBACK;
-    }
 
     ele = find_one->view()["password"];
     //用户存在，则判断密码是否正
